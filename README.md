@@ -3,7 +3,7 @@
 This action lets you easily cross-compile Rust projects using
 [cross](https://github.com/cross-rs/cross).
 
-Here's an example from the release workflor for
+Here's an example from the release workflow for
 [my tool `precious`](https://github.com/houseabsolute/precious):
 
 ```yaml
@@ -55,7 +55,7 @@ This action takes the following parameters:
 | -------------- | --------------------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
 | `target`       | string                      | yes       | The target triple to compile for. This should be one of the targets listed by running `rustup target list`.                               |
 | `GITHUB_TOKEN` | string                      | no        | Defaults to the value of `${{ github.token }}`.                                                                                           |
-| `args`         | string                      | no        | A string-separated list of arguments to be passed to the `cross build`, like `--release --locked`.                                        |
+| `args`         | string                      | no        | A string-separated list of arguments to be passed to `cross build`, like `--release --locked`.                                            |
 | `strip`        | boolean (`true` or `false`) | no        | If this is true, then the resulting binary will be stripped if possible. This is only possible for binaries which weren't cross-compiled. |
 
 ## How it Works
