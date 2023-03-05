@@ -4,10 +4,7 @@ branding:
   icon: home
   color: gray-dark
 description: |
-  This action lets you easily install and use cross
-  (https://github.com/cross-rs/cross) to compile your Rust projects. It will
-  compile with cargo if the host and target platforms allow, so it's a drop-in
-  replacement for running `cargo build` in your Actions.
+  Cross compile your Rust projects with cross (https://github.com/cross-rs/cross).
 inputs:
   target:
     description: The target platform
