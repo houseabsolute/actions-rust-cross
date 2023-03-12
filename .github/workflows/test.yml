@@ -1,0 +1,160 @@
+name: Self-test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    name: Test
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - platform_name: FreeBSD-x86_64
+            os: ubuntu-20.04
+            target: x86_64-unknown-freebsd
+            expect_file: "x86-64.+FreeBSD"
+            expect_cross: true
+
+          - platform_name: Linux-x86_64
+            os: ubuntu-20.04
+            target: x86_64-unknown-linux-musl
+            expect_file: "ELF.+x86-64"
+            expect_cross: false
+
+          - platform_name: Linux-aarch64
+            os: ubuntu-20.04
+            target: aarch64-unknown-linux-musl
+            expect_file: "aarch64"
+            expect_cross: true
+
+          - platform_name: Linux-arm
+            os: ubuntu-20.04
+            target: arm-unknown-linux-musleabi
+            expect_file: "32.+ARM"
+            expect_cross: true
+
+          - platform_name: Linux-i586
+            os: ubuntu-20.04
+            target: i586-unknown-linux-musl
+            expect_file: "ELF.+80386"
+            expect_cross: false
+
+          - platform_name: Linux-mips
+            os: ubuntu-20.04
+            target: mips-unknown-linux-musl
+            expect_file: "MIPS32.+mips-"
+            expect_cross: true
+
+          - platform_name: Linux-mipsel
+            os: ubuntu-20.04
+            target: mipsel-unknown-linux-musl
+            expect_file: "MIPS32.+mipsel-"
+            expect_cross: true
+
+          - platform_name: Linux-mips64
+            os: ubuntu-20.04
+            target: mips64-unknown-linux-muslabi64
+            expect_file: "MIPS64"
+            expect_cross: true
+
+          - platform_name: Linux-mips64el
+            os: ubuntu-20.04
+            target: mips64el-unknown-linux-muslabi64
+            expect_file: "MIPS64"
+            expect_cross: true
+
+          - platform_name: Linux-powerpc
+            os: ubuntu-20.04
+            target: powerpc-unknown-linux-gnu
+            expect_file: "32.+PowerPC"
+            expect_cross: true
+
+          - platform_name: Linux-powerpc64
+            os: ubuntu-20.04
+            target: powerpc64-unknown-linux-gnu
+            expect_file: "64.+PowerPC"
+            expect_cross: true
+
+          - platform_name: Linux-powerpc64le
+            os: ubuntu-20.04
+            target: powerpc64le-unknown-linux-gnu
+            expect_file: "64.+PowerPC"
+            expect_cross: true
+
+          - platform_name: Linux-riscv64
+            os: ubuntu-20.04
+            target: riscv64gc-unknown-linux-gnu
+            expect_file: "64.+RISC-V"
+            expect_cross: true
+
+          - platform_name: Linux-s390x
+            os: ubuntu-20.04
+            target: s390x-unknown-linux-gnu
+            expect_file: "64.+S/390"
+            expect_cross: true
+
+          - platform_name: NetBSD-x86_64
+            os: ubuntu-20.04
+            target: x86_64-unknown-netbsd
+            expect_file: "x86-64.+NetBSD"
+            expect_cross: true
+
+          - platform_name: Windows-aarch64
+            os: windows-latest
+            target: aarch64-pc-windows-msvc
+            expect_file: "Aarch64.+Windows"
+            expect_cross: false
+
+          - platform_name: Windows-i686
+            os: windows-latest
+            target: i686-pc-windows-msvc
+            expect_file: "80386.+Windows"
+            expect_cross: false
+
+          - platform_name: Windows-x86_64
+            os: windows-latest
+            target: x86_64-pc-windows-msvc
+            expect_file: "x86-64.+Windows"
+            expect_cross: false
+
+          - platform_name: macOS-x86_64
+            os: macOS-latest
+            target: x86_64-apple-darwin
+            expect_file: "Mach-O.+x86_64"
+            expect_cross: false
+
+          - platform_name: macOS-aarch64
+            os: macOS-latest
+            target: aarch64-apple-darwin
+            expect_file: "Mach-O.+arm64"
+            expect_cross: false
+
+    runs-on: ${{ matrix.platform.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      # This is installed here so we can check for it in $PATH later. This
+      # makes sure that the actions don't overwrite anything in $PATH.
+      - name: Install Protoc
+        uses: arduino/setup-protoc@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Copy test project to root
+        shell: bash
+        run: |
+          cp -a test-project/* .
+          rm -fr test-project
+      - name: Use self
+        uses: "houseabsolute/actions-rust-cross@v0"
+        with:
+          target: ${{ matrix.platform.target }}
+      - name: Check for cross on ${{ matrix.platform.platform_name }}
+        shell: bash
+        run: |
+          tests/check-binary.sh "${{ matrix.platform.target }}" "${{ matrix.platform.expect_cross }}" "${{ matrix.platform.expect_file }}"
+      - name: Check that $PATH is not overwritten
+        shell: bash
+        run: |
+          tests/check-path.sh
