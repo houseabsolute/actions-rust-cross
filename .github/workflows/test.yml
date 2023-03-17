@@ -171,18 +171,21 @@ jobs:
         with:
           command: both
           target: ${{ matrix.platform.target }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ matrix.platform.can_test }}
       - name: Run test command
         uses: "houseabsolute/actions-rust-cross@v0"
         with:
           command: test
           target: ${{ matrix.platform.target }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ matrix.platform.can_test }}
       - name: Run build command
         uses: "houseabsolute/actions-rust-cross@v0"
         with:
           command: build
           target: ${{ matrix.platform.target }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Check for cross on ${{ matrix.platform.platform_name }}
         shell: bash
         run: |
