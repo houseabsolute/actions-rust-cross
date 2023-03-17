@@ -16,120 +16,140 @@ jobs:
             target: x86_64-unknown-freebsd
             expect_file: "x86-64.+FreeBSD"
             expect_cross: true
+            can_test: false
 
           - platform_name: Linux-x86_64
             os: ubuntu-20.04
             target: x86_64-unknown-linux-musl
             expect_file: "ELF.+x86-64"
             expect_cross: false
+            can_test: true
 
           - platform_name: Linux-aarch64
             os: ubuntu-20.04
             target: aarch64-unknown-linux-musl
             expect_file: "aarch64"
             expect_cross: true
+            can_test: true
 
           - platform_name: Linux-arm
             os: ubuntu-20.04
             target: arm-unknown-linux-musleabi
             expect_file: "32.+ARM"
             expect_cross: true
+            can_test: true
 
           - platform_name: Linux-i586
             os: ubuntu-20.04
             target: i586-unknown-linux-musl
             expect_file: "ELF.+80386"
             expect_cross: false
+            can_test: true
 
           - platform_name: Linux-mips
             os: ubuntu-20.04
             target: mips-unknown-linux-musl
             expect_file: "MIPS32.+mips-"
             expect_cross: true
+            can_test: true
 
           - platform_name: Linux-mipsel
             os: ubuntu-20.04
             target: mipsel-unknown-linux-musl
             expect_file: "MIPS32.+mipsel-"
             expect_cross: true
+            can_test: true
 
           - platform_name: Linux-mips64
             os: ubuntu-20.04
             target: mips64-unknown-linux-muslabi64
             expect_file: "MIPS64"
             expect_cross: true
+            can_test: true
 
           - platform_name: Linux-mips64el
             os: ubuntu-20.04
             target: mips64el-unknown-linux-muslabi64
             expect_file: "MIPS64"
             expect_cross: true
+            can_test: true
 
           - platform_name: Linux-powerpc
             os: ubuntu-20.04
             target: powerpc-unknown-linux-gnu
             expect_file: "32.+PowerPC"
             expect_cross: true
+            can_test: true
 
           - platform_name: Linux-powerpc64
             os: ubuntu-20.04
             target: powerpc64-unknown-linux-gnu
             expect_file: "64.+PowerPC"
             expect_cross: true
+            can_test: true
 
           - platform_name: Linux-powerpc64le
             os: ubuntu-20.04
             target: powerpc64le-unknown-linux-gnu
             expect_file: "64.+PowerPC"
             expect_cross: true
+            can_test: true
 
           - platform_name: Linux-riscv64
             os: ubuntu-20.04
             target: riscv64gc-unknown-linux-gnu
             expect_file: "64.+RISC-V"
             expect_cross: true
+            can_test: true
 
           - platform_name: Linux-s390x
             os: ubuntu-20.04
             target: s390x-unknown-linux-gnu
             expect_file: "64.+S/390"
             expect_cross: true
+            can_test: true
 
           - platform_name: NetBSD-x86_64
             os: ubuntu-20.04
             target: x86_64-unknown-netbsd
             expect_file: "x86-64.+NetBSD"
             expect_cross: true
+            can_test: false
 
           - platform_name: Windows-aarch64
             os: windows-latest
             target: aarch64-pc-windows-msvc
             expect_file: "Aarch64.+Windows"
             expect_cross: false
+            can_test: false
 
           - platform_name: Windows-i686
             os: windows-latest
             target: i686-pc-windows-msvc
             expect_file: "80386.+Windows"
             expect_cross: false
+            can_test: true
 
           - platform_name: Windows-x86_64
             os: windows-latest
             target: x86_64-pc-windows-msvc
             expect_file: "x86-64.+Windows"
             expect_cross: false
+            can_test: true
 
           - platform_name: macOS-x86_64
             os: macOS-latest
             target: x86_64-apple-darwin
             expect_file: "Mach-O.+x86_64"
             expect_cross: false
+            can_test: true
 
           - platform_name: macOS-aarch64
             os: macOS-latest
             target: aarch64-apple-darwin
             expect_file: "Mach-O.+arm64"
             expect_cross: false
+            can_test: false
 
     runs-on: ${{ matrix.platform.os }}
     steps:
@@ -146,9 +166,22 @@ jobs:
         run: |
           cp -a test-project/* .
           rm -fr test-project
-      - name: Use self
+      - name: Run both commands
         uses: "houseabsolute/actions-rust-cross@v0"
         with:
+          command: both
+          target: ${{ matrix.platform.target }}
+        if: ${{ matrix.platform.can_test }}
+      - name: Run test command
+        uses: "houseabsolute/actions-rust-cross@v0"
+        with:
+          command: test
+          target: ${{ matrix.platform.target }}
+        if: ${{ matrix.platform.can_test }}
+      - name: Run build command
+        uses: "houseabsolute/actions-rust-cross@v0"
+        with:
+          command: build
           target: ${{ matrix.platform.target }}
       - name: Check for cross on ${{ matrix.platform.platform_name }}
         shell: bash

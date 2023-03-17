@@ -18,18 +18,21 @@ jobs:
             target: x86_64-unknown-freebsd
             bin: precious
             name: precious-FreeBSD-x86_64.tar.gz
+            command: build
 
           - release_for: Windows-x86_64
             os: windows-latest
             target: x86_64-pc-windows-msvc
             bin: precious.exe
             name: precious-Windows-x86_64.zip
+            command: both
 
           - release_for: macOS-x86_64
             os: macOS-latest
             target: x86_64-apple-darwin
             bin: precious
             name: precious-Darwin-x86_64.tar.gz
+            command: both
 
             # more release targets here ...
 
@@ -40,6 +43,7 @@ jobs:
       - name: Build binary
         uses: houseabsolute/actions-rust-cross@v0
         with:
+          command: ${{ matrix.platform.command }}
           target: ${{ matrix.platform.target }}
           args: "--locked --release"
           strip: true
@@ -51,12 +55,13 @@ jobs:
 
 This action takes the following parameters:
 
-| Key            | Type                        | Required? | Description                                                                                                                               |
-| -------------- | --------------------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `target`       | string                      | yes       | The target triple to compile for. This should be one of the targets listed by running `rustup target list`.                               |
-| `GITHUB_TOKEN` | string                      | no        | Defaults to the value of `${{ github.token }}`.                                                                                           |
-| `args`         | string                      | no        | A string-separated list of arguments to be passed to `cross build`, like `--release --locked`.                                            |
-| `strip`        | boolean (`true` or `false`) | no        | If this is true, then the resulting binary will be stripped if possible. This is only possible for binaries which weren't cross-compiled. |
+| Key            | Type                                       | Required? | Description                                                                                                                               |
+| -------------- | ------------------------------------------ | --------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `command`      | string (one of `build`, `test`, or `both`) | no        | The command(s) to run. The default is `build`. Running the `test` command will fails with \*BSD targets, non-x86 Windows, and macOS ARM.  |
+| `target`       | string                                     | yes       | The target triple to compile for. This should be one of the targets listed by running `rustup target list`.                               |
+| `GITHUB_TOKEN` | string                                     | no        | Defaults to the value of `${{ github.token }}`.                                                                                           |
+| `args`         | string                                     | no        | A string-separated list of arguments to be passed to `cross build`, like `--release --locked`.                                            |
+| `strip`        | boolean (`true` or `false`)                | no        | If this is true, then the resulting binary will be stripped if possible. This is only possible for binaries which weren't cross-compiled. |
 
 ## How it Works
 

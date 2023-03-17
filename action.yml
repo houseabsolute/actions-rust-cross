@@ -6,6 +6,10 @@ branding:
 description: |
   Cross compile your Rust projects with cross (https://github.com/cross-rs/cross).
 inputs:
+  command:
+    description: |
+      The commands to run (one of "build", "test", or "both").
+    default: build
   target:
     description: The target platform
     required: true
@@ -52,23 +56,33 @@ runs:
       id: set-build-command
       shell: bash
       run: set-build-command.sh
-    - name: Build binary (*nix)
+    - name: Run tests (*nix)
       shell: bash
       run: |
-        ${{ steps.set-build-command.outputs.build-command }} build ${{ inputs.args }} --target ${{ inputs.target }}
-      if: ${{ runner.os != 'Windows' }}
+        ${{ steps.set-build-command.outputs.build-command }} test ${{ inputs.args }} --target ${{ inputs.target }}
+      if: ${{ inputs.command != 'build' && runner.os != 'Windows' }}
     # We want to run in Powershell on Windows to make sure we compile in a
     # native Windows environment. Some things won't compile properly under
     # msys, notably OpenSSL, which is compiled locally when using the
     # `openssl` crate with the `vendored` feature.
+    - name: Run tests (Windows)
+      shell: powershell
+      run: |
+        & ${{ steps.set-build-command.outputs.build-command }} test ${{ inputs.args }} --target ${{ inputs.target }}
+      if: ${{ inputs.command != 'build' && runner.os == 'Windows' }}
+    - name: Build binary (*nix)
+      shell: bash
+      run: |
+        ${{ steps.set-build-command.outputs.build-command }} build ${{ inputs.args }} --target ${{ inputs.target }}
+      if: ${{ inputs.command != 'test' && runner.os != 'Windows' }}
     - name: Build binary (Windows)
       shell: powershell
       run: |
         & ${{ steps.set-build-command.outputs.build-command }} build ${{ inputs.args }} --target ${{ inputs.target }}
-      if: ${{ runner.os == 'Windows' }}
+      if: ${{ inputs.command != 'test' && runner.os == 'Windows' }}
     - name: Strip binary
       shell: bash
       run: |
         strip target/${{ matrix.platform.target }}/release/${{ matrix.platform.bin }}
       # strip doesn't work with cross-arch binaries on Linux or Windows.
-      if: ${{ inputs.strip == 'true' && steps.determine-cross-compile.outputs.needs-cross == 'false' && inputs.target != 'aarch64-pc-windows-msvc' }}
+      if: ${{ inputs.command != 'test' && inputs.strip == 'true' && steps.determine-cross-compile.outputs.needs-cross == 'false' && inputs.target != 'aarch64-pc-windows-msvc' }}
