@@ -42,7 +42,7 @@ runs:
     - name: Install toolchain if not cross-compiling
       uses: dtolnay/rust-toolchain@stable
       with:
-        targets: ${{ matrix.platform.target }}
+        targets: ${{ inputs.target }}
         toolchain: ${{ inputs.toolchain }}
       if: ${{ steps.determine-cross-compile.outputs.needs-cross == 'false' }}
     - name: Install cross if cross-compiling (*nix)
