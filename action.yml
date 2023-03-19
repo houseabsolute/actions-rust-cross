@@ -87,7 +87,6 @@ runs:
       if: ${{ inputs.command != 'test' && runner.os == 'Windows' }}
     - name: Strip binary
       shell: bash
-      run: |
-        strip target/${{ matrix.platform.target }}/release/${{ matrix.platform.bin }}
+      run: strip-binary.sh ${{ inputs.target }}
       # strip doesn't work with cross-arch binaries on Linux or Windows.
       if: ${{ inputs.command != 'test' && inputs.strip == 'true' && steps.determine-cross-compile.outputs.needs-cross == 'false' && inputs.target != 'aarch64-pc-windows-msvc' }}
