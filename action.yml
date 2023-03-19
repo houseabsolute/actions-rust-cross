@@ -13,6 +13,10 @@ inputs:
   target:
     description: The target platform
     required: true
+  toolchain:
+    description: |
+      The target toolchain to use (one of "stable", "beta", or "nightly").
+    default: stable
   GITHUB_TOKEN:
     description: |
       A GitHub token, available in the secrets.GITHUB_TOKEN context variable.
@@ -39,6 +43,7 @@ runs:
       uses: dtolnay/rust-toolchain@stable
       with:
         targets: ${{ matrix.platform.target }}
+        toolchain: ${{ inputs.toolchain }}
       if: ${{ steps.determine-cross-compile.outputs.needs-cross == 'false' }}
     - name: Install cross if cross-compiling (*nix)
       shell: bash
