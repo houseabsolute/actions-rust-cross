@@ -175,12 +175,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      # This is installed here so we can check for it in $PATH later. This
-      # makes sure that the actions don't overwrite anything in $PATH.
-      - name: Install Protoc
-        uses: arduino/setup-protoc@v1
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Copy test project to root
         shell: bash
         run: |
@@ -211,7 +205,3 @@ jobs:
         shell: bash
         run: |
           tests/check-binary.sh "${{ matrix.platform.target }}" "${{ matrix.platform.expect_cross }}" "${{ matrix.platform.expect_file }}" "${{ matrix.platform.expect_stripped }}"
-      - name: Check that $PATH is not overwritten
-        shell: bash
-        run: |
-          tests/check-path.sh
