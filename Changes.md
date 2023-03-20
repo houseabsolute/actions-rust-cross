@@ -1,3 +1,8 @@
+## 0.0.5 - 2023-03-19
+
+- Fix use of `dtolnay/rust-toolchain` action to allow passing a `toolchain`
+  input.
+
 ## 0.0.4 - 2023-03-19
 
 - Added a new `toolchain` parameter to allow selecting a Rust toolchain other
