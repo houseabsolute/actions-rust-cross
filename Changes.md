@@ -1,3 +1,10 @@
+## 0.0.6 - 2023-04-21
+
+- When the `strip` parameter was true, stripping binaries could fail if there
+  were both `target/*/debug` and `target/*/release` directories present and
+  the `debug` directory didn't have a binary. Now it will strip all binaries
+  it finds under `target`.
+
 ## 0.0.5 - 2023-03-19
 
 - Fix use of `dtolnay/rust-toolchain` action to allow passing a `toolchain`
