@@ -44,7 +44,6 @@ runs:
       with:
         targets: ${{ inputs.target }}
         toolchain: ${{ inputs.toolchain }}
-      if: ${{ steps.determine-cross-compile.outputs.needs-cross == 'false' }}
     - name: Install cross if cross-compiling (*nix)
       shell: bash
       run: install-cross-nix.sh
@@ -64,7 +63,7 @@ runs:
     - name: Run tests (*nix)
       shell: bash
       run: |
-        ${{ steps.set-build-command.outputs.build-command }} test ${{ inputs.args }} --target ${{ inputs.target }}
+        ${{ steps.set-build-command.outputs.build-command }} +${{inputs.toolchain}} test ${{ inputs.args }} --target ${{ inputs.target }}
       if: ${{ inputs.command != 'build' && runner.os != 'Windows' }}
     # We want to run in Powershell on Windows to make sure we compile in a
     # native Windows environment. Some things won't compile properly under
@@ -73,17 +72,17 @@ runs:
     - name: Run tests (Windows)
       shell: powershell
       run: |
-        & ${{ steps.set-build-command.outputs.build-command }} test ${{ inputs.args }} --target ${{ inputs.target }}
+        & ${{ steps.set-build-command.outputs.build-command }} +${{inputs.toolchain}} test ${{ inputs.args }} --target ${{ inputs.target }}
       if: ${{ inputs.command != 'build' && runner.os == 'Windows' }}
     - name: Build binary (*nix)
       shell: bash
       run: |
-        ${{ steps.set-build-command.outputs.build-command }} build ${{ inputs.args }} --target ${{ inputs.target }}
+        ${{ steps.set-build-command.outputs.build-command }} +${{inputs.toolchain}} build ${{ inputs.args }} --target ${{ inputs.target }}
       if: ${{ inputs.command != 'test' && runner.os != 'Windows' }}
     - name: Build binary (Windows)
       shell: powershell
       run: |
-        & ${{ steps.set-build-command.outputs.build-command }} build ${{ inputs.args }} --target ${{ inputs.target }}
+        & ${{ steps.set-build-command.outputs.build-command }} +${{inputs.toolchain}} build ${{ inputs.args }} --target ${{ inputs.target }}
       if: ${{ inputs.command != 'test' && runner.os == 'Windows' }}
     - name: Strip binary
       shell: bash

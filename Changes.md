@@ -1,3 +1,10 @@
+## 0.0.7 - 2023-04-21
+
+- The toolchain argument was (probably) not being respected with cross builds,
+  though it's hard to be sure since none of the output from past CI runs I've
+  looked at it includes the toolchain version in the output. But now the
+  toolchain version is explicitly passed to all `cargo` and `cross` commands.
+
 ## 0.0.6 - 2023-04-21
 
 - When the `strip` parameter was true, stripping binaries could fail if there
