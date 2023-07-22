@@ -11,8 +11,8 @@ function install_tools () {
     curl --silent --location \
          https://raw.githubusercontent.com/houseabsolute/ubi/master/bootstrap/bootstrap-ubi.sh |
         sh
-    run "rustup component add clippy"
     run "ubi --project houseabsolute/precious --in ~/bin"
+    run "ubi --project houseabsolute/omegasort --in ~/bin"
     run "npm install prettier"
 }
 

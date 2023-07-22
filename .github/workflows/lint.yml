@@ -1,0 +1,25 @@
+name: Lint
+
+on: [push, pull_request]
+
+env:
+  GITHUB_TOKEN: ${{ github.token }}
+
+jobs:
+  lint:
+    name: Check that code is lint clean using precious
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Configure Git
+        run: |
+          git config --global user.email "jdoe@example.com"
+          git config --global user.name "J. Doe"
+      - name: Run install-dev-tools.sh
+        run: |
+          set -e
+          mkdir $HOME/bin
+          ./dev/bin/install-dev-tools.sh
+      - name: Run precious
+        run: |
+          PATH=$PATH:$HOME/bin precious lint -a
