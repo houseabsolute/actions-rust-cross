@@ -181,21 +181,21 @@ jobs:
           cp -a test-project/* .
           rm -fr test-project
       - name: Run both commands
-        uses: "houseabsolute/actions-rust-cross@v0"
+        uses: ./
         with:
           command: both
           target: ${{ matrix.platform.target }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ matrix.platform.can_test }}
       - name: Run test command
-        uses: "houseabsolute/actions-rust-cross@v0"
+        uses: ./
         with:
           command: test
           target: ${{ matrix.platform.target }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ matrix.platform.can_test }}
       - name: Run build command
-        uses: "houseabsolute/actions-rust-cross@v0"
+        uses: ./
         with:
           command: build
           target: ${{ matrix.platform.target }}
