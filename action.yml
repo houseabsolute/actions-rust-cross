@@ -39,7 +39,7 @@ runs:
       id: determine-cross-compile
       shell: bash
       run: set-cross-compile.sh ${{ inputs.target }}
-    - name: Install toolchain if not cross-compiling
+    - name: Install toolchain
       uses: dtolnay/rust-toolchain@master
       with:
         targets: ${{ inputs.target }}
