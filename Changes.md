@@ -1,3 +1,9 @@
+## 0.0.8
+
+- For builds that need the `cross` binary, this binary is now cached. A cache
+  hit saves about 20 seconds in my tests. Suggested by @timon-schelling. GH
+  #4.
+
 ## 0.0.7 - 2023-04-21
 
 - The toolchain argument was (probably) not being respected with cross builds,

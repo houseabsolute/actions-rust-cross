@@ -1,7 +1,9 @@
 set -e
 set -x
+set -o pipefail
 
-cd "$RUNNER_TEMP"
+CROSS_DIR="$1"
+cd "$CROSS_DIR"
 export TARGET=.
 curl --silent --location \
      https://raw.githubusercontent.com/houseabsolute/ubi/master/bootstrap/bootstrap-ubi.sh |
