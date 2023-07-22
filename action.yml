@@ -47,13 +47,7 @@ runs:
     - name: Install cross if cross-compiling (*nix)
       shell: bash
       run: install-cross-nix.sh
-      if: ${{ steps.determine-cross-compile.outputs.needs-cross == 'true' && runner.os != 'Windows' }}
-      env:
-        GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
-    - name: Install cross if cross-compiling (Windows)
-      shell: powershell
-      run: install-cross-windows.ps1
-      if: ${{ steps.determine-cross-compile.outputs.needs-cross == 'true' && runner.os == 'Windows' }}
+      if: ${{ steps.determine-cross-compile.outputs.needs-cross == 'true' }}
       env:
         GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
     - name: Set build command
