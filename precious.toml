@@ -2,9 +2,19 @@ exclude = [
   "target",
 ]
 
-[commands.prettier]
+[commands.prettier-md]
 type    = "both"
-include = [ "**/*.md", "**/*.yml" ]
+include = [ "**/*.md" ]
+cmd     = [ "./node_modules/.bin/prettier", "--no-config", "--print-width", "100", "--prose-wrap", "always" ]
+lint_flags = "--check"
+tidy_flags = "--write"
+ok_exit_codes = 0
+lint_failure_exit_codes = 1
+ignore_stderr = [ "Code style issues" ]
+
+[commands.prettier-yml]
+type    = "both"
+include = [ "**/*.yml" ]
 cmd     = [ "./node_modules/.bin/prettier", "--no-config" ]
 lint_flags = "--check"
 tidy_flags = "--write"
