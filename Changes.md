@@ -1,4 +1,4 @@
-## 0.0.8
+## 0.0.8 - 2023-07-22
 
 - For builds that need the `cross` binary, this binary is now cached. A cache hit saves about 20
   seconds in my tests. Suggested by @timon-schelling. GH #4.
