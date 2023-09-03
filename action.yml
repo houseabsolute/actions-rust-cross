@@ -6,6 +6,9 @@ branding:
 description: |
   Cross compile your Rust projects with cross (https://github.com/cross-rs/cross).
 inputs:
+  context:
+    description: The working directory for each step
+    default: "."
   command:
     description: |
       The commands to run (one of "build", "test", or "both").
@@ -76,6 +79,7 @@ runs:
       shell: bash
       run: set-build-command.sh ${{ steps.set-cross-dir.outputs.cross-dir }}
     - name: Run tests (*nix)
+      working-directory: ${{ inputs.context }}
       shell: bash
       run: |
         ${{ steps.set-build-command.outputs.build-command }} +${{inputs.toolchain}} test ${{ inputs.args }} --target ${{ inputs.target }}
@@ -85,21 +89,25 @@ runs:
     # msys, notably OpenSSL, which is compiled locally when using the
     # `openssl` crate with the `vendored` feature.
     - name: Run tests (Windows)
+      working-directory: ${{ inputs.context }}
       shell: powershell
       run: |
         & ${{ steps.set-build-command.outputs.build-command }} +${{inputs.toolchain}} test ${{ inputs.args }} --target ${{ inputs.target }}
       if: ${{ inputs.command != 'build' && runner.os == 'Windows' }}
     - name: Build binary (*nix)
+      working-directory: ${{ inputs.context }}
       shell: bash
       run: |
         ${{ steps.set-build-command.outputs.build-command }} +${{inputs.toolchain}} build ${{ inputs.args }} --target ${{ inputs.target }}
       if: ${{ inputs.command != 'test' && runner.os != 'Windows' }}
     - name: Build binary (Windows)
+      working-directory: ${{ inputs.context }}
       shell: powershell
       run: |
         & ${{ steps.set-build-command.outputs.build-command }} +${{inputs.toolchain}} build ${{ inputs.args }} --target ${{ inputs.target }}
       if: ${{ inputs.command != 'test' && runner.os == 'Windows' }}
     - name: Strip binary
+      working-directory: ${{ inputs.context }}
       shell: bash
       run: strip-binary.sh ${{ inputs.target }}
       # strip doesn't work with cross-arch binaries on Linux or Windows.
