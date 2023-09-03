@@ -14,161 +14,160 @@ jobs:
           - platform_name: FreeBSD-x86_64
             os: ubuntu-20.04
             target: x86_64-unknown-freebsd
-            expect_cross: true
-            expect_file: "x86-64.+FreeBSD"
-            expect_stripped: false
+            expect_file_re: "x86-64.+FreeBSD"
+            expect_cross: "--expect-cross"
+            expect_stripped: "--no-expect-stripped"
             can_test: false
 
           - platform_name: Linux-x86_64
             os: ubuntu-20.04
             target: x86_64-unknown-linux-musl
-            expect_cross: false
-            expect_file: "ELF.+x86-64"
-            expect_stripped: true
+            expect_file_re: "ELF.+x86-64"
+            expect_cross: "--no-expect-cross"
+            expect_stripped: "--expect-stripped"
             can_test: true
 
           - platform_name: Linux-aarch64
             os: ubuntu-20.04
             target: aarch64-unknown-linux-musl
-            expect_cross: true
-            expect_file: "aarch64"
-            expect_stripped: false
+            expect_file_re: "aarch64"
+            expect_cross: "--expect-cross"
+            expect_stripped: "--no-expect-stripped"
             can_test: true
 
           - platform_name: Linux-arm
             os: ubuntu-20.04
             target: arm-unknown-linux-musleabi
-            expect_cross: true
-            expect_file: "32.+ARM"
-            expect_stripped: false
+            expect_file_re: "32.+ARM"
+            expect_cross: "--expect-cross"
+            expect_stripped: "--no-expect-stripped"
             can_test: true
 
           - platform_name: Linux-i586
             os: ubuntu-20.04
             target: i586-unknown-linux-musl
-            expect_cross: false
-            expect_file: "ELF.+80386"
-            expect_stripped: true
+            expect_file_re: "ELF.+80386"
+            expect_cross: "--no-expect-cross"
+            expect_stripped: "--expect-stripped"
             can_test: true
 
           - platform_name: Linux-mips
             os: ubuntu-20.04
             target: mips-unknown-linux-musl
-            expect_cross: true
-            expect_file: "MIPS32.+mips-"
-            expect_stripped: false
+            expect_file_re: "MIPS32.+mips-"
+            expect_cross: "--expect-cross"
+            expect_stripped: "--no-expect-stripped"
             can_test: true
 
           - platform_name: Linux-mipsel
             os: ubuntu-20.04
             target: mipsel-unknown-linux-musl
-            expect_cross: true
-            expect_file: "MIPS32.+mipsel-"
-            expect_stripped: false
+            expect_file_re: "MIPS32.+mipsel-"
+            expect_cross: "--expect-cross"
+            expect_stripped: "--no-expect-stripped"
             can_test: true
 
           - platform_name: Linux-mips64
             os: ubuntu-20.04
             target: mips64-unknown-linux-muslabi64
-            expect_cross: true
-            expect_file: "MIPS64"
-            expect_stripped: false
+            expect_file_re: "MIPS64"
+            expect_cross: "--expect-cross"
+            expect_stripped: "--no-expect-stripped"
             can_test: true
 
           - platform_name: Linux-mips64el
             os: ubuntu-20.04
             target: mips64el-unknown-linux-muslabi64
-            expect_cross: true
-            expect_file: "MIPS64"
-            expect_stripped: false
+            expect_file_re: "MIPS64"
+            expect_cross: "--expect-cross"
+            expect_stripped: "--no-expect-stripped"
             can_test: true
 
           - platform_name: Linux-powerpc
             os: ubuntu-20.04
             target: powerpc-unknown-linux-gnu
-            expect_cross: true
-            expect_file: "32.+PowerPC"
-            expect_stripped: false
+            expect_file_re: "32.+PowerPC"
+            expect_cross: "--expect-cross"
+            expect_stripped: "--no-expect-stripped"
             can_test: true
 
           - platform_name: Linux-powerpc64
             os: ubuntu-20.04
             target: powerpc64-unknown-linux-gnu
-            expect_cross: true
-            expect_file: "64.+PowerPC"
-            expect_stripped: false
+            expect_file_re: "64.+PowerPC"
+            expect_cross: "--expect-cross"
+            expect_stripped: "--no-expect-stripped"
             can_test: true
 
           - platform_name: Linux-powerpc64le
             os: ubuntu-20.04
             target: powerpc64le-unknown-linux-gnu
-            expect_cross: true
-            expect_file: "64.+PowerPC"
-            expect_stripped: false
+            expect_file_re: "64.+PowerPC"
+            expect_cross: "--expect-cross"
+            expect_stripped: "--no-expect-stripped"
             can_test: true
 
           - platform_name: Linux-riscv64
             os: ubuntu-20.04
             target: riscv64gc-unknown-linux-gnu
-            expect_cross: true
-            expect_file: "64.+RISC-V"
-            expect_stripped: false
+            expect_file_re: "64.+RISC-V"
+            expect_cross: "--expect-cross"
+            expect_stripped: "--no-expect-stripped"
             can_test: true
 
           - platform_name: Linux-s390x
             os: ubuntu-20.04
             target: s390x-unknown-linux-gnu
-            expect_cross: true
-            expect_file: "64.+S/390"
-            expect_stripped: false
+            expect_file_re: "64.+S/390"
+            expect_cross: "--expect-cross"
+            expect_stripped: "--no-expect-stripped"
             can_test: true
 
           - platform_name: NetBSD-x86_64
             os: ubuntu-20.04
             target: x86_64-unknown-netbsd
-            expect_cross: true
-            expect_file: "x86-64.+NetBSD"
-            expect_stripped: false
+            expect_file_re: "x86-64.+NetBSD"
+            expect_cross: "--expect-cross"
+            expect_stripped: "--no-expect-stripped"
             can_test: false
 
           - platform_name: Windows-aarch64
             os: windows-latest
             target: aarch64-pc-windows-msvc
-            expect_cross: false
-            expect_file: "Aarch64.+Windows"
-            expect_stripped: false
+            expect_file_re: "Aarch64.+Windows"
+            expect_cross: "--no-expect-cross"
+            expect_stripped: "--no-expect-stripped"
             can_test: false
 
           - platform_name: Windows-i686
             os: windows-latest
             target: i686-pc-windows-msvc
-            expect_cross: false
-            expect_file: "80386.+Windows"
-            expect_stripped: true
+            expect_file_re: "80386.+Windows"
+            expect_cross: "--no-expect-cross"
+            expect_stripped: "--expect-stripped"
             can_test: true
 
           - platform_name: Windows-x86_64
             os: windows-latest
             target: x86_64-pc-windows-msvc
-            expect_cross: false
-            expect_file: "x86-64.+Windows"
-            expect_stripped: true
+            expect_file_re: "x86-64.+Windows"
+            expect_stripped: "--expect-stripped"
             can_test: true
 
           - platform_name: macOS-x86_64
             os: macOS-latest
             target: x86_64-apple-darwin
-            expect_cross: false
-            expect_file: "Mach-O.+x86_64"
-            expect_stripped: true
+            expect_file_re: "Mach-O.+x86_64"
+            expect_cross: "--no-expect-cross"
+            expect_stripped: "--expect-stripped"
             can_test: true
 
           - platform_name: macOS-aarch64
             os: macOS-latest
             target: aarch64-apple-darwin
-            expect_cross: false
-            expect_file: "Mach-O.+arm64"
-            expect_stripped: true
+            expect_file_re: "Mach-O.+arm64"
+            expect_cross: "--no-expect-cross"
+            expect_stripped: "--expect-stripped"
             can_test: false
 
     runs-on: ${{ matrix.platform.os }}
@@ -201,7 +200,19 @@ jobs:
           target: ${{ matrix.platform.target }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           strip: true
+      - name: Run build command for subdir
+        uses: ./
+        with:
+          command: build
+          working-directory: subcrate
+          target: ${{ matrix.platform.target }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          strip: true
       - name: Check binary and cross on ${{ matrix.platform.platform_name }}
         shell: bash
         run: |
-          tests/check-binary.sh "${{ matrix.platform.target }}" "${{ matrix.platform.expect_cross }}" "${{ matrix.platform.expect_file }}" "${{ matrix.platform.expect_stripped }}"
+          tests/check-binary.pl \
+              --target "${{ matrix.platform.target }}" \
+              --expect-file-re "${{ matrix.platform.expect_file_re }}" \
+              ${{ matrix.platform.expect_cross }} \
+              ${{ matrix.platform.expect_stripped }}

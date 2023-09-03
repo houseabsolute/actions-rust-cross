@@ -2,6 +2,17 @@ exclude = [
   "target",
 ]
 
+[commands.perltidy]
+type = "both"
+include = [ "**/*.{pl,pm,t,psgi}" ]
+exclude = "tests/lib/**"
+cmd = [ "perltidy", "--profile=$PRECIOUS_ROOT/perltidyrc" ]
+lint_flags = [ "--assert-tidy", "--no-standard-output", "--outfile=/dev/null" ]
+tidy_flags = [ "--backup-and-modify-in-place", "--backup-file-extension=/" ]
+ok_exit_codes = 0
+lint_failure_exit_codes = 2
+ignore_stderr = "Begin Error Output Stream"
+
 [commands.prettier-md]
 type    = "both"
 include = [ "**/*.md" ]

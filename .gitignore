@@ -3,4 +3,4 @@
 /package.json
 .\#*
 \#*\#
-test-project/target/**
+test-project/**/target/**

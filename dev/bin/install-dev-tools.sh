@@ -14,6 +14,9 @@ function install_tools () {
     run "ubi --project houseabsolute/precious --in ~/bin"
     run "ubi --project houseabsolute/omegasort --in ~/bin"
     run "npm install prettier"
+    run "curl -L https://cpanmin.us/ -o ~/bin/cpanm"
+    run "chmod 0755 ~/bin/cpanm"
+    run "~/bin/cpanm --sudo --notest Perl::Tidy"
 }
 
 if [ "$1" == "-v" ]; then

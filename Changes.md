@@ -1,3 +1,10 @@
+## 0.0.9 - 2023-09-10
+
+- Added a `working-directory` parameter. By default this is the current directory (`.`) but you can
+  set it to something else to compile a single crate or workspace in a subdirectory of the repo.
+  This allows you to use this action with monorepos with multiple crates. Based on GH #7 by
+  @aaronvg.
+
 ## 0.0.8 - 2023-07-22
 
 - For builds that need the `cross` binary, this binary is now cached. A cache hit saves about 20
