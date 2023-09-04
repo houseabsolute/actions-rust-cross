@@ -1,4 +1,4 @@
-name: "Build Rust Projects with Cross"
+name: "Build Rust Projects with Cross - Monorepo friendly"
 author: "Dave Rolsky <autarch@urth.org>"
 branding:
   icon: home
