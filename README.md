@@ -88,5 +88,5 @@ be stripped either.
 ## Caching Rust Compilation Output
 
 You can use the [Swatinem/rust-cache](https://github.com/Swatinem/rust-cache) action with this one
-seemlessly, whether or not a specific build target needs `cross. There is no special configuration
+seemlessly, whether or not a specific build target needs `cross`. There is no special configuration
 that you need for this. It just works.
