@@ -35,6 +35,16 @@ jobs:
             expect_stripped: "--no-expect-stripped"
             can_test: true
 
+          - platform_name: Linux-aarch64-with-cross-v0.2.3
+            os: ubuntu-20.04
+            target: aarch64-unknown-linux-musl
+            cross-version: "v0.2.3"
+            expect_file_re: "aarch64"
+            expect_cross: "--expect-cross"
+            expect_cross_version: "0.2.3"
+            expect_stripped: "--no-expect-stripped"
+            can_test: true
+
           - platform_name: Linux-arm
             os: ubuntu-20.04
             target: arm-unknown-linux-musleabi
@@ -183,6 +193,7 @@ jobs:
         uses: ./
         with:
           command: both
+          cross-version: ${{ matrix.platform.cross-version }}
           target: ${{ matrix.platform.target }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ matrix.platform.can_test }}
@@ -190,6 +201,7 @@ jobs:
         uses: ./
         with:
           command: test
+          cross-version: ${{ matrix.platform.cross-version }}
           target: ${{ matrix.platform.target }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ matrix.platform.can_test }}
@@ -197,6 +209,7 @@ jobs:
         uses: ./
         with:
           command: build
+          cross-version: ${{ matrix.platform.cross-version }}
           target: ${{ matrix.platform.target }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           strip: true
@@ -204,6 +217,7 @@ jobs:
         uses: ./
         with:
           command: build
+          cross-version: ${{ matrix.platform.cross-version }}
           working-directory: subcrate
           target: ${{ matrix.platform.target }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -214,5 +228,6 @@ jobs:
           tests/check-binary.pl \
               --target "${{ matrix.platform.target }}" \
               --expect-file-re "${{ matrix.platform.expect_file_re }}" \
+              --expect-cross-version "${{ matrix.platform.expect_cross_version }}" \
               ${{ matrix.platform.expect_cross }} \
               ${{ matrix.platform.expect_stripped }}

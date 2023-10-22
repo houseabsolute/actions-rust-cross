@@ -1,3 +1,8 @@
+## 0.0.10
+
+- Added a new `cross-version` parameter. This can be specified to make this action use a specific
+  version of `cross`. If this is not specified, the latest version will be used.
+
 ## 0.0.9 - 2023-09-10
 
 - Added a `working-directory` parameter. By default this is the current directory (`.`) but you can

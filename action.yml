@@ -32,6 +32,10 @@ inputs:
   strip:
     description: Strip the compiled binary
     default: false
+  cross-version:
+    description: |
+      The version of cross to use. If not specified, then the latest version
+      will be used.
 runs:
   using: composite
   steps:
@@ -47,10 +51,10 @@ runs:
       with:
         targets: ${{ inputs.target }}
         toolchain: ${{ inputs.toolchain }}
-    - name: Determine latest cross version
-      id: determine-latest-cross-version
+    - name: Determine cross version
+      id: determine-cross-version
       shell: bash
-      run: determine-latest-cross-version.sh
+      run: determine-cross-version.sh "${{ inputs.cross-version }}"
       env:
         GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
       if: ${{ steps.determine-cross-compile.outputs.needs-cross == 'true' }}
@@ -66,11 +70,11 @@ runs:
       uses: actions/cache@v3
       with:
         path: ${{ steps.set-cross-dir.outputs.cross-dir }}/cross
-        key: ${{ runner.os }}-${{ steps.determine-latest-cross-version.outputs.cross-version }}
+        key: ${{ runner.os }}-${{ steps.determine-cross-version.outputs.cross-version }}
       if: ${{ steps.determine-cross-compile.outputs.needs-cross == 'true' }}
     - name: Install cross if cross-compiling (*nix)
       shell: bash
-      run: install-cross-nix.sh ${{ steps.set-cross-dir.outputs.cross-dir }}
+      run: install-cross-nix.sh ${{ steps.set-cross-dir.outputs.cross-dir }} ${{ steps.determine-cross-version.outputs.cross-version }}
       if: ${{ steps.determine-cross-compile.outputs.needs-cross == 'true' && steps.cache-cross.outputs.cache-hit != 'true' }}
       env:
         GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}

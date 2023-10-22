@@ -19,17 +19,22 @@ use Test::More;
 sub main {
     my $target;
     my $expect_cross;
+    my $expect_cross_version;
     my $expect_file_re;
     my $expect_stripped;
 
     GetOptions(
-        'target=s'         => \$target,
-        'expect-file-re=s' => \$expect_file_re,
-        'expect-cross!'    => \$expect_cross,
-        'expect-stripped!' => \$expect_stripped,
+        'target=s'               => \$target,
+        'expect-file-re=s'       => \$expect_file_re,
+        'expect-cross!'          => \$expect_cross,
+        'expect-cross-version=s' => \$expect_cross_version,
+        'expect-stripped!'       => \$expect_stripped,
     );
 
-    check_cross( path( $ENV{RUNNER_TEMP} ), $expect_cross );
+    check_cross(
+        path( $ENV{RUNNER_TEMP} ), $expect_cross,
+        $expect_cross_version
+    );
 
     for my $bin (
         path( qw( . target ),          $target, qw( debug test-project ) ),
@@ -41,10 +46,17 @@ sub main {
     done_testing();
 }
 
-sub check_cross ( $bin_dir, $expect_cross ) {
+sub check_cross ( $bin_dir, $expect_cross, $expect_cross_version ) {
     my $cross = $bin_dir->child('cross');
     if ($expect_cross) {
         ok( $cross->is_file && -x $cross, 'found `cross` in $PATH' );
+        if ($expect_cross_version) {
+            my $version = capturex( $cross, '--version' );
+            like(
+                $version, qr/\Q$expect_cross_version/,
+                'cross version matches expected version'
+            );
+        }
     }
     else {
         ok( !$cross->exists, 'did not find `cross` in $PATH' );

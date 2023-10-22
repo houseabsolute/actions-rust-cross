@@ -55,15 +55,16 @@ jobs:
 
 This action takes the following parameters:
 
-| Key                 | Type                                           | Required? | Description                                                                                                                               |
-| ------------------- | ---------------------------------------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `command`           | string (one of `build`, `test`, or `both`)     | no        | The command(s) to run. The default is `build`. Running the `test` command will fail with \*BSD targets, non-x86 Windows, and macOS ARM.   |
-| `target`            | string                                         | yes       | The target triple to compile for. This should be one of the targets listed by running `rustup target list`.                               |
-| `working-directory` | string                                         | no        | The working directory in which to run the `cargo` or `cross` commands. Defaults to the current directory (`.`).                           |
-| `toolchain`         | string (one of `stable`, `beta`, or `nightly`) | no        | The Rust toolchain version to install. The default is `stable`.                                                                           |
-| `GITHUB_TOKEN`      | string                                         | no        | Defaults to the value of `${{ github.token }}`.                                                                                           |
-| `args`              | string                                         | no        | A string-separated list of arguments to be passed to `cross build`, like `--release --locked`.                                            |
-| `strip`             | boolean (`true` or `false`)                    | no        | If this is true, then the resulting binary will be stripped if possible. This is only possible for binaries which weren't cross-compiled. |
+| Key                 | Type                                           | Required? | Description                                                                                                                                                                       |
+| ------------------- | ---------------------------------------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `command`           | string (one of `build`, `test`, or `both`)     | no        | The command(s) to run. The default is `build`. Running the `test` command will fail with \*BSD targets, non-x86 Windows, and macOS ARM.                                           |
+| `target`            | string                                         | yes       | The target triple to compile for. This should be one of the targets listed by running `rustup target list`.                                                                       |
+| `working-directory` | string                                         | no        | The working directory in which to run the `cargo` or `cross` commands. Defaults to the current directory (`.`).                                                                   |
+| `toolchain`         | string (one of `stable`, `beta`, or `nightly`) | no        | The Rust toolchain version to install. The default is `stable`.                                                                                                                   |
+| `GITHUB_TOKEN`      | string                                         | no        | Defaults to the value of `${{ github.token }}`.                                                                                                                                   |
+| `args`              | string                                         | no        | A string-separated list of arguments to be passed to `cross build`, like `--release --locked`.                                                                                    |
+| `strip`             | boolean (`true` or `false`)                    | no        | If this is true, then the resulting binary will be stripped if possible. This is only possible for binaries which weren't cross-compiled.                                         |
+| `cross-version`     | string                                         | no        | This can be used to set the version of `cross` to use. If specified, it should be a specific `cross` release tag. If this is not set then the latest version will always be used. |
 
 ## How it Works
 
