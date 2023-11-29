@@ -57,7 +57,7 @@ This action takes the following parameters:
 
 | Key                 | Type                                           | Required? | Description                                                                                                                               |
 | ------------------- | ---------------------------------------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `command`           | string (one of `build`, `test`, or `both`)     | no        | The command(s) to run. The default is `build`. Running the `test` command will fails with \*BSD targets, non-x86 Windows, and macOS ARM.  |
+| `command`           | string (one of `build`, `test`, or `both`)     | no        | The command(s) to run. The default is `build`. Running the `test` command will fail with \*BSD targets, non-x86 Windows, and macOS ARM.   |
 | `target`            | string                                         | yes       | The target triple to compile for. This should be one of the targets listed by running `rustup target list`.                               |
 | `working-directory` | string                                         | no        | The working directory in which to run the `cargo` or `cross` commands. Defaults to the current directory (`.`).                           |
 | `toolchain`         | string (one of `stable`, `beta`, or `nightly`) | no        | The Rust toolchain version to install. The default is `stable`.                                                                           |
