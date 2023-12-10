@@ -1,4 +1,4 @@
-## 0.0.10
+## 0.0.10 - 2023-12-10
 
 - Fixed handling of crates with multiple binaries. Attempting to strip binaries for such a crate
   caused the build to fail. Reported by Tomaž Hribernik. GH #8
