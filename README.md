@@ -63,12 +63,12 @@ This action takes the following parameters:
 | `toolchain`         | string (one of `stable`, `beta`, or `nightly`) | no        | The Rust toolchain version to install. The default is `stable`.                                                                                                                   |
 | `GITHUB_TOKEN`      | string                                         | no        | Defaults to the value of `${{ github.token }}`.                                                                                                                                   |
 | `args`              | string                                         | no        | A string-separated list of arguments to be passed to `cross build`, like `--release --locked`.                                                                                    |
-| `strip`             | boolean (`true` or `false`)                    | no        | If this is true, then the resulting binary will be stripped if possible. This is only possible for binaries which weren't cross-compiled.                                         |
+| `strip`             | boolean (`true` or `false`)                    | no        | If this is true, then the resulting binaries will be stripped if possible. This is only possible for binaries which weren't cross-compiled.                                       |
 | `cross-version`     | string                                         | no        | This can be used to set the version of `cross` to use. If specified, it should be a specific `cross` release tag. If this is not set then the latest version will always be used. |
 
 ## How it Works
 
-Under the hood, this action will compile your binary with either `cargo` or `cross`, depending on
+Under the hood, this action will compile your binaries with either `cargo` or `cross`, depending on
 the host machine and target. For Linux builds, it will always use `cross` except for builds
 targeting an x86 architecture like `x86_64` or `i686`.
 
@@ -82,7 +82,7 @@ build `cross`.
 When compiling on Windows, it will do so in a Powershell environment, which can matter in some
 corner cases, like compiling the `openssl` crate with the `vendored` feature.
 
-Finally, it will run `strip` to strip the binary if the `strip` parameter is true. This is only
+Finally, it will run `strip` to strip the binaries if the `strip` parameter is true. This is only
 possible for builds that are not done via `cross`. In addition, Windows builds for `aarch64` cannot
 be stripped either.
 
