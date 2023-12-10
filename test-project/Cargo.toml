@@ -3,4 +3,14 @@ name = "test-project"
 version = "0.1.0"
 edition = "2021"
 
-[dependencies]
+# For testing it would be nice to create a binary with spaces in the name, but
+# right now the `name` value must be a valid crate name, and there's no
+# separate setting for the compiled executable's name. See
+# https://github.com/rust-lang/cargo/issues/9778.
+[[bin]]
+name = "bin1"
+path = "src/bin1.rs"
+
+[[bin]]
+name = "bin2"
+path = "src/bin2.rs"

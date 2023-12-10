@@ -37,7 +37,8 @@ sub main {
     );
 
     for my $bin (
-        path( qw( . target ),          $target, qw( debug test-project ) ),
+        path( qw( . target ),          $target, qw( debug bin1 ) ),
+        path( qw( . target ),          $target, qw( debug bin2 ) ),
         path( qw( . subcrate target ), $target, qw( debug subcrate ) )
     ) {
         check_binary( $bin, $expect_file_re, $expect_stripped );

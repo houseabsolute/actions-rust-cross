@@ -2,20 +2,29 @@ set -e
 set -x
 
 TARGET=$1
-stripped=""
+did_strip=""
 
 strip_binary () {
     if [[ $( uname -s ) =~ "Darwin" ]]; then
-        EXE=$( find "$1" -maxdepth 1 -type f -perm +111 )
+        stripped=$(
+            find "$1" -maxdepth 1 -type f -perm +111 | while read exe; do
+                strip "$exe"
+                echo "stripped $exe"
+            done
+        )
     else
-        EXE=$( find "$1" -maxdepth 1 -type f -executable )
+        stripped=$(
+            find "$1" -maxdepth 1 -type f -executable | while read exe; do
+                strip "$exe"
+                echo "stripped $exe"
+            done
+        )
     fi
 
-    if [ -z "$EXE" ]; then
-        echo "Could not find a binary to strip in $1"
+    if [ -z "$stripped" ]; then
+        echo "Could not find any binaries to strip in $1"
     else
-        strip "$EXE"
-        stripped="$EXE"
+        did_strip="true"
     fi
 }
 
@@ -27,7 +36,7 @@ for type in debug release; do
     fi
 done
 
-if [ -z "$stripped" ]; then
+if [ -z "$did_strip" ]; then
     echo "No binaries were stripped"
     exit 1
 fi

@@ -1,5 +1,7 @@
 ## 0.0.10
 
+- Fixed handling of crates with multiple binaries. Attempting to strip binaries for such a crate
+  caused the build to fail. Reported by Tomaž Hribernik. GH #8
 - Added a new `cross-version` parameter. This can be specified to make this action use a specific
   version of `cross`. If this is not specified, the latest version will be used.
 
