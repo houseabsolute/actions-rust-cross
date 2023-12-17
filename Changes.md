@@ -1,3 +1,7 @@
+- Use `cross` when compiling for 32-bit Linux targets. While in theory this should work without
+  `cross`, compiling `openssl` with the `vendored` feature fails when we run
+  `cargo build --target i686-unknown-linux-musl`.
+
 ## 0.0.10 - 2023-12-10
 
 - Fixed handling of crates with multiple binaries. Attempting to strip binaries for such a crate

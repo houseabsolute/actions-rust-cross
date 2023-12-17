@@ -57,8 +57,16 @@ jobs:
             os: ubuntu-20.04
             target: i586-unknown-linux-musl
             expect_file_re: "ELF.+80386"
-            expect_cross: "--no-expect-cross"
-            expect_stripped: "--expect-stripped"
+            expect_cross: "--expect-cross"
+            expect_stripped: "--no-expect-stripped"
+            can_test: true
+
+          - platform_name: Linux-i686
+            os: ubuntu-20.04
+            target: i686-unknown-linux-musl
+            expect_file_re: "ELF.+80386"
+            expect_cross: "--expect-cross"
+            expect_stripped: "--no-expect-stripped"
             can_test: true
 
           - platform_name: Linux-mips
