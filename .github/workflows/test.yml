@@ -69,38 +69,6 @@ jobs:
             expect_stripped: "--no-expect-stripped"
             can_test: true
 
-          - platform_name: Linux-mips
-            os: ubuntu-20.04
-            target: mips-unknown-linux-musl
-            expect_file_re: "MIPS32.+mips-"
-            expect_cross: "--expect-cross"
-            expect_stripped: "--no-expect-stripped"
-            can_test: true
-
-          - platform_name: Linux-mipsel
-            os: ubuntu-20.04
-            target: mipsel-unknown-linux-musl
-            expect_file_re: "MIPS32.+mipsel-"
-            expect_cross: "--expect-cross"
-            expect_stripped: "--no-expect-stripped"
-            can_test: true
-
-          - platform_name: Linux-mips64
-            os: ubuntu-20.04
-            target: mips64-unknown-linux-muslabi64
-            expect_file_re: "MIPS64"
-            expect_cross: "--expect-cross"
-            expect_stripped: "--no-expect-stripped"
-            can_test: true
-
-          - platform_name: Linux-mips64el
-            os: ubuntu-20.04
-            target: mips64el-unknown-linux-muslabi64
-            expect_file_re: "MIPS64"
-            expect_cross: "--expect-cross"
-            expect_stripped: "--no-expect-stripped"
-            can_test: true
-
           - platform_name: Linux-powerpc
             os: ubuntu-20.04
             target: powerpc-unknown-linux-gnu
