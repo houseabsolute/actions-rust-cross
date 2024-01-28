@@ -86,7 +86,7 @@ runs:
       working-directory: ${{ inputs.working-directory }}
       shell: bash
       run: |
-        ${{ steps.set-build-command.outputs.build-command }} +${{inputs.toolchain}} test --target ${{ inputs.target }} ${{ inputs.args }} 
+        ${{ steps.set-build-command.outputs.build-command }} +${{inputs.toolchain}} test --target ${{ inputs.target }} ${{ inputs.args }}
       if: ${{ inputs.command != 'build' && runner.os != 'Windows' }}
     # We want to run in Powershell on Windows to make sure we compile in a
     # native Windows environment. Some things won't compile properly under
