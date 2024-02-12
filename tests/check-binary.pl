@@ -32,7 +32,8 @@ sub main {
     );
 
     check_cross(
-        path( $ENV{RUNNER_TEMP} ), $expect_cross,
+        path( $ENV{RUNNER_TEMP} ),
+        $expect_cross,
         $expect_cross_version
     );
 
