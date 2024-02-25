@@ -1,7 +1,7 @@
 ## 0.0.12 - 2024-02-25
 
 - Bumped the version of `actions/cache` used in this action to v4. The v3 version uses Node 16,
-  which causes warnings when run.
+  which causes warnings when run. Implemented by @hms5232. GH #13.
 
 ## 0.0.11 - 2023-12-17
 
