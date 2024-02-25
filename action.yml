@@ -67,7 +67,7 @@ runs:
       if: ${{ steps.determine-cross-compile.outputs.needs-cross == 'true' }}
     - name: Cache cross
       id: cache-cross
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ${{ steps.set-cross-dir.outputs.cross-dir }}/cross
         key: ${{ runner.os }}-${{ steps.determine-cross-version.outputs.cross-version }}
