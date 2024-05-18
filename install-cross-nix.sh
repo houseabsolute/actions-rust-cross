@@ -9,7 +9,7 @@ VERSION="$2"
 
 cd "$CROSS_DIR"
 
-if [[ -n $VERSION ]] && ! [[ $VERSION =~ ^v ]]; then
+if [[ -n $VERSION ]] && ! [[ $VERSION =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
     cargo install cross --git https://github.com/cross-rs/cross --rev "$VERSION"
     mv "$HOME/.cargo/bin/cross" .
     CROSS_NO_WARNINGS=0 ./cross --version
