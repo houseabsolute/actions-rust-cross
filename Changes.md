@@ -1,4 +1,4 @@
-## 0.0.13
+## 0.0.13 - 2024-05-18
 
 - It's now possible to set `cross-version` to a git ref like a commit hash or `HEAD`. This will
   install `cross` from its git repo.
