@@ -58,7 +58,7 @@ runs:
       env:
         GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
       if: ${{ steps.determine-cross-compile.outputs.needs-cross == 'true' }}
-    # We need to accesss this in both this YAML config and shell scripts. It
+    # We need to access this in both this YAML config and shell scripts. It
     # doesn't seem like using ${{ env.RUNNER_TEMP }} works in the YAML config.
     - name: Set directory for installing cross
       id: set-cross-dir

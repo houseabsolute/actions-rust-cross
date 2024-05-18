@@ -1,6 +1,17 @@
 exclude = [
   "target",
+  "tests/lib/**/*",
 ]
+
+[commands.typos]
+type = "both"
+include = "**/*"
+exclude = "**/*.tar.gz"
+invoke = "once"
+cmd = "typos"
+tidy_flags = "--write-changes"
+ok-exit-codes = 0
+lint-failure-exit-codes = 2
 
 [commands.perltidy]
 type = "both"
