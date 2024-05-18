@@ -45,6 +45,16 @@ jobs:
             expect_stripped: "--no-expect-stripped"
             can_test: true
 
+          - platform_name: Linux-aarch64-with-cross-19be834
+            os: ubuntu-20.04
+            target: aarch64-unknown-linux-musl
+            cross-version: "19be834"
+            expect_file_re: "aarch64"
+            expect_cross: "--expect-cross"
+            expect_cross_version: "19be834"
+            expect_stripped: "--no-expect-stripped"
+            can_test: true
+
           - platform_name: Linux-arm
             os: ubuntu-20.04
             target: arm-unknown-linux-musleabi
