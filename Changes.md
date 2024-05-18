@@ -1,3 +1,8 @@
+## 0.0.13
+
+- It's now possible to set `cross-version` to a git ref like a commit hash or `HEAD`. This will
+  install `cross` from its git repo.
+
 ## 0.0.12 - 2024-02-25
 
 - Bumped the version of `actions/cache` used in this action to v4. The v3 version uses Node 16,
