@@ -14,6 +14,7 @@ jobs:
           - platform_name: FreeBSD-x86_64
             os: ubuntu-20.04
             target: x86_64-unknown-freebsd
+            cache-cross-binary: true
             expect_file_re: "x86-64.+FreeBSD"
             expect_cross: "--expect-cross"
             expect_stripped: "--no-expect-stripped"
@@ -22,6 +23,7 @@ jobs:
           - platform_name: Linux-x86_64
             os: ubuntu-20.04
             target: x86_64-unknown-linux-musl
+            cache-cross-binary: true
             expect_file_re: "ELF.+x86-64"
             expect_cross: "--no-expect-cross"
             expect_stripped: "--expect-stripped"
@@ -30,25 +32,59 @@ jobs:
           - platform_name: Linux-aarch64
             os: ubuntu-20.04
             target: aarch64-unknown-linux-musl
+            cache-cross-binary: true
             expect_file_re: "aarch64"
             expect_cross: "--expect-cross"
             expect_stripped: "--no-expect-stripped"
             can_test: true
 
-          - platform_name: Linux-aarch64-with-cross-v0.2.3
+          - platform_name: Linux-aarch64 (no cache)
+            os: ubuntu-20.04
+            target: aarch64-unknown-linux-musl
+            cache-cross-binary: false
+            expect_file_re: "aarch64"
+            expect_cross: "--expect-cross"
+            expect_stripped: "--no-expect-stripped"
+            can_test: true
+
+          - platform_name: Linux-aarch64 with cross v0.2.3
             os: ubuntu-20.04
             target: aarch64-unknown-linux-musl
             cross-version: "v0.2.3"
+            cache-cross-binary: true
             expect_file_re: "aarch64"
             expect_cross: "--expect-cross"
             expect_cross_version: "0.2.3"
             expect_stripped: "--no-expect-stripped"
             can_test: true
 
-          - platform_name: Linux-aarch64-with-cross-19be834
+          - platform_name: Linux-aarch64 with cross v0.2.3 (no cache)
+            os: ubuntu-20.04
+            target: aarch64-unknown-linux-musl
+            cross-version: "v0.2.3"
+            cache-cross-binary: false
+            expect_file_re: "aarch64"
+            expect_cross: "--expect-cross"
+            expect_cross_version: "0.2.3"
+            expect_stripped: "--no-expect-stripped"
+            can_test: true
+
+          - platform_name: Linux-aarch64 with cross 19be834
             os: ubuntu-20.04
             target: aarch64-unknown-linux-musl
             cross-version: "19be834"
+            cache-cross-binary: true
+            expect_file_re: "aarch64"
+            expect_cross: "--expect-cross"
+            expect_cross_version: "19be834"
+            expect_stripped: "--no-expect-stripped"
+            can_test: true
+
+          - platform_name: Linux-aarch64 with cross 19be834
+            os: ubuntu-20.04
+            target: aarch64-unknown-linux-musl
+            cross-version: "19be834"
+            cache-cross-binary: false
             expect_file_re: "aarch64"
             expect_cross: "--expect-cross"
             expect_cross_version: "19be834"
@@ -58,6 +94,7 @@ jobs:
           - platform_name: Linux-arm
             os: ubuntu-20.04
             target: arm-unknown-linux-musleabi
+            cache-cross-binary: true
             expect_file_re: "32.+ARM"
             expect_cross: "--expect-cross"
             expect_stripped: "--no-expect-stripped"
@@ -66,6 +103,7 @@ jobs:
           - platform_name: Linux-i586
             os: ubuntu-20.04
             target: i586-unknown-linux-musl
+            cache-cross-binary: true
             expect_file_re: "ELF.+80386"
             expect_cross: "--expect-cross"
             expect_stripped: "--no-expect-stripped"
@@ -74,6 +112,7 @@ jobs:
           - platform_name: Linux-i686
             os: ubuntu-20.04
             target: i686-unknown-linux-musl
+            cache-cross-binary: true
             expect_file_re: "ELF.+80386"
             expect_cross: "--expect-cross"
             expect_stripped: "--no-expect-stripped"
@@ -82,6 +121,7 @@ jobs:
           - platform_name: Linux-powerpc
             os: ubuntu-20.04
             target: powerpc-unknown-linux-gnu
+            cache-cross-binary: true
             expect_file_re: "32.+PowerPC"
             expect_cross: "--expect-cross"
             expect_stripped: "--no-expect-stripped"
@@ -90,6 +130,7 @@ jobs:
           - platform_name: Linux-powerpc64
             os: ubuntu-20.04
             target: powerpc64-unknown-linux-gnu
+            cache-cross-binary: true
             expect_file_re: "64.+PowerPC"
             expect_cross: "--expect-cross"
             expect_stripped: "--no-expect-stripped"
@@ -98,6 +139,7 @@ jobs:
           - platform_name: Linux-powerpc64le
             os: ubuntu-20.04
             target: powerpc64le-unknown-linux-gnu
+            cache-cross-binary: true
             expect_file_re: "64.+PowerPC"
             expect_cross: "--expect-cross"
             expect_stripped: "--no-expect-stripped"
@@ -106,6 +148,7 @@ jobs:
           - platform_name: Linux-riscv64
             os: ubuntu-20.04
             target: riscv64gc-unknown-linux-gnu
+            cache-cross-binary: true
             expect_file_re: "64.+RISC-V"
             expect_cross: "--expect-cross"
             expect_stripped: "--no-expect-stripped"
@@ -114,6 +157,7 @@ jobs:
           - platform_name: Linux-s390x
             os: ubuntu-20.04
             target: s390x-unknown-linux-gnu
+            cache-cross-binary: true
             expect_file_re: "64.+S/390"
             expect_cross: "--expect-cross"
             expect_stripped: "--no-expect-stripped"
@@ -122,6 +166,7 @@ jobs:
           - platform_name: NetBSD-x86_64
             os: ubuntu-20.04
             target: x86_64-unknown-netbsd
+            cache-cross-binary: true
             expect_file_re: "x86-64.+NetBSD"
             expect_cross: "--expect-cross"
             expect_stripped: "--no-expect-stripped"
@@ -130,6 +175,7 @@ jobs:
           - platform_name: Windows-aarch64
             os: windows-latest
             target: aarch64-pc-windows-msvc
+            cache-cross-binary: true
             expect_file_re: "Aarch64.+Windows"
             expect_cross: "--no-expect-cross"
             expect_stripped: "--no-expect-stripped"
@@ -138,6 +184,7 @@ jobs:
           - platform_name: Windows-i686
             os: windows-latest
             target: i686-pc-windows-msvc
+            cache-cross-binary: true
             expect_file_re: "80386.+Windows"
             expect_cross: "--no-expect-cross"
             expect_stripped: "--expect-stripped"
@@ -146,6 +193,7 @@ jobs:
           - platform_name: Windows-x86_64
             os: windows-latest
             target: x86_64-pc-windows-msvc
+            cache-cross-binary: true
             expect_file_re: "x86-64.+Windows"
             expect_stripped: "--expect-stripped"
             can_test: true
@@ -153,6 +201,7 @@ jobs:
           - platform_name: macOS-x86_64
             os: macOS-latest
             target: x86_64-apple-darwin
+            cache-cross-binary: true
             expect_file_re: "Mach-O.+x86_64"
             expect_cross: "--no-expect-cross"
             expect_stripped: "--expect-stripped"
@@ -161,6 +210,7 @@ jobs:
           - platform_name: macOS-aarch64
             os: macOS-latest
             target: aarch64-apple-darwin
+            cache-cross-binary: true
             expect_file_re: "Mach-O.+arm64"
             expect_cross: "--no-expect-cross"
             expect_stripped: "--expect-stripped"
@@ -180,6 +230,7 @@ jobs:
         with:
           command: both
           cross-version: ${{ matrix.platform.cross-version }}
+          cache-cross-binary: ${{ matrix.platform.cache-cross-binary }}
           target: ${{ matrix.platform.target }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ matrix.platform.can_test }}
@@ -188,6 +239,7 @@ jobs:
         with:
           command: test
           cross-version: ${{ matrix.platform.cross-version }}
+          cache-cross-binary: ${{ matrix.platform.cache-cross-binary }}
           target: ${{ matrix.platform.target }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ matrix.platform.can_test }}
@@ -196,6 +248,7 @@ jobs:
         with:
           command: build
           cross-version: ${{ matrix.platform.cross-version }}
+          cache-cross-binary: ${{ matrix.platform.cache-cross-binary }}
           target: ${{ matrix.platform.target }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           strip: true
@@ -204,6 +257,7 @@ jobs:
         with:
           command: build
           cross-version: ${{ matrix.platform.cross-version }}
+          cache-cross-binary: ${{ matrix.platform.cache-cross-binary }}
           working-directory: subcrate
           target: ${{ matrix.platform.target }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

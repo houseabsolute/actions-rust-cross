@@ -36,6 +36,11 @@ inputs:
     description: |
       The version of cross to use. If not specified, then the latest version
       will be used.
+  cache-cross-binary:
+    description: |
+      Cache the cross binary if one is installed. This is primarily for use in
+      tests of this action.
+    default: true
 runs:
   using: composite
   steps:
@@ -71,7 +76,7 @@ runs:
       with:
         path: ${{ steps.set-cross-dir.outputs.cross-dir }}/cross
         key: ${{ runner.os }}-${{ steps.determine-cross-version.outputs.cross-version }}
-      if: ${{ steps.determine-cross-compile.outputs.needs-cross == 'true' }}
+      if: ${{ steps.determine-cross-compile.outputs.needs-cross == 'true' && inputs.cache-cross-binary == 'true' }}
     - name: Install cross if cross-compiling (*nix)
       shell: bash
       run: install-cross-nix.sh ${{ steps.set-cross-dir.outputs.cross-dir }} ${{ steps.determine-cross-version.outputs.cross-version }}
