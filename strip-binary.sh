@@ -1,20 +1,23 @@
+#!/bin/bash
+
 set -e
 set -x
+set -o pipefail
 
 TARGET=$1
 did_strip=""
 
-strip_binary () {
-    if [[ $( uname -s ) =~ "Darwin" ]]; then
+strip_binary() {
+    if [[ $(uname -s) =~ "Darwin" ]]; then
         stripped=$(
-            find "$1" -maxdepth 1 -type f -perm +111 | while read exe; do
+            find "$1" -maxdepth 1 -type f -perm +111 | while read -r exe; do
                 strip "$exe"
                 echo "stripped $exe"
             done
         )
     else
         stripped=$(
-            find "$1" -maxdepth 1 -type f -executable | while read exe; do
+            find "$1" -maxdepth 1 -type f -executable | while read -r exe; do
                 strip "$exe"
                 echo "stripped $exe"
             done

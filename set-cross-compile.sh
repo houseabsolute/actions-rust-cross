@@ -1,12 +1,15 @@
+#!/bin/bash
+
 set -e
 set -x
+set -o pipefail
 
 TARGET="$1"
 
 # On macOS and Windows, we can cross-compile to all possible targets without
 # using cross.
 if uname -a | grep --quiet --extended-regexp -i "darwin|msys|windows"; then
-    echo "needs-cross=false" >> $GITHUB_OUTPUT
+    echo "needs-cross=false" >>"$GITHUB_OUTPUT"
     exit 0
 fi
 
@@ -15,8 +18,8 @@ fi
 # feature. This feature makes it compile openssl itself, which fails without
 # cross.
 if echo "$TARGET" | grep --quiet --extended-regexp -i 'x86_64.+linux-(gnu|musl)'; then
-    echo "needs-cross=false" >> $GITHUB_OUTPUT
+    echo "needs-cross=false" >>"$GITHUB_OUTPUT"
     exit 0
 fi
 
-echo "needs-cross=true" >> $GITHUB_OUTPUT
+echo "needs-cross=true" >>"$GITHUB_OUTPUT"
