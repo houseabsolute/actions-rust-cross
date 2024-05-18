@@ -12,6 +12,7 @@ cd "$CROSS_DIR"
 if [[ -n $VERSION ]] && ! [[ $VERSION =~ ^v ]]; then
     cargo install cross --git https://github.com/cross-rs/cross --rev "$VERSION"
     mv "$HOME/.cargo/bin/cross" .
+    CROSS_NO_WARNINGS=0 ./cross --version
     exit 0
 fi
 
@@ -26,3 +27,4 @@ curl --silent --location \
     sh
 # shellcheck disable=SC2086
 ./ubi --project cross-rs/cross --matching musl --in . $VERSION_ARGS
+CROSS_NO_WARNINGS=0 ./cross --version
