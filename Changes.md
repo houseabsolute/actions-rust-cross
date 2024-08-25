@@ -1,3 +1,9 @@
+## 0.0.14 - 2024-08-25
+
+- When the given `target` includes the string `musl`, this action will install the `musl-tools`
+  package. This allows crates with C or C++ code to compile properly. Fixes #20. Reported by Matteo
+  Pietro Dazzi (@ilteoood).
+
 ## 0.0.13 - 2024-05-18
 
 - It's now possible to set `cross-version` to a git ref like a commit hash or `HEAD`. This will
