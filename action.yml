@@ -86,7 +86,7 @@ runs:
     - name: Install musl-tools on Linux if target includes "musl"
       shell: bash
       run: sudo apt-get update --yes && sudo apt-get install --yes musl-tools
-      if: contains(inputs.target, 'musl')
+      if: steps.determine-cross-compile.outputs.needs-cross != 'true' && contains(inputs.target, 'musl')
     - name: Set build command
       id: set-build-command
       shell: bash

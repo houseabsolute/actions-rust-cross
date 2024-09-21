@@ -1,3 +1,7 @@
+## 0.0.15 - 2024-09-21
+
+- The `musl` packages are only installed when not cross-compiling.
+
 ## 0.0.14 - 2024-08-25
 
 - When the given `target` includes the string `musl`, this action will install the `musl-tools`
