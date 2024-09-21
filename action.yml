@@ -62,25 +62,25 @@ runs:
       run: determine-cross-version.sh "${{ inputs.cross-version }}"
       env:
         GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
-      if: ${{ steps.determine-cross-compile.outputs.needs-cross == 'true' }}
+      if: steps.determine-cross-compile.outputs.needs-cross == 'true'
     # We need to access this in both this YAML config and shell scripts. It
     # doesn't seem like using ${{ env.RUNNER_TEMP }} works in the YAML config.
     - name: Set directory for installing cross
       id: set-cross-dir
       shell: bash
       run: set-cross-dir.sh
-      if: ${{ steps.determine-cross-compile.outputs.needs-cross == 'true' }}
+      if: steps.determine-cross-compile.outputs.needs-cross == 'true'
     - name: Cache cross
       id: cache-cross
       uses: actions/cache@v4
       with:
         path: ${{ steps.set-cross-dir.outputs.cross-dir }}/cross
         key: ${{ runner.os }}-${{ steps.determine-cross-version.outputs.cross-version }}
-      if: ${{ steps.determine-cross-compile.outputs.needs-cross == 'true' && inputs.cache-cross-binary == 'true' }}
+      if: steps.determine-cross-compile.outputs.needs-cross == 'true' && inputs.cache-cross-binary == 'true'
     - name: Install cross if cross-compiling (*nix)
       shell: bash
       run: install-cross-nix.sh ${{ steps.set-cross-dir.outputs.cross-dir }} ${{ steps.determine-cross-version.outputs.cross-version }}
-      if: ${{ steps.determine-cross-compile.outputs.needs-cross == 'true' && steps.cache-cross.outputs.cache-hit != 'true' }}
+      if: steps.determine-cross-compile.outputs.needs-cross == 'true' && steps.cache-cross.outputs.cache-hit != 'true'
       env:
         GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
     - name: Install musl-tools on Linux if target includes "musl"
@@ -96,7 +96,7 @@ runs:
       shell: bash
       run: |
         ${{ steps.set-build-command.outputs.build-command }} +${{inputs.toolchain}} test ${{ inputs.args }} --target ${{ inputs.target }}
-      if: ${{ inputs.command != 'build' && runner.os != 'Windows' }}
+      if: inputs.command != 'build' && runner.os != 'Windows'
     # We want to run in Powershell on Windows to make sure we compile in a
     # native Windows environment. Some things won't compile properly under
     # msys, notably OpenSSL, which is compiled locally when using the
@@ -106,22 +106,22 @@ runs:
       shell: powershell
       run: |
         & ${{ steps.set-build-command.outputs.build-command }} +${{inputs.toolchain}} test ${{ inputs.args }} --target ${{ inputs.target }}
-      if: ${{ inputs.command != 'build' && runner.os == 'Windows' }}
+      if: inputs.command != 'build' && runner.os == 'Windows'
     - name: Build binary (*nix)
       working-directory: ${{ inputs.working-directory }}
       shell: bash
       run: |
         ${{ steps.set-build-command.outputs.build-command }} +${{inputs.toolchain}} build ${{ inputs.args }} --target ${{ inputs.target }}
-      if: ${{ inputs.command != 'test' && runner.os != 'Windows' }}
+      if: inputs.command != 'test' && runner.os != 'Windows'
     - name: Build binary (Windows)
       working-directory: ${{ inputs.working-directory }}
       shell: powershell
       run: |
         & ${{ steps.set-build-command.outputs.build-command }} +${{inputs.toolchain}} build ${{ inputs.args }} --target ${{ inputs.target }}
-      if: ${{ inputs.command != 'test' && runner.os == 'Windows' }}
+      if: inputs.command != 'test' && runner.os == 'Windows'
     - name: Strip binary
       working-directory: ${{ inputs.working-directory }}
       shell: bash
       run: strip-binary.sh ${{ inputs.target }}
       # strip doesn't work with cross-arch binaries on Linux or Windows.
-      if: ${{ inputs.command != 'test' && inputs.strip == 'true' && steps.determine-cross-compile.outputs.needs-cross == 'false' && inputs.target != 'aarch64-pc-windows-msvc' }}
+      if: inputs.command != 'test' && inputs.strip == 'true' && steps.determine-cross-compile.outputs.needs-cross == 'false' && inputs.target != 'aarch64-pc-windows-msvc'
