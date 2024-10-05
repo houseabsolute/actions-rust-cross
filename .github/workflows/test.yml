@@ -5,8 +5,8 @@ on:
   pull_request:
 
 jobs:
-  test:
-    name: Test
+  test-pure-rust:
+    name: Test a pure Rust project
     strategy:
       fail-fast: false
       matrix:
@@ -223,8 +223,8 @@ jobs:
       - name: Copy test project to root
         shell: bash
         run: |
-          cp -a test-project/* .
-          rm -fr test-project
+          cp -a test-projects/pure-rust/* .
+          rm -fr test-projects
       - name: Run both commands
         uses: ./
         with:
@@ -271,3 +271,61 @@ jobs:
               --expect-cross-version "${{ matrix.platform.expect_cross_version }}" \
               ${{ matrix.platform.expect_cross }} \
               ${{ matrix.platform.expect_stripped }}
+
+  test-cxx:
+    name: Test a project with C++
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-20.04
+          - ubuntu-22.04
+          - ubuntu-24.04
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Copy test project to root
+        shell: bash
+        run: |
+          cp -a test-projects/with-cxx/* .
+          rm -fr test-projects
+      - name: Run both commands
+        uses: ./
+        with:
+          command: both
+          cache-cross-binary: true
+          target: x86_64-unknown-linux-musl
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run test command
+        uses: ./
+        with:
+          command: test
+          cache-cross-binary: true
+          target: x86_64-unknown-linux-musl
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run build command
+        uses: ./
+        with:
+          command: build
+          cache-cross-binary: true
+          target: x86_64-unknown-linux-musl
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          strip: true
+      - name: Run build command for subdir
+        uses: ./
+        with:
+          command: build
+          cache-cross-binary: true
+          working-directory: subcrate
+          target: x86_64-unknown-linux-musl
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          strip: true
+      - name: Check binary and cross on ${{ matrix.os }}
+        shell: bash
+        run: |
+          tests/check-binary.pl \
+              --target "x86_64-unknown-linux-musl" \
+              --expect-file-re "ELF.+x86-64" \
+              --no-expect-cross \
+              --expect-stripped

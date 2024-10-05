@@ -87,6 +87,10 @@ runs:
       shell: bash
       run: sudo apt-get update --yes && sudo apt-get install --yes musl-tools
       if: steps.determine-cross-compile.outputs.needs-cross != 'true' && contains(inputs.target, 'musl')
+    - name: Set up system for C++ with musl
+      shell: bash
+      run: musl-symlink.sh
+      if: steps.determine-cross-compile.outputs.needs-cross != 'true' && contains(inputs.target, 'musl')
     - name: Set build command
       id: set-build-command
       shell: bash
