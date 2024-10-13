@@ -20,6 +20,10 @@ inputs:
     description: |
       The target toolchain to use (one of "stable", "beta", or "nightly").
     default: stable
+  components:
+    description: |
+      Comma-separated string of additional components to install e.g. clippy, rustfmt.
+    default: ""
   GITHUB_TOKEN:
     description: |
       A GitHub token, available in the secrets.GITHUB_TOKEN working-directory variable.
@@ -56,6 +60,7 @@ runs:
       with:
         targets: ${{ inputs.target }}
         toolchain: ${{ inputs.toolchain }}
+        components: ${{ inputs.components }}
     - name: Determine cross version
       id: determine-cross-version
       shell: bash
@@ -111,7 +116,7 @@ runs:
       working-directory: ${{ inputs.working-directory }}
       shell: bash
       run: |
-        ${{ steps.set-build-command.outputs.build-command }} +${{inputs.toolchain}} build ${{ inputs.args }} --target ${{ inputs.target }}
+        ${{ steps.set-build-command.outputs.build-command }} ${{inputs.toolchain}} build ${{ inputs.args }} --target ${{ inputs.target }}
       if: inputs.command != 'test' && runner.os != 'Windows'
     - name: Build binary (Windows)
       working-directory: ${{ inputs.working-directory }}
