@@ -59,6 +59,11 @@ jobs:
         if: matrix.toolchain == 'stable'
 ```
 
+Note that for Linux or BSD targets, you should always set the `runs-on` key to an x86-64
+architecture runner. If you want to do native ARM compilation, for example using
+`ubuntu-latest-arm`, then there's no point in using this action. This action is only tested on
+Ubuntu x86-64, Windows, and macOS runners.
+
 ## Input Parameters
 
 This action takes the following parameters:
