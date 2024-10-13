@@ -56,7 +56,6 @@ jobs:
         with:
           binary-name: ubi
           target: ${{ matrix.platform.target }}
-        if: matrix.toolchain == 'stable'
 ```
 
 Note that for Linux or BSD targets, you should always set the `runs-on` key to an x86-64
