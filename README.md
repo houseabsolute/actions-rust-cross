@@ -54,7 +54,7 @@ jobs:
       - name: Publish artifacts and release
         uses: houseabsolute/actions-rust-release@v0
         with:
-          binary-name: ubi
+          executable-name: ubi
           target: ${{ matrix.platform.target }}
 ```
 
