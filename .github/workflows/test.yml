@@ -17,7 +17,7 @@ jobs:
             cache-cross-binary: true
             expect_file_re: "x86-64.+FreeBSD"
             expect_cross: "--expect-cross"
-            expect_stripped: "--no-expect-stripped"
+            expect_stripped: ""
             can_execute: false
 
           - platform_name: Linux-x86_64
@@ -25,7 +25,7 @@ jobs:
             target: x86_64-unknown-linux-musl
             cache-cross-binary: true
             expect_file_re: "ELF.+x86-64"
-            expect_cross: "--no-expect-cross"
+            expect_cross: ""
             expect_stripped: "--expect-stripped"
             can_execute: true
 
@@ -35,7 +35,7 @@ jobs:
             cache-cross-binary: true
             expect_file_re: "aarch64"
             expect_cross: "--expect-cross"
-            expect_stripped: "--no-expect-stripped"
+            expect_stripped: ""
             can_execute: true
 
           - platform_name: Linux-aarch64 (no cache)
@@ -44,7 +44,7 @@ jobs:
             cache-cross-binary: false
             expect_file_re: "aarch64"
             expect_cross: "--expect-cross"
-            expect_stripped: "--no-expect-stripped"
+            expect_stripped: ""
             can_execute: true
 
           - platform_name: Linux-aarch64 with cross v0.2.3
@@ -55,7 +55,7 @@ jobs:
             expect_file_re: "aarch64"
             expect_cross: "--expect-cross"
             expect_cross_version: "0.2.3"
-            expect_stripped: "--no-expect-stripped"
+            expect_stripped: ""
             can_execute: true
 
           - platform_name: Linux-aarch64 with cross v0.2.3 (no cache)
@@ -66,7 +66,7 @@ jobs:
             expect_file_re: "aarch64"
             expect_cross: "--expect-cross"
             expect_cross_version: "0.2.3"
-            expect_stripped: "--no-expect-stripped"
+            expect_stripped: ""
             can_execute: true
 
           - platform_name: Linux-aarch64 with cross 19be834
@@ -77,7 +77,7 @@ jobs:
             expect_file_re: "aarch64"
             expect_cross: "--expect-cross"
             expect_cross_version: "19be834"
-            expect_stripped: "--no-expect-stripped"
+            expect_stripped: ""
             can_execute: true
 
           - platform_name: Linux-aarch64 with cross 19be834
@@ -88,7 +88,7 @@ jobs:
             expect_file_re: "aarch64"
             expect_cross: "--expect-cross"
             expect_cross_version: "19be834"
-            expect_stripped: "--no-expect-stripped"
+            expect_stripped: ""
             can_execute: true
 
           - platform_name: Linux-arm
@@ -97,7 +97,7 @@ jobs:
             cache-cross-binary: true
             expect_file_re: "32.+ARM"
             expect_cross: "--expect-cross"
-            expect_stripped: "--no-expect-stripped"
+            expect_stripped: ""
             can_execute: true
 
           - platform_name: Linux-i586
@@ -106,7 +106,7 @@ jobs:
             cache-cross-binary: true
             expect_file_re: "ELF.+80386"
             expect_cross: "--expect-cross"
-            expect_stripped: "--no-expect-stripped"
+            expect_stripped: ""
             can_execute: true
 
           - platform_name: Linux-i686
@@ -115,7 +115,7 @@ jobs:
             cache-cross-binary: true
             expect_file_re: "ELF.+80386"
             expect_cross: "--expect-cross"
-            expect_stripped: "--no-expect-stripped"
+            expect_stripped: ""
             can_execute: true
 
           - platform_name: Linux-powerpc
@@ -124,7 +124,7 @@ jobs:
             cache-cross-binary: true
             expect_file_re: "32.+PowerPC"
             expect_cross: "--expect-cross"
-            expect_stripped: "--no-expect-stripped"
+            expect_stripped: ""
             can_execute: true
 
           - platform_name: Linux-powerpc64
@@ -133,7 +133,7 @@ jobs:
             cache-cross-binary: true
             expect_file_re: "64.+PowerPC"
             expect_cross: "--expect-cross"
-            expect_stripped: "--no-expect-stripped"
+            expect_stripped: ""
             can_execute: true
 
           - platform_name: Linux-powerpc64le
@@ -142,7 +142,7 @@ jobs:
             cache-cross-binary: true
             expect_file_re: "64.+PowerPC"
             expect_cross: "--expect-cross"
-            expect_stripped: "--no-expect-stripped"
+            expect_stripped: ""
             can_execute: true
 
           - platform_name: Linux-riscv64
@@ -151,7 +151,7 @@ jobs:
             cache-cross-binary: true
             expect_file_re: "64.+RISC-V"
             expect_cross: "--expect-cross"
-            expect_stripped: "--no-expect-stripped"
+            expect_stripped: ""
             can_execute: true
 
           - platform_name: Linux-s390x
@@ -160,7 +160,7 @@ jobs:
             cache-cross-binary: true
             expect_file_re: "64.+S/390"
             expect_cross: "--expect-cross"
-            expect_stripped: "--no-expect-stripped"
+            expect_stripped: ""
             can_execute: true
 
           - platform_name: NetBSD-x86_64
@@ -169,7 +169,7 @@ jobs:
             cache-cross-binary: true
             expect_file_re: "x86-64.+NetBSD"
             expect_cross: "--expect-cross"
-            expect_stripped: "--no-expect-stripped"
+            expect_stripped: ""
             can_execute: false
 
           - platform_name: Windows-aarch64
@@ -177,8 +177,8 @@ jobs:
             target: aarch64-pc-windows-msvc
             cache-cross-binary: true
             expect_file_re: "Aarch64.+Windows"
-            expect_cross: "--no-expect-cross"
-            expect_stripped: "--no-expect-stripped"
+            expect_cross: ""
+            expect_stripped: ""
             can_execute: false
 
           - platform_name: Windows-i686
@@ -186,7 +186,7 @@ jobs:
             target: i686-pc-windows-msvc
             cache-cross-binary: true
             expect_file_re: "80386.+Windows"
-            expect_cross: "--no-expect-cross"
+            expect_cross: ""
             expect_stripped: "--expect-stripped"
             can_execute: true
 
@@ -203,7 +203,7 @@ jobs:
             target: x86_64-apple-darwin
             cache-cross-binary: true
             expect_file_re: "Mach-O.+x86_64"
-            expect_cross: "--no-expect-cross"
+            expect_cross: ""
             expect_stripped: "--expect-stripped"
             can_execute: true
 
@@ -212,7 +212,7 @@ jobs:
             target: aarch64-apple-darwin
             cache-cross-binary: true
             expect_file_re: "Mach-O.+arm64"
-            expect_cross: "--no-expect-cross"
+            expect_cross: ""
             expect_stripped: "--expect-stripped"
             can_execute: false
 
@@ -285,7 +285,10 @@ jobs:
       - name: Check binary and cross on ${{ matrix.platform.platform_name }}
         shell: bash
         run: |
-          tests/check-binary.pl \
+          set -e
+          set -x
+          cargo run --manifest-path ./run-tests/Cargo.toml -- \
+              --checkout-root "$PWD" \
               --target "${{ matrix.platform.target }}" \
               --expect-file-re "${{ matrix.platform.expect_file_re }}" \
               --expect-cross-version "${{ matrix.platform.expect_cross_version }}" \

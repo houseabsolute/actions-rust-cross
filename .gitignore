@@ -3,4 +3,5 @@
 /package.json
 .\#*
 \#*\#
+run-tests/**/target/**
 test-project/**/target/**
