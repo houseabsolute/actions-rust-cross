@@ -1,3 +1,12 @@
+## 1.0.0-beta1 - 2024-12-21
+
+The addition of caching is a significant behavior change for this action, so the version has been
+bumped to v1.0.0 because of this change.
+
+- This action will now configure and use `Swatinem/rust-cache` by default for you. It will include
+  the `target` parameter as part of the cache key automatically. Suggested by @jennydaman (Jennings
+  Zhang). GH #23.
+
 ## 0.0.17 - 2024-11-23
 
 - Added support for running `cargo bench` or `cross bench`. Implemented by @RaulTrombin (Raul Victor

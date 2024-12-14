@@ -41,6 +41,15 @@ inputs:
       Cache the cross binary if one is installed. This is primarily for use in
       tests of this action.
     default: true
+  use-rust-cache:
+    description: |
+      Use `Swatinem/rust-cache@v2`. Defaults to true.
+    default: true
+  rust-cache-parameters:
+    description: |
+      A JSON string containing parameters to pass to `Swatinem/rust-cache@v2`. You can use the
+      `toJSON()` function in your action to make passing this easier.
+    default: "{}"
 runs:
   using: composite
   steps:
@@ -95,6 +104,23 @@ runs:
       id: determine-cargo-commands
       shell: bash
       run: determine-cargo-commands.sh ${{ inputs.command }}
+    - name: Parse `rust-cache-parameters` and set inputs for `Swatinem/rust-cache@v2`
+      id: parse-rust-cache-parameters
+      shell: bash
+      run: |
+        set -e
+        set -x
+        set -o pipefail
+        # This will get the inputs JSON from the `RUST_CACHE_PARAMETERS` env var. This avoids
+        # any string interpolation issues, since the inputs will contain quotes.
+        parse-rust-cache-parameters.py "${{ inputs.target }}"
+      env:
+        RUST_CACHE_PARAMETERS: ${{ inputs.rust-cache-parameters }}
+      if: inputs.use-rust-cache == 'true'
+    - name: Cache cargo & target directories
+      uses: Swatinem/rust-cache@v2
+      with: ${{ steps.parse-rust-cache-parameters.outputs }}
+      if: inputs.use-rust-cache == 'true'
     - name: Run tests (*nix)
       working-directory: ${{ inputs.working-directory }}
       shell: bash
