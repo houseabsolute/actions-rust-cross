@@ -6,6 +6,7 @@ bumped to v1.0.0 because of this change.
 - This action will now configure and use `Swatinem/rust-cache` by default for you. It will include
   the `target` parameter as part of the cache key automatically. Suggested by @jennydaman (Jennings
   Zhang). GH #23.
+- This action now validates its input and will exit early if they are not valid. GH #35.
 
 ## 0.0.17 - 2024-11-23
 

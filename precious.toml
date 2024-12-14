@@ -3,6 +3,24 @@ exclude = [
   "tests/lib/**/*",
 ]
 
+[commands."ruff for linting"]
+type = "both"
+include = [ "**/*.py" ]
+cmd = "ruff"
+lint_flags = [ "check" ]
+tidy_flags = [ "check", "--fix" ]
+ok_exit_codes = 0
+lint_failure_exit_codes = 1
+
+[commands."ruff for tidying"]
+type = "both"
+include = [ "**/*.py" ]
+cmd = "ruff"
+lint_flags = [ "format", "--check" ]
+tidy_flags = [ "format" ]
+ok_exit_codes = 0
+lint_failure_exit_codes = 1
+
 [commands.typos]
 type = "both"
 include = "**/*"

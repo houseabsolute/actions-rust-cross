@@ -6,20 +6,20 @@ branding:
 description: |
   Cross compile your Rust projects with cross (https://github.com/cross-rs/cross).
 inputs:
-  working-directory:
-    description: The working directory for each step
-    default: "."
+  target:
+    description: The target platform
+    required: true
   command:
     description: |
       The commands to run. This must be one of "build", "test", "both" (build and test), or "bench".
     default: build
-  target:
-    description: The target platform
-    required: true
   toolchain:
     description: |
       The target toolchain to use (one of "stable", "beta", or "nightly").
     default: stable
+  working-directory:
+    description: The working directory for each step
+    default: "."
   GITHUB_TOKEN:
     description: |
       A GitHub token, available in the secrets.GITHUB_TOKEN working-directory variable.
@@ -56,6 +56,19 @@ runs:
     - name: Add this action's path to PATH
       shell: bash
       run: echo "${{ github.action_path }}" >> $GITHUB_PATH
+    - name: Validate inputs
+      shell: bash
+      run: |
+        "${{ github.action_path }}"/validate-inputs.py "${{ github.workspace }}"
+      env:
+        INPUTS_target: ${{ inputs.target }}
+        INPUTS_command: ${{ inputs.command }}
+        INPUTS_toolchain: ${{ inputs.toolchain }}
+        INPUTS_working_directory: ${{ inputs.working-directory }}
+        INPUTS_strip: ${{ inputs.strip }}
+        INPUTS_cache_cross_binary: ${{ inputs.cache-cross-binary }}
+        INPUTS_use_rust_cache: ${{ inputs.use-rust-cache }}
+        INPUTS_rust_cache_parameters: ${{ inputs.rust-cache-parameters }}
     - name: Determine whether we need to cross-compile
       id: determine-cross-compile
       shell: bash

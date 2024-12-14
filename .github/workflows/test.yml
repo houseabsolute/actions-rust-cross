@@ -5,8 +5,8 @@ on:
   pull_request:
 
 jobs:
-  test:
-    name: Test
+  test-action:
+    name: Test action
     strategy:
       fail-fast: false
       matrix:
@@ -291,3 +291,13 @@ jobs:
               --expect-cross-version "${{ matrix.platform.expect_cross_version }}" \
               ${{ matrix.platform.expect_cross }} \
               ${{ matrix.platform.expect_stripped }}
+
+  test-validate-inputs:
+    name: Test validate-inputs
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run tests
+        shell: bash
+        run: ./validate-inputs.py --test
