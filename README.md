@@ -103,6 +103,6 @@ value for crates without a `Cargo.lock` file. The `key` parameter passed to this
 include the value of the `target` input. If you specify a `key` parameter in
 `rust-cache-parameters`, then the `target` input will be appended to the value you specify.
 
-Finally, it will run `strip` to strip the binaries if the `strip` parameter is true. This is only
-possible for builds that are not done via `cross`. In addition, Windows builds for `aarch64` cannot
-be stripped either.
+Finally, it will run `strip` to strip the binaries it builds if the `strip` parameter is true. This
+is only possible for builds that are not done via `cross`. In addition, Windows builds for `aarch64`
+cannot be stripped either.
