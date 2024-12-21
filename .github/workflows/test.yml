@@ -12,7 +12,7 @@ jobs:
       matrix:
         platform:
           - platform_name: FreeBSD-x86_64
-            os: ubuntu-22.04
+            runs-on: ubuntu-22.04
             target: x86_64-unknown-freebsd
             cache-cross-binary: true
             expect_file_re: "x86-64.+FreeBSD"
@@ -21,7 +21,7 @@ jobs:
             can_execute: false
 
           - platform_name: Linux-x86_64
-            os: ubuntu-22.04
+            runs-on: ubuntu-22.04
             target: x86_64-unknown-linux-musl
             cache-cross-binary: true
             expect_file_re: "ELF.+x86-64"
@@ -30,7 +30,7 @@ jobs:
             can_execute: true
 
           - platform_name: Linux-aarch64
-            os: ubuntu-22.04
+            runs-on: ubuntu-22.04
             target: aarch64-unknown-linux-musl
             cache-cross-binary: true
             expect_file_re: "aarch64"
@@ -39,7 +39,7 @@ jobs:
             can_execute: true
 
           - platform_name: Linux-aarch64 (no cache)
-            os: ubuntu-22.04
+            runs-on: ubuntu-22.04
             target: aarch64-unknown-linux-musl
             cache-cross-binary: false
             expect_file_re: "aarch64"
@@ -48,7 +48,7 @@ jobs:
             can_execute: true
 
           - platform_name: Linux-aarch64 with cross v0.2.3
-            os: ubuntu-22.04
+            runs-on: ubuntu-22.04
             target: aarch64-unknown-linux-musl
             cross-version: "v0.2.3"
             cache-cross-binary: true
@@ -59,7 +59,7 @@ jobs:
             can_execute: true
 
           - platform_name: Linux-aarch64 with cross v0.2.3 (no cache)
-            os: ubuntu-22.04
+            runs-on: ubuntu-22.04
             target: aarch64-unknown-linux-musl
             cross-version: "v0.2.3"
             cache-cross-binary: false
@@ -70,7 +70,7 @@ jobs:
             can_execute: true
 
           - platform_name: Linux-aarch64 with cross 19be834
-            os: ubuntu-22.04
+            runs-on: ubuntu-22.04
             target: aarch64-unknown-linux-musl
             cross-version: "19be834"
             cache-cross-binary: true
@@ -81,7 +81,7 @@ jobs:
             can_execute: true
 
           - platform_name: Linux-aarch64 with cross 19be834
-            os: ubuntu-22.04
+            runs-on: ubuntu-22.04
             target: aarch64-unknown-linux-musl
             cross-version: "19be834"
             cache-cross-binary: false
@@ -92,7 +92,7 @@ jobs:
             can_execute: true
 
           - platform_name: Linux-arm
-            os: ubuntu-22.04
+            runs-on: ubuntu-22.04
             target: arm-unknown-linux-musleabi
             cache-cross-binary: true
             expect_file_re: "32.+ARM"
@@ -101,7 +101,7 @@ jobs:
             can_execute: true
 
           - platform_name: Linux-i586
-            os: ubuntu-22.04
+            runs-on: ubuntu-22.04
             target: i586-unknown-linux-musl
             cache-cross-binary: true
             expect_file_re: "ELF.+80386"
@@ -110,7 +110,7 @@ jobs:
             can_execute: true
 
           - platform_name: Linux-i686
-            os: ubuntu-22.04
+            runs-on: ubuntu-22.04
             target: i686-unknown-linux-musl
             cache-cross-binary: true
             expect_file_re: "ELF.+80386"
@@ -119,7 +119,7 @@ jobs:
             can_execute: true
 
           - platform_name: Linux-powerpc
-            os: ubuntu-22.04
+            runs-on: ubuntu-22.04
             target: powerpc-unknown-linux-gnu
             cache-cross-binary: true
             expect_file_re: "32.+PowerPC"
@@ -128,7 +128,7 @@ jobs:
             can_execute: true
 
           - platform_name: Linux-powerpc64
-            os: ubuntu-22.04
+            runs-on: ubuntu-22.04
             target: powerpc64-unknown-linux-gnu
             cache-cross-binary: true
             expect_file_re: "64.+PowerPC"
@@ -137,7 +137,7 @@ jobs:
             can_execute: true
 
           - platform_name: Linux-powerpc64le
-            os: ubuntu-22.04
+            runs-on: ubuntu-22.04
             target: powerpc64le-unknown-linux-gnu
             cache-cross-binary: true
             expect_file_re: "64.+PowerPC"
@@ -146,7 +146,7 @@ jobs:
             can_execute: true
 
           - platform_name: Linux-riscv64
-            os: ubuntu-22.04
+            runs-on: ubuntu-22.04
             target: riscv64gc-unknown-linux-gnu
             cache-cross-binary: true
             expect_file_re: "64.+RISC-V"
@@ -155,7 +155,7 @@ jobs:
             can_execute: true
 
           - platform_name: Linux-s390x
-            os: ubuntu-22.04
+            runs-on: ubuntu-22.04
             target: s390x-unknown-linux-gnu
             cache-cross-binary: true
             expect_file_re: "64.+S/390"
@@ -164,7 +164,7 @@ jobs:
             can_execute: true
 
           - platform_name: NetBSD-x86_64
-            os: ubuntu-22.04
+            runs-on: ubuntu-22.04
             target: x86_64-unknown-netbsd
             cache-cross-binary: true
             expect_file_re: "x86-64.+NetBSD"
@@ -173,7 +173,7 @@ jobs:
             can_execute: false
 
           - platform_name: Windows-aarch64
-            os: windows-latest
+            runs-on: windows-latest
             target: aarch64-pc-windows-msvc
             cache-cross-binary: true
             expect_file_re: "Aarch64.+Windows"
@@ -182,7 +182,7 @@ jobs:
             can_execute: false
 
           - platform_name: Windows-i686
-            os: windows-latest
+            runs-on: windows-latest
             target: i686-pc-windows-msvc
             cache-cross-binary: true
             expect_file_re: "80386.+Windows"
@@ -191,7 +191,7 @@ jobs:
             can_execute: true
 
           - platform_name: Windows-x86_64
-            os: windows-latest
+            runs-on: windows-latest
             target: x86_64-pc-windows-msvc
             cache-cross-binary: true
             expect_file_re: "x86-64.+Windows"
@@ -199,7 +199,7 @@ jobs:
             can_execute: true
 
           - platform_name: macOS-x86_64
-            os: macOS-latest
+            runs-on: macOS-latest
             target: x86_64-apple-darwin
             cache-cross-binary: true
             expect_file_re: "Mach-O.+x86_64"
@@ -208,7 +208,7 @@ jobs:
             can_execute: true
 
           - platform_name: macOS-aarch64
-            os: macOS-latest
+            runs-on: macOS-latest
             target: aarch64-apple-darwin
             cache-cross-binary: true
             expect_file_re: "Mach-O.+arm64"
@@ -216,7 +216,7 @@ jobs:
             expect_stripped: "--expect-stripped"
             can_execute: false
 
-    runs-on: ${{ matrix.platform.os }}
+    runs-on: ${{ matrix.platform.runs-on }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
