@@ -58,9 +58,12 @@ jobs:
           target: ${{ matrix.platform.target }}
 ```
 
-Note that for Linux or BSD targets, you should always set the `runs-on` key to an x86-64
-architecture runner. If you want to do native ARM compilation, for example using
-`ubuntu-latest-arm`, then there's no point in using this action. This action is only tested on
+Note that for Linux or BSD targets, you should always set the `runs-on` key to a Linux x86-64
+architecture runner.
+
+If you _only_ want to do native ARM compilation, for example using the `ubuntu-latest-arm` runner,
+then there's no need to use this action. However, if you want to compile for _many_ platforms,
+including Linux ARM, using this action will simplify your config. This action is only tested on
 Ubuntu x86-64, Windows, and macOS runners.
 
 ## Input Parameters
