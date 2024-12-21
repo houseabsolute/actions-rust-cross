@@ -43,7 +43,7 @@ jobs:
     runs-on: ${{ matrix.platform.runs-on }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Build binary
         uses: houseabsolute/actions-rust-cross@v0
         with:
