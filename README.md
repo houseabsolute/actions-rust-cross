@@ -45,7 +45,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Build binary
-        uses: houseabsolute/actions-rust-cross@v0
+        uses: houseabsolute/actions-rust-cross@v1
         with:
           command: ${{ matrix.platform.command }}
           target: ${{ matrix.platform.target }}
