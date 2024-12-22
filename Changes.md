@@ -1,3 +1,15 @@
+## 1.0.0
+
+The addition of caching is a significant behavior change for this action, so the version has been
+bumped to v1.0.0 because of this change.
+
+- This action will now configure and use `Swatinem/rust-cache` by default for you. It will include
+  the `target` parameter as part of the cache key automatically. Suggested by @jennydaman (Jennings
+  Zhang). GH #23.
+- This action now validates its input and will exit early if they are not valid. GH #35.
+- When compiling for `musl` targets, this action will not try to reinstall the `musl-tools` package
+  if it's already installed.
+
 ## 1.0.0-beta1 - 2024-12-21
 
 The addition of caching is a significant behavior change for this action, so the version has been

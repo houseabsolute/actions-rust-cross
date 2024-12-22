@@ -111,7 +111,12 @@ runs:
         GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
     - name: Install musl-tools on Linux if target includes "musl"
       shell: bash
-      run: sudo apt-get update --yes && sudo apt-get install --yes musl-tools
+      run: |
+        if dpkg -l musl-tools | grep -q "^ii\s*musl-tools"; then
+            exit 0
+        fi
+        sudo apt-get update --yes && \
+            sudo apt-get install --yes musl-tools
       if: steps.determine-cross-compile.outputs.needs-cross != 'true' && contains(inputs.target, 'musl')
     - name: Set build command
       id: set-build-command
