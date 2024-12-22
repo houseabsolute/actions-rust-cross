@@ -53,6 +53,10 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Show inputs
+      shell: bash
+      run: |
+        echo '${{ toJSON(inputs) }}'
     - name: Add this action's path to PATH
       shell: bash
       run: echo "${{ github.action_path }}" >> $GITHUB_PATH
