@@ -133,9 +133,14 @@ runs:
         set -e
         set -x
         set -o pipefail
+        OS_VERSION=""
+        if [ -x /usr/bin/lsb_release ]; then
+            # This will be something like "Ubuntu 22.04.5 LTS"
+            OS_VERSION="$( lsb_release --short --description )"
+        fi
         # This will get the inputs JSON from the `RUST_CACHE_PARAMETERS` env var. This avoids
         # any string interpolation issues, since the inputs will contain quotes.
-        parse-rust-cache-parameters.py "${{ inputs.target }}"
+        parse-rust-cache-parameters.py "${{ inputs.target }}" "${{ steps.set-build-command.outputs.build-command }}" "$OS_VERSION"
       env:
         RUST_CACHE_PARAMETERS: ${{ inputs.rust-cache-parameters }}
       if: inputs.use-rust-cache == 'true'

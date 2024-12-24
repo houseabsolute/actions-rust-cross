@@ -106,6 +106,11 @@ value for crates without a `Cargo.lock` file. The `key` parameter passed to this
 include the value of the `target` input. If you specify a `key` parameter in
 `rust-cache-parameters`, then the `target` input will be appended to the value you specify.
 
+When running `cargo` on a Linux system, it will also include the output of running
+`lsb_release --short --description` in the cache key. This is important for crates that link against
+system libraries. If those library versions change across OS versions (e.g. Ubuntu 20.04 to 22.04),
+then the cache will be broken for these cases.
+
 Finally, it will run `strip` to strip the binaries it builds if the `strip` parameter is true. This
 is only possible for builds that are not done via `cross`. In addition, Windows builds for `aarch64`
 cannot be stripped either.
