@@ -111,6 +111,10 @@ When running `cargo` on a Linux system, it will also include the output of runni
 system libraries. If those library versions change across OS versions (e.g. Ubuntu 20.04 to 22.04),
 then the cache will be broken for these cases.
 
+When running `cross`, the hash of the `cross` binary will be included in the cache key. This is done
+because the Docker images that `cross` uses can change when `cross` is updated. We want to make sure
+that we do not re-use the cache across changes when these images change.
+
 Finally, it will run `strip` to strip the binaries it builds if the `strip` parameter is true. This
 is only possible for builds that are not done via `cross`. In addition, Windows builds for `aarch64`
 cannot be stripped either.
