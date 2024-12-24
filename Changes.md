@@ -10,6 +10,15 @@ bumped to v1.0.0 because of this change.
 - When compiling for `musl` targets, this action will not try to reinstall the `musl-tools` package
   if it's already installed.
 
+The following changes were made since the 1.0.0-beta1 release:
+
+- The cache key includes information that causes the cache to not be re-used when the system running
+  `cargo` or `cross` changes. When using `cargo` on Linux, this is the OS version, like "Ubuntu
+  22.04". When using `cross`, this is the hash of the `cross` binary itself. This is needed because
+  the Docker images that `cross` uses can change when the binary is updated. This can include
+  changing the underlying Docker image base OS, in which case it's quite likely the old cache
+  contents would be incompatible with the the new image.
+
 ## 1.0.0-beta1 - 2024-12-21
 
 The addition of caching is a significant behavior change for this action, so the version has been
