@@ -2,7 +2,7 @@
 node = "22.11.0"
 "npm:prettier" = "3.4.1"
 ruff = "0.8.3"
-shellcheck = "v0.10.0"
+shellcheck = "0.10.0"
 shfmt = "v3.10.0"
 taplo = "0.9.3"
 typos = "1.28.1"
