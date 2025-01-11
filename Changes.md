@@ -1,4 +1,4 @@
-## 1.0.0
+## 1.0.0 - 2025-01-11
 
 The addition of caching is a significant behavior change for this action, so the version has been
 bumped to v1.0.0 because of this change.
