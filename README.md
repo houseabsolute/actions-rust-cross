@@ -99,13 +99,6 @@ build `cross`.
 When compiling on Windows, it will do so in a Powershell environment, which can matter in some
 corner cases, like compiling the `openssl` crate with the `vendored` feature.
 
-By default, it will use
-[the `Swatinem/rust-cache@v2` action](https://github.com/Swatinem/rust-cache) to cache compiled
-dependencies for this crate. Note that per the documentation for this action, it has fairly limited
-value for crates without a `Cargo.lock` file. The `key` parameter passed to this action will always
-include the value of the `target` input. If you specify a `key` parameter in
-`rust-cache-parameters`, then the `target` input will be appended to the value you specify.
-
 When running `cargo` on a Linux system, it will also include the output of running
 `lsb_release --short --description` in the cache key. This is important for crates that link against
 system libraries. If those library versions change across OS versions (e.g. Ubuntu 20.04 to 22.04),
@@ -118,3 +111,34 @@ that we do not re-use the cache across changes when these images change.
 Finally, it will run `strip` to strip the binaries it builds if the `strip` parameter is true. This
 is only possible for builds that are not done via `cross`. In addition, Windows builds for `aarch64`
 cannot be stripped either.
+
+### Caching
+
+By default, this action will use
+[the `Swatinem/rust-cache@v2` action](https://github.com/Swatinem/rust-cache) to cache compiled
+dependencies for a crate. Note that per the documentation for the `rust-cache` action, it has fairly
+limited value for crates without a `Cargo.lock` file. The `key` parameter passed to this action will
+always include the value of the `target` input. If you specify a `key` parameter in
+`rust-cache-parameters`, then the `target` input will be appended to the value you specify.
+
+#### Weird Caching Issue with Multiple Crates
+
+In my testing, it seemed like in some cases restoring the cache would delete existing files in a
+`target` directory. This manifested with this sequence of actions:
+
+1. Run `actions-rust-cross` to compile a crate in a top-level directory.
+2. Run `actions-rust-cross` to compile a crate in a subdirectory.
+
+After step 2, the compiled binaries from step 1 were no longer present, _sometimes_. I'm not sure
+exactly what's going on here, but my recommendation is to structure your workflows so that this
+cannot affect you.
+
+For example, if you have multiple crates, each of which builds a binary you want to release, then
+you can avoid this issue by structuring your workflow as follows:
+
+1. Run `actions-rust-cross` to compile crate A.
+2. Run the release steps for crate A.
+3. Run `actions-rust-cross` to compile crate B.
+4. Run the release steps for crate B.
+
+When structured this way, it does not matter if the output of crate A is deleted in step 3.
