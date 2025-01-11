@@ -24,6 +24,8 @@ struct Args {
     expect_cross_version: Option<String>,
     #[arg(long)]
     expect_stripped: bool,
+    #[arg(long)]
+    is_subcrate: bool,
 }
 
 fn main() {
@@ -39,24 +41,27 @@ fn main() {
     );
 
     let checkout_root_path = PathBuf::from(args.checkout_root);
-    let bin_paths = vec![
-        checkout_root_path
-            .join("target")
-            .join(&args.target)
-            .join("debug")
-            .join("bin1"),
-        checkout_root_path
-            .join("target")
-            .join(&args.target)
-            .join("debug")
-            .join("bin2"),
-        checkout_root_path
+    let bin_paths = if args.is_subcrate {
+        vec![checkout_root_path
             .join("subcrate")
             .join("target")
             .join(&args.target)
             .join("debug")
-            .join("subcrate"),
-    ];
+            .join("subcrate")]
+    } else {
+        vec![
+            checkout_root_path
+                .join("target")
+                .join(&args.target)
+                .join("debug")
+                .join("bin1"),
+            checkout_root_path
+                .join("target")
+                .join(&args.target)
+                .join("debug")
+                .join("bin2"),
+        ]
+    };
 
     for mut bin_path in bin_paths {
         if cfg!(windows) {

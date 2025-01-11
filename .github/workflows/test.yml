@@ -262,27 +262,7 @@ jobs:
           target: ${{ matrix.platform.target }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           strip: true
-      - name: Run build command for subdir
-        uses: ./
-        with:
-          command: build
-          cross-version: ${{ matrix.platform.cross-version }}
-          cache-cross-binary: ${{ matrix.platform.cache-cross-binary }}
-          working-directory: subcrate
-          target: ${{ matrix.platform.target }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          strip: true
-      - name: Run bench command
-        uses: ./
-        with:
-          command: bench
-          cross-version: ${{ matrix.platform.cross-version }}
-          cache-cross-binary: ${{ matrix.platform.cache-cross-binary }}
-          target: ${{ matrix.platform.target }}
-          working-directory: bench
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: ${{ matrix.platform.can_execute }}
-      - name: Check binary and cross on ${{ matrix.platform.platform_name }}
+      - name: Check binary and cross for main crate on ${{ matrix.platform.platform_name }}
         shell: bash
         run: |
           set -e
@@ -294,6 +274,39 @@ jobs:
               --expect-cross-version "${{ matrix.platform.expect_cross_version }}" \
               ${{ matrix.platform.expect_cross }} \
               ${{ matrix.platform.expect_stripped }}
+      - name: Run build command for subdir
+        uses: ./
+        with:
+          command: build
+          cross-version: ${{ matrix.platform.cross-version }}
+          cache-cross-binary: ${{ matrix.platform.cache-cross-binary }}
+          working-directory: subcrate
+          target: ${{ matrix.platform.target }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          strip: true
+      - name: Check binary and cross for subcrate on ${{ matrix.platform.platform_name }}
+        shell: bash
+        run: |
+          set -e
+          set -x
+          cargo run --manifest-path ./run-tests/Cargo.toml -- \
+              --checkout-root "$PWD" \
+              --target "${{ matrix.platform.target }}" \
+              --expect-file-re "${{ matrix.platform.expect_file_re }}" \
+              --expect-cross-version "${{ matrix.platform.expect_cross_version }}" \
+              ${{ matrix.platform.expect_cross }} \
+              ${{ matrix.platform.expect_stripped }} \
+              --is-subcrate
+      - name: Run bench command
+        uses: ./
+        with:
+          command: bench
+          cross-version: ${{ matrix.platform.cross-version }}
+          cache-cross-binary: ${{ matrix.platform.cache-cross-binary }}
+          target: ${{ matrix.platform.target }}
+          working-directory: bench
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: ${{ matrix.platform.can_execute }}
 
   test-validate-inputs:
     name: Test validate-inputs
