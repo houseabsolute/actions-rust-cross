@@ -83,6 +83,20 @@ This action takes the following parameters:
 | `use-rust-cache`        | boolean                                                              | no        | Whether or not to use [the `Swatinem/rust-cache@v2` action](https://github.com/Swatinem/rust-cache). This defaults to true.                                                                                                                                                                                                                   |
 | `rust-cache-parameters` | string (containing JSON)                                             | no        | This must be a string containing valid JSON. The JSON should be an object where the keys are the parameters for [the `Swatinem/rust-cache@v2` action](https://github.com/Swatinem/rust-cache).                                                                                                                                                |
 
+### Setting Environment Variables
+
+You can simply set an `env` key in the workflow step that uses this action, for example:
+
+```
+- name: Run build command
+  uses: houseabsolute/actions-rust-cross@v1
+  env:
+    CARGO_LOG: debug
+    RUSTFLAGS: "-g"
+  with:
+    command: build
+```
+
 ## How it Works
 
 Under the hood, this action will compile your binaries with either `cargo` or `cross`, depending on
