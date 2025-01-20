@@ -84,7 +84,8 @@ This action takes the following parameters:
 
 ### Setting Environment Variables
 
-You can simply set an `env` key in the workflow step that uses this action, for example:
+By default, `cross` passes most rust-related environment variables through when it runs `cargo` in a
+Docker image. This means you can simply set an `env` key in the workflow step that uses this action.
 
 ```
 - name: Run build command
@@ -95,6 +96,11 @@ You can simply set an `env` key in the workflow step that uses this action, for 
   with:
     command: build
 ```
+
+If you want to pass other environment variables through, you will need to configure `cross` to do
+see. See the
+[`cross` docs](https://github.com/cross-rs/cross/blob/main/docs/environment_variables.md#environment-variable-passthrough)
+for more details.
 
 ## How it Works
 
