@@ -16,7 +16,6 @@ jobs:
           - os-name: FreeBSD-x86_64
             runs-on: ubuntu-20.04
             target: x86_64-unknown-freebsd
-            skip_tests: true
 
           - os-name: Linux-x86_64
             runs-on: ubuntu-20.04
