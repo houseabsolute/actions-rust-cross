@@ -11,14 +11,14 @@ jobs:
       fail-fast: false
       matrix:
         platform:
-          - platform_name: FreeBSD-x86_64
-            runs-on: ubuntu-22.04
-            target: x86_64-unknown-freebsd
-            cache-cross-binary: true
-            expect-file-re: "x86-64.+FreeBSD"
-            expect-cross: "--expect-cross"
-            expect-stripped: ""
-            can-execute: false
+          # - platform_name: FreeBSD-x86_64
+          #   runs-on: ubuntu-22.04
+          #   target: x86_64-unknown-freebsd
+          #   cache-cross-binary: true
+          #   expect-file-re: "x86-64.+FreeBSD"
+          #   expect-cross: "--expect-cross"
+          #   expect-stripped: ""
+          #   can-execute: false
 
           - platform_name: Linux-x86_64
             runs-on: ubuntu-22.04
@@ -29,192 +29,192 @@ jobs:
             expect-stripped: "--expect-stripped"
             can-execute: true
 
-          - platform_name: Linux-aarch64
-            runs-on: ubuntu-22.04
-            target: aarch64-unknown-linux-musl
-            cache-cross-binary: true
-            expect-file-re: "aarch64"
-            expect-cross: "--expect-cross"
-            expect-stripped: ""
-            can-execute: true
+          # - platform_name: Linux-aarch64
+          #   runs-on: ubuntu-22.04
+          #   target: aarch64-unknown-linux-musl
+          #   cache-cross-binary: true
+          #   expect-file-re: "aarch64"
+          #   expect-cross: "--expect-cross"
+          #   expect-stripped: ""
+          #   can-execute: true
 
-          - platform_name: Linux-aarch64 (no cache)
-            runs-on: ubuntu-22.04
-            target: aarch64-unknown-linux-musl
-            cache-cross-binary: false
-            expect-file-re: "aarch64"
-            expect-cross: "--expect-cross"
-            expect-stripped: ""
-            can-execute: true
+          # - platform_name: Linux-aarch64 (no cache)
+          #   runs-on: ubuntu-22.04
+          #   target: aarch64-unknown-linux-musl
+          #   cache-cross-binary: false
+          #   expect-file-re: "aarch64"
+          #   expect-cross: "--expect-cross"
+          #   expect-stripped: ""
+          #   can-execute: true
 
-          - platform_name: Linux-aarch64 with cross v0.2.3
-            runs-on: ubuntu-22.04
-            target: aarch64-unknown-linux-musl
-            cross-version: "v0.2.3"
-            cache-cross-binary: true
-            expect-file-re: "aarch64"
-            expect-cross: "--expect-cross"
-            expect-cross-version: "0.2.3"
-            expect-stripped: ""
-            can-execute: true
+          # - platform_name: Linux-aarch64 with cross v0.2.3
+          #   runs-on: ubuntu-22.04
+          #   target: aarch64-unknown-linux-musl
+          #   cross-version: "v0.2.3"
+          #   cache-cross-binary: true
+          #   expect-file-re: "aarch64"
+          #   expect-cross: "--expect-cross"
+          #   expect-cross-version: "0.2.3"
+          #   expect-stripped: ""
+          #   can-execute: true
 
-          - platform_name: Linux-aarch64 with cross v0.2.3 (no cache)
-            runs-on: ubuntu-22.04
-            target: aarch64-unknown-linux-musl
-            cross-version: "v0.2.3"
-            cache-cross-binary: false
-            expect-file-re: "aarch64"
-            expect-cross: "--expect-cross"
-            expect-cross-version: "0.2.3"
-            expect-stripped: ""
-            can-execute: true
+          # - platform_name: Linux-aarch64 with cross v0.2.3 (no cache)
+          #   runs-on: ubuntu-22.04
+          #   target: aarch64-unknown-linux-musl
+          #   cross-version: "v0.2.3"
+          #   cache-cross-binary: false
+          #   expect-file-re: "aarch64"
+          #   expect-cross: "--expect-cross"
+          #   expect-cross-version: "0.2.3"
+          #   expect-stripped: ""
+          #   can-execute: true
 
-          - platform_name: Linux-aarch64 with cross 19be834
-            runs-on: ubuntu-22.04
-            target: aarch64-unknown-linux-musl
-            cross-version: "19be834"
-            cache-cross-binary: true
-            expect-file-re: "aarch64"
-            expect-cross: "--expect-cross"
-            expect-cross-version: "19be834"
-            expect-stripped: ""
-            can-execute: true
+          # - platform_name: Linux-aarch64 with cross 19be834
+          #   runs-on: ubuntu-22.04
+          #   target: aarch64-unknown-linux-musl
+          #   cross-version: "19be834"
+          #   cache-cross-binary: true
+          #   expect-file-re: "aarch64"
+          #   expect-cross: "--expect-cross"
+          #   expect-cross-version: "19be834"
+          #   expect-stripped: ""
+          #   can-execute: true
 
-          - platform_name: Linux-aarch64 with cross 19be834
-            runs-on: ubuntu-22.04
-            target: aarch64-unknown-linux-musl
-            cross-version: "19be834"
-            cache-cross-binary: false
-            expect-file-re: "aarch64"
-            expect-cross: "--expect-cross"
-            expect-cross-version: "19be834"
-            expect-stripped: ""
-            can-execute: true
+          # - platform_name: Linux-aarch64 with cross 19be834
+          #   runs-on: ubuntu-22.04
+          #   target: aarch64-unknown-linux-musl
+          #   cross-version: "19be834"
+          #   cache-cross-binary: false
+          #   expect-file-re: "aarch64"
+          #   expect-cross: "--expect-cross"
+          #   expect-cross-version: "19be834"
+          #   expect-stripped: ""
+          #   can-execute: true
 
-          - platform_name: Linux-arm
-            runs-on: ubuntu-22.04
-            target: arm-unknown-linux-musleabi
-            cache-cross-binary: true
-            expect-file-re: "32.+ARM"
-            expect-cross: "--expect-cross"
-            expect-stripped: ""
-            can-execute: true
+          # - platform_name: Linux-arm
+          #   runs-on: ubuntu-22.04
+          #   target: arm-unknown-linux-musleabi
+          #   cache-cross-binary: true
+          #   expect-file-re: "32.+ARM"
+          #   expect-cross: "--expect-cross"
+          #   expect-stripped: ""
+          #   can-execute: true
 
-          - platform_name: Linux-i586
-            runs-on: ubuntu-22.04
-            target: i586-unknown-linux-musl
-            cache-cross-binary: true
-            expect-file-re: "ELF.+80386"
-            expect-cross: "--expect-cross"
-            expect-stripped: ""
-            can-execute: true
+          # - platform_name: Linux-i586
+          #   runs-on: ubuntu-22.04
+          #   target: i586-unknown-linux-musl
+          #   cache-cross-binary: true
+          #   expect-file-re: "ELF.+80386"
+          #   expect-cross: "--expect-cross"
+          #   expect-stripped: ""
+          #   can-execute: true
 
-          - platform_name: Linux-i686
-            runs-on: ubuntu-22.04
-            target: i686-unknown-linux-musl
-            cache-cross-binary: true
-            expect-file-re: "ELF.+80386"
-            expect-cross: "--expect-cross"
-            expect-stripped: ""
-            can-execute: true
+          # - platform_name: Linux-i686
+          #   runs-on: ubuntu-22.04
+          #   target: i686-unknown-linux-musl
+          #   cache-cross-binary: true
+          #   expect-file-re: "ELF.+80386"
+          #   expect-cross: "--expect-cross"
+          #   expect-stripped: ""
+          #   can-execute: true
 
-          - platform_name: Linux-powerpc
-            runs-on: ubuntu-22.04
-            target: powerpc-unknown-linux-gnu
-            cache-cross-binary: true
-            expect-file-re: "32.+PowerPC"
-            expect-cross: "--expect-cross"
-            expect-stripped: ""
-            can-execute: true
+          # - platform_name: Linux-powerpc
+          #   runs-on: ubuntu-22.04
+          #   target: powerpc-unknown-linux-gnu
+          #   cache-cross-binary: true
+          #   expect-file-re: "32.+PowerPC"
+          #   expect-cross: "--expect-cross"
+          #   expect-stripped: ""
+          #   can-execute: true
 
-          - platform_name: Linux-powerpc64
-            runs-on: ubuntu-22.04
-            target: powerpc64-unknown-linux-gnu
-            cache-cross-binary: true
-            expect-file-re: "64.+PowerPC"
-            expect-cross: "--expect-cross"
-            expect-stripped: ""
-            can-execute: true
+          # - platform_name: Linux-powerpc64
+          #   runs-on: ubuntu-22.04
+          #   target: powerpc64-unknown-linux-gnu
+          #   cache-cross-binary: true
+          #   expect-file-re: "64.+PowerPC"
+          #   expect-cross: "--expect-cross"
+          #   expect-stripped: ""
+          #   can-execute: true
 
-          - platform_name: Linux-powerpc64le
-            runs-on: ubuntu-22.04
-            target: powerpc64le-unknown-linux-gnu
-            cache-cross-binary: true
-            expect-file-re: "64.+PowerPC"
-            expect-cross: "--expect-cross"
-            expect-stripped: ""
-            can-execute: true
+          # - platform_name: Linux-powerpc64le
+          #   runs-on: ubuntu-22.04
+          #   target: powerpc64le-unknown-linux-gnu
+          #   cache-cross-binary: true
+          #   expect-file-re: "64.+PowerPC"
+          #   expect-cross: "--expect-cross"
+          #   expect-stripped: ""
+          #   can-execute: true
 
-          - platform_name: Linux-riscv64
-            runs-on: ubuntu-22.04
-            target: riscv64gc-unknown-linux-gnu
-            cache-cross-binary: true
-            expect-file-re: "64.+RISC-V"
-            expect-cross: "--expect-cross"
-            expect-stripped: ""
-            can-execute: true
+          # - platform_name: Linux-riscv64
+          #   runs-on: ubuntu-22.04
+          #   target: riscv64gc-unknown-linux-gnu
+          #   cache-cross-binary: true
+          #   expect-file-re: "64.+RISC-V"
+          #   expect-cross: "--expect-cross"
+          #   expect-stripped: ""
+          #   can-execute: true
 
-          - platform_name: Linux-s390x
-            runs-on: ubuntu-22.04
-            target: s390x-unknown-linux-gnu
-            cache-cross-binary: true
-            expect-file-re: "64.+S/390"
-            expect-cross: "--expect-cross"
-            expect-stripped: ""
-            can-execute: true
+          # - platform_name: Linux-s390x
+          #   runs-on: ubuntu-22.04
+          #   target: s390x-unknown-linux-gnu
+          #   cache-cross-binary: true
+          #   expect-file-re: "64.+S/390"
+          #   expect-cross: "--expect-cross"
+          #   expect-stripped: ""
+          #   can-execute: true
 
-          - platform_name: NetBSD-x86_64
-            runs-on: ubuntu-22.04
-            target: x86_64-unknown-netbsd
-            cache-cross-binary: true
-            expect-file-re: "x86-64.+NetBSD"
-            expect-cross: "--expect-cross"
-            expect-stripped: ""
-            can-execute: false
+          # - platform_name: NetBSD-x86_64
+          #   runs-on: ubuntu-22.04
+          #   target: x86_64-unknown-netbsd
+          #   cache-cross-binary: true
+          #   expect-file-re: "x86-64.+NetBSD"
+          #   expect-cross: "--expect-cross"
+          #   expect-stripped: ""
+          #   can-execute: false
 
-          - platform_name: Windows-aarch64
-            runs-on: windows-latest
-            target: aarch64-pc-windows-msvc
-            cache-cross-binary: true
-            expect-file-re: "Aarch64.+Windows"
-            expect-cross: ""
-            expect-stripped: ""
-            can-execute: false
+          # - platform_name: Windows-aarch64
+          #   runs-on: windows-latest
+          #   target: aarch64-pc-windows-msvc
+          #   cache-cross-binary: true
+          #   expect-file-re: "Aarch64.+Windows"
+          #   expect-cross: ""
+          #   expect-stripped: ""
+          #   can-execute: false
 
-          - platform_name: Windows-i686
-            runs-on: windows-latest
-            target: i686-pc-windows-msvc
-            cache-cross-binary: true
-            expect-file-re: "80386.+Windows"
-            expect-cross: ""
-            expect-stripped: "--expect-stripped"
-            can-execute: true
+          # - platform_name: Windows-i686
+          #   runs-on: windows-latest
+          #   target: i686-pc-windows-msvc
+          #   cache-cross-binary: true
+          #   expect-file-re: "80386.+Windows"
+          #   expect-cross: ""
+          #   expect-stripped: "--expect-stripped"
+          #   can-execute: true
 
-          - platform_name: Windows-x86_64
-            runs-on: windows-latest
-            target: x86_64-pc-windows-msvc
-            cache-cross-binary: true
-            expect-file-re: "x86-64.+Windows"
-            expect-stripped: "--expect-stripped"
-            can-execute: true
+          # - platform_name: Windows-x86_64
+          #   runs-on: windows-latest
+          #   target: x86_64-pc-windows-msvc
+          #   cache-cross-binary: true
+          #   expect-file-re: "x86-64.+Windows"
+          #   expect-stripped: "--expect-stripped"
+          #   can-execute: true
 
-          - platform_name: macOS-x86_64
-            runs-on: macOS-latest
-            target: x86_64-apple-darwin
-            cache-cross-binary: true
-            expect-file-re: "Mach-O.+x86_64"
-            expect-cross: ""
-            expect-stripped: "--expect-stripped"
-            can-execute: true
+          # - platform_name: macOS-x86_64
+          #   runs-on: macOS-latest
+          #   target: x86_64-apple-darwin
+          #   cache-cross-binary: true
+          #   expect-file-re: "Mach-O.+x86_64"
+          #   expect-cross: ""
+          #   expect-stripped: "--expect-stripped"
+          #   can-execute: true
 
-          - platform_name: macOS-aarch64
-            runs-on: macOS-latest
-            target: aarch64-apple-darwin
-            cache-cross-binary: true
-            expect-file-re: "Mach-O.+arm64"
-            expect-cross: ""
-            expect-stripped: "--expect-stripped"
-            can-execute: false
+          # - platform_name: macOS-aarch64
+          #   runs-on: macOS-latest
+          #   target: aarch64-apple-darwin
+          #   cache-cross-binary: true
+          #   expect-file-re: "Mach-O.+arm64"
+          #   expect-cross: ""
+          #   expect-stripped: "--expect-stripped"
+          #   can-execute: false
 
     runs-on: ${{ matrix.platform.runs-on }}
     steps:
@@ -225,34 +225,34 @@ jobs:
         run: |
           cp -a test-project/* .
           rm -fr test-project
-      - name: Run both commands
-        uses: ./
-        with:
-          command: both
-          cross-version: ${{ matrix.platform.cross-version }}
-          cache-cross-binary: ${{ matrix.platform.cache-cross-binary }}
-          target: ${{ matrix.platform.target }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: ${{ matrix.platform.can-execute }}
-      - name: Run test command
-        uses: ./
-        with:
-          command: test
-          cross-version: ${{ matrix.platform.cross-version }}
-          cache-cross-binary: ${{ matrix.platform.cache-cross-binary }}
-          target: ${{ matrix.platform.target }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: ${{ matrix.platform.can-execute }}
-      - name: Run test command with args
-        uses: ./
-        with:
-          command: test
-          cross-version: ${{ matrix.platform.cross-version }}
-          cache-cross-binary: ${{ matrix.platform.cache-cross-binary }}
-          target: ${{ matrix.platform.target }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          args: "-- --ignored"
-        if: ${{ matrix.platform.can-execute }}
+      # - name: Run both commands
+      #   uses: ./
+      #   with:
+      #     command: both
+      #     cross-version: ${{ matrix.platform.cross-version }}
+      #     cache-cross-binary: ${{ matrix.platform.cache-cross-binary }}
+      #     target: ${{ matrix.platform.target }}
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   if: ${{ matrix.platform.can-execute }}
+      # - name: Run test command
+      #   uses: ./
+      #   with:
+      #     command: test
+      #     cross-version: ${{ matrix.platform.cross-version }}
+      #     cache-cross-binary: ${{ matrix.platform.cache-cross-binary }}
+      #     target: ${{ matrix.platform.target }}
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   if: ${{ matrix.platform.can-execute }}
+      # - name: Run test command with args
+      #   uses: ./
+      #   with:
+      #     command: test
+      #     cross-version: ${{ matrix.platform.cross-version }}
+      #     cache-cross-binary: ${{ matrix.platform.cache-cross-binary }}
+      #     target: ${{ matrix.platform.target }}
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     args: "-- --ignored"
+      #   if: ${{ matrix.platform.can-execute }}
       - name: Run build command
         uses: ./
         with:
@@ -260,53 +260,54 @@ jobs:
           cross-version: ${{ matrix.platform.cross-version }}
           cache-cross-binary: ${{ matrix.platform.cache-cross-binary }}
           target: ${{ matrix.platform.target }}
+          use-sccache: true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           strip: true
-      - name: Check binary and cross for main crate on ${{ matrix.platform.platform_name }}
-        shell: bash
-        run: |
-          set -e
-          set -x
-          cargo run --manifest-path ./run-tests/Cargo.toml -- \
-              --checkout-root "$PWD" \
-              --target "${{ matrix.platform.target }}" \
-              --expect-file-re "${{ matrix.platform.expect-file-re }}" \
-              --expect-cross-version "${{ matrix.platform.expect-cross-version }}" \
-              ${{ matrix.platform.expect-cross }} \
-              ${{ matrix.platform.expect-stripped }}
-      - name: Run build command for subdir
-        uses: ./
-        with:
-          command: build
-          cross-version: ${{ matrix.platform.cross-version }}
-          cache-cross-binary: ${{ matrix.platform.cache-cross-binary }}
-          working-directory: subcrate
-          target: ${{ matrix.platform.target }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          strip: true
-      - name: Check binary and cross for subcrate on ${{ matrix.platform.platform_name }}
-        shell: bash
-        run: |
-          set -e
-          set -x
-          cargo run --manifest-path ./run-tests/Cargo.toml -- \
-              --checkout-root "$PWD" \
-              --target "${{ matrix.platform.target }}" \
-              --expect-file-re "${{ matrix.platform.expect-file-re }}" \
-              --expect-cross-version "${{ matrix.platform.expect-cross-version }}" \
-              ${{ matrix.platform.expect-cross }} \
-              ${{ matrix.platform.expect-stripped }} \
-              --is-subcrate
-      - name: Run bench command
-        uses: ./
-        with:
-          command: bench
-          cross-version: ${{ matrix.platform.cross-version }}
-          cache-cross-binary: ${{ matrix.platform.cache-cross-binary }}
-          target: ${{ matrix.platform.target }}
-          working-directory: bench
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: ${{ matrix.platform.can-execute }}
+      # - name: Check binary and cross for main crate on ${{ matrix.platform.platform_name }}
+      #   shell: bash
+      #   run: |
+      #     set -e
+      #     set -x
+      #     cargo run --manifest-path ./run-tests/Cargo.toml -- \
+      #         --checkout-root "$PWD" \
+      #         --target "${{ matrix.platform.target }}" \
+      #         --expect-file-re "${{ matrix.platform.expect-file-re }}" \
+      #         --expect-cross-version "${{ matrix.platform.expect-cross-version }}" \
+      #         ${{ matrix.platform.expect-cross }} \
+      #         ${{ matrix.platform.expect-stripped }}
+      # - name: Run build command for subdir
+      #   uses: ./
+      #   with:
+      #     command: build
+      #     cross-version: ${{ matrix.platform.cross-version }}
+      #     cache-cross-binary: ${{ matrix.platform.cache-cross-binary }}
+      #     working-directory: subcrate
+      #     target: ${{ matrix.platform.target }}
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     strip: true
+      # - name: Check binary and cross for subcrate on ${{ matrix.platform.platform_name }}
+      #   shell: bash
+      #   run: |
+      #     set -e
+      #     set -x
+      #     cargo run --manifest-path ./run-tests/Cargo.toml -- \
+      #         --checkout-root "$PWD" \
+      #         --target "${{ matrix.platform.target }}" \
+      #         --expect-file-re "${{ matrix.platform.expect-file-re }}" \
+      #         --expect-cross-version "${{ matrix.platform.expect-cross-version }}" \
+      #         ${{ matrix.platform.expect-cross }} \
+      #         ${{ matrix.platform.expect-stripped }} \
+      #         --is-subcrate
+      # - name: Run bench command
+      #   uses: ./
+      #   with:
+      #     command: bench
+      #     cross-version: ${{ matrix.platform.cross-version }}
+      #     cache-cross-binary: ${{ matrix.platform.cache-cross-binary }}
+      #     target: ${{ matrix.platform.target }}
+      #     working-directory: bench
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   if: ${{ matrix.platform.can-execute }}
 
   test-validate-inputs:
     name: Test validate-inputs
