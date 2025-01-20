@@ -57,9 +57,11 @@ runs:
       shell: bash
       run: |
         echo '${{ toJSON(inputs) }}'
+
     - name: Add this action's path to PATH
       shell: bash
       run: echo "${{ github.action_path }}" >> $GITHUB_PATH
+
     - name: Validate inputs
       shell: bash
       run: |
@@ -73,15 +75,18 @@ runs:
         INPUTS_cache_cross_binary: ${{ inputs.cache-cross-binary }}
         INPUTS_use_rust_cache: ${{ inputs.use-rust-cache }}
         INPUTS_rust_cache_parameters: ${{ inputs.rust-cache-parameters }}
+
     - name: Determine whether we need to cross-compile
       id: determine-cross-compile
       shell: bash
       run: set-cross-compile.py ${{ inputs.target }}
+
     - name: Install toolchain
       uses: dtolnay/rust-toolchain@master
       with:
         targets: ${{ inputs.target }}
         toolchain: ${{ inputs.toolchain }}
+
     - name: Determine cross version
       id: determine-cross-version
       shell: bash
@@ -89,6 +94,7 @@ runs:
       env:
         GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
       if: steps.determine-cross-compile.outputs.needs-cross == 'true'
+
     # We need to access this in both this YAML config and shell scripts. It
     # doesn't seem like using ${{ env.RUNNER_TEMP }} works in the YAML config.
     - name: Set directory for installing cross
@@ -96,6 +102,7 @@ runs:
       shell: bash
       run: set-cross-dir.sh
       if: steps.determine-cross-compile.outputs.needs-cross == 'true'
+
     - name: Cache cross
       id: cache-cross
       uses: actions/cache@v4
@@ -103,12 +110,14 @@ runs:
         path: ${{ steps.set-cross-dir.outputs.cross-dir }}/cross
         key: ${{ runner.os }}-${{ steps.determine-cross-version.outputs.cross-version }}
       if: steps.determine-cross-compile.outputs.needs-cross == 'true' && inputs.cache-cross-binary == 'true'
+
     - name: Install cross if cross-compiling (*nix)
       shell: bash
       run: install-cross-nix.sh ${{ steps.set-cross-dir.outputs.cross-dir }} ${{ steps.determine-cross-version.outputs.cross-version }}
       if: steps.determine-cross-compile.outputs.needs-cross == 'true' && steps.cache-cross.outputs.cache-hit != 'true'
       env:
         GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
+
     - name: Install musl-tools on Linux if target includes "musl"
       shell: bash
       run: |
@@ -118,14 +127,17 @@ runs:
         sudo apt-get update --yes && \
             sudo apt-get install --yes musl-tools
       if: steps.determine-cross-compile.outputs.needs-cross != 'true' && contains(inputs.target, 'musl')
+
     - name: Set build command
       id: set-build-command
       shell: bash
       run: set-build-command.sh ${{ steps.set-cross-dir.outputs.cross-dir }}
+
     - name: Determine which cargo commands to run
       id: determine-cargo-commands
       shell: bash
       run: determine-cargo-commands.sh ${{ inputs.command }}
+
     - name: Parse `rust-cache-parameters` and set inputs for `Swatinem/rust-cache@v2`
       id: parse-rust-cache-parameters
       shell: bash
@@ -144,16 +156,19 @@ runs:
       env:
         RUST_CACHE_PARAMETERS: ${{ inputs.rust-cache-parameters }}
       if: inputs.use-rust-cache == 'true'
+
     - name: Cache cargo & target directories
       uses: Swatinem/rust-cache@v2
       with: ${{ steps.parse-rust-cache-parameters.outputs }}
       if: inputs.use-rust-cache == 'true'
+
     - name: Run tests (*nix)
       working-directory: ${{ inputs.working-directory }}
       shell: bash
       run: |
         ${{ steps.set-build-command.outputs.build-command }} +${{inputs.toolchain}} test --target ${{ inputs.target }} ${{ inputs.args }}
       if: steps.determine-cargo-commands.outputs.test == 'true' && runner.os != 'Windows'
+
     # We want to run in Powershell on Windows to make sure we compile in a
     # native Windows environment. Some things won't compile properly under
     # msys, notably OpenSSL, which is compiled locally when using the
@@ -164,30 +179,35 @@ runs:
       run: |
         & ${{ steps.set-build-command.outputs.build-command }} +${{inputs.toolchain}} test --target ${{ inputs.target }} ${{ inputs.args }}
       if: steps.determine-cargo-commands.outputs.test == 'true' && runner.os == 'Windows'
+
     - name: Run benchmarks (*nix)
       working-directory: ${{ inputs.working-directory }}
       shell: bash
       run: |
         ${{ steps.set-build-command.outputs.build-command }} +${{inputs.toolchain}} bench --target ${{ inputs.target }} ${{ inputs.args }}
       if: steps.determine-cargo-commands.outputs.bench == 'true' && runner.os != 'Windows'
+
     - name: Run benchmarks (Windows)
       working-directory: ${{ inputs.working-directory }}
       shell: powershell
       run: |
         & ${{ steps.set-build-command.outputs.build-command }} +${{inputs.toolchain}} bench --target ${{ inputs.target }} ${{ inputs.args }}
       if: steps.determine-cargo-commands.outputs.bench == 'true' && runner.os == 'Windows'
+
     - name: Build binary (*nix)
       working-directory: ${{ inputs.working-directory }}
       shell: bash
       run: |
         ${{ steps.set-build-command.outputs.build-command }} +${{inputs.toolchain}} build ${{ inputs.args }} --target ${{ inputs.target }}
       if: steps.determine-cargo-commands.outputs.build == 'true' && runner.os != 'Windows'
+
     - name: Build binary (Windows)
       working-directory: ${{ inputs.working-directory }}
       shell: powershell
       run: |
         & ${{ steps.set-build-command.outputs.build-command }} +${{inputs.toolchain}} build ${{ inputs.args }} --target ${{ inputs.target }}
       if: steps.determine-cargo-commands.outputs.build == 'true' && runner.os == 'Windows'
+
     - name: Strip binary
       working-directory: ${{ inputs.working-directory }}
       shell: bash
