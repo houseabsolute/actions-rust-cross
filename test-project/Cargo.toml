@@ -3,6 +3,9 @@ name = "test-project"
 version = "0.1.0"
 edition = "2021"
 
+[dependencies]
+anyhow = "1.0.95"
+
 # For testing it would be nice to create a binary with spaces in the name, but
 # right now the `name` value must be a valid crate name, and there's no
 # separate setting for the compiled executable's name. See

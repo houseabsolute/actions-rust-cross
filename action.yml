@@ -175,7 +175,7 @@ runs:
       run: |
         echo "SCCACHE_GHA_ENABLED=true" >> "$GITHUB_ENV"
         echo "RUSTC_WRAPPER=sccache" >> "$GITHUB_ENV"
-      if: inputs.use-sccache == 'true' && steps.rust-cache.outputs.cache-hit == 'true'
+      if: inputs.use-sccache == 'true' && steps.rust-cache.outputs.cache-hit == 'true' && steps.determine-cross-compile.outputs.needs-cross != 'true'
 
     - name: Run tests (*nix)
       working-directory: ${{ inputs.working-directory }}
