@@ -50,6 +50,9 @@ inputs:
       A JSON string containing parameters to pass to `Swatinem/rust-cache@v2`. You can use the
       `toJSON()` function in your action to make passing this easier.
     default: "{}"
+  use-sccache:
+    description: |
+      Use sccache. This is only allowed when `use-rust-cache` is true as well.
 runs:
   using: composite
   steps:
@@ -158,9 +161,21 @@ runs:
       if: inputs.use-rust-cache == 'true'
 
     - name: Cache cargo & target directories
+      id: rust-cache
       uses: Swatinem/rust-cache@v2
       with: ${{ steps.parse-rust-cache-parameters.outputs }}
       if: inputs.use-rust-cache == 'true'
+
+    - name: Run sccache-cache
+      uses: mozilla-actions/sccache-action@v0.0.7
+      if: inputs.use-sccache == 'true' && steps.rust-cache.outputs.cache-hit == 'true'
+
+    - name: Set env vars for sccache
+      shell: bash
+      run: |
+        echo "SCCACHE_GHA_ENABLED=true" >> "$GITHUB_ENV"
+        echo "RUSTC_WRAPPER=sccache" >> "$GITHUB_ENV"
+      if: inputs.use-sccache == 'true' && steps.rust-cache.outputs.cache-hit == 'true'
 
     - name: Run tests (*nix)
       working-directory: ${{ inputs.working-directory }}
