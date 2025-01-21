@@ -1,0 +1,97 @@
+#!/usr/bin/env python3
+
+# Written mostly by Claude.ai based on my original bash script.
+
+import sys
+import platform
+import re
+import os
+from subprocess import run, PIPE, CalledProcessError
+
+
+def main() -> int:
+    """
+    Main function to determine cross-compilation requirements.
+
+    Returns:
+        Exit code (0 for success)
+    """
+    if len(sys.argv) < 2:
+        print("Error: Target architecture argument is required", file=sys.stderr)
+        return 1
+
+    target = sys.argv[1]
+    needs_cross = check_needs_cross(target)
+    write_github_output(needs_cross)
+
+    return 0
+
+
+def check_needs_cross(target: str) -> bool:
+    """
+    Determine if cross-compilation is needed based on system and target.
+
+    Args:
+        target: Target architecture string
+
+    Returns:
+        Boolean indicating if cross-compilation is needed
+    """
+    system_info = get_uname_info().lower()
+
+    # Check if we're on macOS or Windows
+    if any(os in system_info for os in ["darwin", "msys", "windows"]):
+        return False
+
+    target = target.lower()
+
+    # Check for x86_64 Linux targets on x86_64 Linux host
+    if (
+        re.search(r"x86_64.+linux-(?:gnu|musl)", target)
+        and "x86_64" in system_info
+        and "linux" in system_info
+    ):
+        return False
+
+    # Check if both host and target are ARM Linux. I'm assuming here that for things like
+    # "arm-linux-androideabi" or "armv7-unknown-linux-ohos" we'd still need cross.
+    if (
+        re.search(r"(?:aarch64|arm).+linux-(?:gnu|musl)", target)
+        and ("arm" in system_info or "aarch64" in system_info)
+        and "linux" in system_info
+    ):
+        return False
+
+    return True
+
+
+def get_uname_info() -> str:
+    """
+    Get system information using uname command.
+
+    Returns:
+        String containing system information
+    """
+    try:
+        result = run(["uname", "-a"], check=True, text=True, stdout=PIPE)
+        return result.stdout
+    except (CalledProcessError, FileNotFoundError):
+        # Fallback to platform.platform() if uname is not available
+        return platform.platform()
+
+
+def write_github_output(needs_cross: bool) -> None:
+    """
+    Write the needs-cross output to GITHUB_OUTPUT environment variable file.
+
+    Args:
+        needs_cross: Boolean indicating if cross-compilation is needed
+    """
+    github_output = os.getenv("GITHUB_OUTPUT")
+    if github_output:
+        with open(github_output, "a") as f:
+            f.write(f"needs-cross={str(needs_cross).lower()}\n")
+
+
+if __name__ == "__main__":
+    sys.exit(main())

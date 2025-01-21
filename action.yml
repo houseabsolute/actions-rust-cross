@@ -76,7 +76,7 @@ runs:
     - name: Determine whether we need to cross-compile
       id: determine-cross-compile
       shell: bash
-      run: set-cross-compile.sh ${{ inputs.target }}
+      run: set-cross-compile.py ${{ inputs.target }}
     - name: Install toolchain
       uses: dtolnay/rust-toolchain@master
       with:
