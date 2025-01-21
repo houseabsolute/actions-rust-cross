@@ -1,4 +1,4 @@
-## 1.0.1
+## 1.0.1 - 2025-01-20
 
 - Fixed a bug where this action would attempt to use `cross` when compiling for an ARM Linux target
   on an ARM Linux host.
