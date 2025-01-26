@@ -168,7 +168,7 @@ runs:
 
     - name: Run sccache-cache
       uses: mozilla-actions/sccache-action@v0.0.7
-      if: inputs.use-sccache == 'true' && steps.rust-cache.outputs.cache-hit == 'true'
+      if: inputs.use-sccache == 'true' && steps.rust-cache.outputs.cache-hit == 'true' && steps.determine-cross-compile.outputs.needs-cross != 'true'
 
     - name: Set env vars for sccache
       shell: bash
