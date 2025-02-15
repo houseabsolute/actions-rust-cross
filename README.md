@@ -14,19 +14,19 @@ jobs:
       matrix:
         platform:
           - os-name: FreeBSD-x86_64
-            runs-on: ubuntu-20.04
+            runs-on: ubuntu-24.04
             target: x86_64-unknown-freebsd
 
           - os-name: Linux-x86_64
-            runs-on: ubuntu-20.04
+            runs-on: ubuntu-24.04
             target: x86_64-unknown-linux-musl
 
           - os-name: Linux-aarch64
-            runs-on: ubuntu-20.04
+            runs-on: ubuntu-24.04
             target: aarch64-unknown-linux-musl
 
           - os-name: Linux-riscv64
-            runs-on: ubuntu-20.04
+            runs-on: ubuntu-24.04
             target: riscv64gc-unknown-linux-gnu
 
           - os-name: Windows-x86_64
@@ -60,7 +60,7 @@ jobs:
 Note that for Linux or BSD targets, you should always set the `runs-on` key to a Linux x86-64
 architecture runner.
 
-If you _only_ want to do native ARM compilation, for example using the `ubuntu-latest-arm` runner,
+If you _only_ want to do native ARM compilation, for example using the `ubuntu-24.04-arm` runner,
 then there's no need to use this action. However, if you want to compile for _many_ platforms,
 including Linux ARM, using this action will simplify your config. This action is only tested on
 Ubuntu x86-64, Windows, and macOS runners.
