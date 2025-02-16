@@ -79,7 +79,11 @@ fn check_cross(bin_dir: &Path, expect_cross: bool, expect_cross_version: Option<
     let cross_path = bin_dir.join("cross");
 
     if expect_cross {
-        assert!(cross_path.is_file(), "`cross` exists");
+        assert!(
+            cross_path.is_file(),
+            "`cross` exists at {}",
+            cross_path.display()
+        );
 
         if let Some(expected_version) = expect_cross_version {
             let output = Command::new(&cross_path)
@@ -90,7 +94,7 @@ fn check_cross(bin_dir: &Path, expect_cross: bool, expect_cross_version: Option<
                 .expect("`cross --version` stdout was not valid UTF-8");
             assert!(
                 version.contains(expected_version),
-                "`cross` version matches expected version"
+                "`cross` version matches expected version: {expected_version}",
             );
         }
     } else {
@@ -136,25 +140,29 @@ fn check_binary(bin_path: &PathBuf, expect_file_re: Option<&str>, expect_strippe
     if expect_stripped {
         assert!(
             !file_output.contains("not stripped"),
-            "`file` does not report {} as not stripped",
+            "`file` does not report {} as 'not stripped': `{}`",
             bin_path.display(),
+            file_output,
         );
         assert!(
             file_output.contains("stripped"),
-            "`file` reports {} as stripped",
+            "`file` reports {} as 'stripped': `{}`",
             bin_path.display(),
+            file_output,
         );
     } else if cfg!(windows) {
         assert!(
             !file_output.contains("stripped"),
-            "`file` does not report {} as stripped",
+            "`file` does not report {} as 'stripped': `{}`",
             bin_path.display(),
+            file_output,
         );
     } else {
         assert!(
             file_output.contains("not stripped"),
-            "`file` reports {} as not stripped",
+            "`file` reports {} as 'not stripped': `{}`",
             bin_path.display(),
+            file_output,
         );
     }
 }
