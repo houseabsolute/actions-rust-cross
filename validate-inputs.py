@@ -76,7 +76,9 @@ class InputValidator:
         # Validate boolean flags
         for flag in boolean_flags:
             if flag in self.inputs and self.inputs[flag] not in {"true", "false"}:
-                validation_errors.append(f"'{flag}' must be either 'true' or 'false'")
+                # Turn the underscores into dashes
+                dashes = flag.replace("_", "-")
+                validation_errors.append(f"'{dashes}' must be either 'true' or 'false'")
 
         # Validate rust-cache-parameters JSON if present
         if "rust_cache_parameters" in self.inputs:
