@@ -92,7 +92,7 @@ jobs:
             expect-stripped: ""
             can-execute: true
 
-          - platform_name: Linux-aarch64 with cross 19be834
+          - platform_name: Linux-aarch64 with cross 19be834 (no cache)
             runs-on: ubuntu-24.04
             target: aarch64-unknown-linux-gnu
             cross-version: "19be834"
