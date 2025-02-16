@@ -1,4 +1,4 @@
-## 1.0.2
+## 1.0.2 - 2025-02-16
 
 - Added a new `force-use-cross` input, which does what it says. It will force the use of `cross`
   even when it is not required for given platform/target combination. Note that this only works on
