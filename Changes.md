@@ -1,3 +1,9 @@
+## 1.0.2
+
+- Added a new `force-use-cross` input, which does what it says. It will force the use of `cross`
+  even when it is not required for given platform/target combination. Note that this only works on
+  Linux hosts.
+
 ## 1.0.1 - 2025-01-20
 
 - Fixed a bug where this action would attempt to use `cross` when compiling for an ARM Linux target

@@ -9,6 +9,8 @@ from typing import Dict, List, Union
 import tempfile
 import unittest
 
+boolean_flags = {"cache_cross_binary", "force_use_cross", "strip", "use_rust_cache"}
+
 
 class InputValidator:
     """Validate inputs for a GitHub Action."""
@@ -72,7 +74,6 @@ class InputValidator:
                 )
 
         # Validate boolean flags
-        boolean_flags = {"cache_cross_binary", "strip", "use_rust_cache"}
         for flag in boolean_flags:
             if flag in self.inputs and self.inputs[flag] not in {"true", "false"}:
                 validation_errors.append(f"'{flag}' must be either 'true' or 'false'")
@@ -212,7 +213,6 @@ class TestInputValidator(unittest.TestCase):
 
     def test_validate_boolean_flags(self) -> None:
         """Test validation of boolean flags."""
-        boolean_flags = ["cache-cross-binary", "strip", "use-rust-cache"]
 
         # Test valid boolean values
         for flag in boolean_flags:

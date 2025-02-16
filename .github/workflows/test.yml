@@ -29,6 +29,16 @@ jobs:
             expect-stripped: "--expect-stripped"
             can-execute: true
 
+          - platform_name: Linux-x86_64 (force cross)
+            runs-on: ubuntu-24.04
+            target: x86_64-unknown-linux-musl
+            force-use-cross: true
+            cache-cross-binary: true
+            expect-file-re: "ELF.+x86-64"
+            expect-cross: "--expect-cross"
+            expect-stripped: ""
+            can-execute: true
+
           - platform_name: Linux-aarch64
             runs-on: ubuntu-24.04
             target: aarch64-unknown-linux-musl
@@ -229,6 +239,7 @@ jobs:
         uses: ./
         with:
           command: both
+          force-use-cross: ${{ matrix.platform.force-use-cross || false }}
           cross-version: ${{ matrix.platform.cross-version }}
           cache-cross-binary: ${{ matrix.platform.cache-cross-binary }}
           target: ${{ matrix.platform.target }}
@@ -238,6 +249,7 @@ jobs:
         uses: ./
         with:
           command: test
+          force-use-cross: ${{ matrix.platform.force-use-cross || false }}
           cross-version: ${{ matrix.platform.cross-version }}
           cache-cross-binary: ${{ matrix.platform.cache-cross-binary }}
           target: ${{ matrix.platform.target }}
@@ -247,6 +259,7 @@ jobs:
         uses: ./
         with:
           command: test
+          force-use-cross: ${{ matrix.platform.force-use-cross || false }}
           cross-version: ${{ matrix.platform.cross-version }}
           cache-cross-binary: ${{ matrix.platform.cache-cross-binary }}
           target: ${{ matrix.platform.target }}
@@ -257,6 +270,7 @@ jobs:
         uses: ./
         with:
           command: build
+          force-use-cross: ${{ matrix.platform.force-use-cross || false }}
           cross-version: ${{ matrix.platform.cross-version }}
           cache-cross-binary: ${{ matrix.platform.cache-cross-binary }}
           target: ${{ matrix.platform.target }}
@@ -278,6 +292,7 @@ jobs:
         uses: ./
         with:
           command: build
+          force-use-cross: ${{ matrix.platform.force-use-cross || false }}
           cross-version: ${{ matrix.platform.cross-version }}
           cache-cross-binary: ${{ matrix.platform.cache-cross-binary }}
           working-directory: subcrate
@@ -301,6 +316,7 @@ jobs:
         uses: ./
         with:
           command: bench
+          force-use-cross: ${{ matrix.platform.force-use-cross || false }}
           cross-version: ${{ matrix.platform.cross-version }}
           cache-cross-binary: ${{ matrix.platform.cache-cross-binary }}
           target: ${{ matrix.platform.target }}

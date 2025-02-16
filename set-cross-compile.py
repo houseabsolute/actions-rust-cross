@@ -16,12 +16,20 @@ def main() -> int:
     Returns:
         Exit code (0 for success)
     """
-    if len(sys.argv) < 2:
-        print("Error: Target architecture argument is required", file=sys.stderr)
+    if len(sys.argv) < 3:
+        print(
+            "Error: Target architecture and force cross arguments are required",
+            file=sys.stderr,
+        )
         return 1
 
     target = sys.argv[1]
-    needs_cross = check_needs_cross(target)
+    force_use_cross = sys.argv[2]
+    if force_use_cross == "true":
+        needs_cross = True
+    else:
+        needs_cross = check_needs_cross(target)
+
     write_github_output(needs_cross)
 
     return 0

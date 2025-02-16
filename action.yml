@@ -53,6 +53,11 @@ inputs:
       tests of this action.
     default: true
 
+  force-use-cross:
+    description: |
+      If this is true, the action will use cross even for targets where it is not needed.
+    default: false
+
   use-rust-cache:
     description: |
       Use `Swatinem/rust-cache@v2`. Defaults to true.
@@ -87,13 +92,14 @@ runs:
         INPUTS_working_directory: ${{ inputs.working-directory }}
         INPUTS_strip: ${{ inputs.strip }}
         INPUTS_cache_cross_binary: ${{ inputs.cache-cross-binary }}
+        INPUTS_force_use_cross: ${{ inputs.force-use-cross }}
         INPUTS_use_rust_cache: ${{ inputs.use-rust-cache }}
         INPUTS_rust_cache_parameters: ${{ inputs.rust-cache-parameters }}
 
     - name: Determine whether we need to cross-compile
       id: determine-cross-compile
       shell: bash
-      run: set-cross-compile.py ${{ inputs.target }}
+      run: set-cross-compile.py ${{ inputs.target }} ${{ inputs.force-use-cross }}
 
     - name: Install toolchain
       uses: dtolnay/rust-toolchain@master
