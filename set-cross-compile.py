@@ -61,6 +61,10 @@ def check_needs_cross(target: str) -> bool:
     ):
         return False
 
+    # It's tempting to not use cross when the host is Linux x86-64 and we're compiling for Linux
+    # i586 or i686. This sort of works, but if there's any C being compiled, things get weird,
+    # because then we need 32-bit C headers, 32-bit C libs to link to, etc.
+
     # Check if both host and target are ARM Linux. I'm assuming here that for things like
     # "arm-linux-androideabi" or "armv7-unknown-linux-ohos" we'd still need cross.
     if (
