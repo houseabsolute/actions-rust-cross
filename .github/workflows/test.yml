@@ -22,6 +22,8 @@ jobs:
 
           - platform_name: Linux-x86_64
             runs-on: ubuntu-24.04
+            # It's important to use a musl target here to make sure that the step to install
+            # musl-tools works.
             target: x86_64-unknown-linux-musl
             cache-cross-binary: true
             expect-file-re: "ELF.+x86-64"
@@ -31,7 +33,7 @@ jobs:
 
           - platform_name: Linux-x86_64 (force cross)
             runs-on: ubuntu-24.04
-            target: x86_64-unknown-linux-musl
+            target: x86_64-unknown-linux-gnu
             force-use-cross: true
             cache-cross-binary: true
             expect-file-re: "ELF.+x86-64"
@@ -50,7 +52,7 @@ jobs:
 
           - platform_name: Linux-aarch64 (no cache)
             runs-on: ubuntu-24.04
-            target: aarch64-unknown-linux-musl
+            target: aarch64-unknown-linux-gnu
             cache-cross-binary: false
             expect-file-re: "aarch64"
             expect-cross: "--expect-cross"
@@ -59,7 +61,7 @@ jobs:
 
           - platform_name: Linux-aarch64 with cross v0.2.3
             runs-on: ubuntu-24.04
-            target: aarch64-unknown-linux-musl
+            target: aarch64-unknown-linux-gnu
             cross-version: "v0.2.3"
             cache-cross-binary: true
             expect-file-re: "aarch64"
@@ -70,7 +72,7 @@ jobs:
 
           - platform_name: Linux-aarch64 with cross v0.2.3 (no cache)
             runs-on: ubuntu-24.04
-            target: aarch64-unknown-linux-musl
+            target: aarch64-unknown-linux-gnu
             cross-version: "v0.2.3"
             cache-cross-binary: false
             expect-file-re: "aarch64"
@@ -81,7 +83,7 @@ jobs:
 
           - platform_name: Linux-aarch64 with cross 19be834
             runs-on: ubuntu-24.04
-            target: aarch64-unknown-linux-musl
+            target: aarch64-unknown-linux-gnu
             cross-version: "19be834"
             cache-cross-binary: true
             expect-file-re: "aarch64"
@@ -92,7 +94,7 @@ jobs:
 
           - platform_name: Linux-aarch64 with cross 19be834
             runs-on: ubuntu-24.04
-            target: aarch64-unknown-linux-musl
+            target: aarch64-unknown-linux-gnu
             cross-version: "19be834"
             cache-cross-binary: false
             expect-file-re: "aarch64"
@@ -103,7 +105,7 @@ jobs:
 
           - platform_name: Linux-arm
             runs-on: ubuntu-24.04
-            target: arm-unknown-linux-musleabi
+            target: arm-unknown-linux-gnueabi
             cache-cross-binary: true
             expect-file-re: "32.+ARM"
             expect-cross: "--expect-cross"
@@ -112,7 +114,7 @@ jobs:
 
           - platform_name: Linux-i586
             runs-on: ubuntu-24.04
-            target: i586-unknown-linux-musl
+            target: i586-unknown-linux-gnu
             cache-cross-binary: true
             expect-file-re: "ELF.+80386"
             expect-cross: "--expect-cross"
@@ -121,7 +123,7 @@ jobs:
 
           - platform_name: Linux-i686
             runs-on: ubuntu-24.04
-            target: i686-unknown-linux-musl
+            target: i686-unknown-linux-gnu
             cache-cross-binary: true
             expect-file-re: "ELF.+80386"
             expect-cross: "--expect-cross"
