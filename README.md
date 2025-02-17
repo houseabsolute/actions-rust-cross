@@ -163,6 +163,19 @@ you can avoid this issue by structuring your workflow as follows:
 
 When structured this way, it does not matter if the output of crate A is deleted in step 3.
 
+## Cross-Compiling from Linux ARM Runners
+
+In theory, this should work, and this action does implement some of the necessary work for this.
+However, there are a couple issues with this:
+
+1. As of 2025-02-17, the `cross` project does not publish Linux ARM binary releases. That means that
+   in order to use `cross` on a Linux ARM runner as part of this action, you must set
+   `cross-version` to a more recent commit from the `cross` repo.
+2. There is
+   [a bug in `cross` that means you must use a custom Docker image](https://github.com/cross-rs/cross/issues/1628)
+   when cross-compiling from a Linux ARM runner. See
+   [this other `cross` issue](https://github.com/cross-rs/cross/issues/751) for more details.
+
 ## Linting and Tidying this Code
 
 The code in this repo is linted and tidied with

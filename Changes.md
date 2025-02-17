@@ -1,3 +1,9 @@
+## 1.0.3
+
+- Fixed a bug when running with an ARM Linux host where the action would use a cached `cross`
+  download for x86-64 Linux (or vice versa). Now the cache key for the `cross` binary includes both
+  the runner's architecture in addition to its OS.
+
 ## 1.0.2 - 2025-02-16
 
 - Added a new `force-use-cross` input, which does what it says. It will force the use of `cross`

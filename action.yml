@@ -107,6 +107,15 @@ runs:
         targets: ${{ inputs.target }}
         toolchain: ${{ inputs.toolchain }}
 
+    - name: Install qemu-user emulator binaries if cross-compiling on arm64 host
+      shell: bash
+      run: |
+        set -e
+        set -x
+
+        docker run --privileged --rm tonistiigi/binfmt --install all
+      if: steps.determine-cross-compile.outputs.needs-cross == 'true' && runner.os == 'Linux' && contains(runner.arch, 'ARM')
+
     - name: Determine cross version
       id: determine-cross-version
       shell: bash
@@ -128,7 +137,7 @@ runs:
       uses: actions/cache@v4
       with:
         path: ${{ steps.set-cross-dir.outputs.cross-dir }}/cross
-        key: ${{ runner.os }}-${{ steps.determine-cross-version.outputs.cross-version }}
+        key: ${{ runner.os }}-${{ runner.arch }}-${{ steps.determine-cross-version.outputs.cross-version }}
       if: steps.determine-cross-compile.outputs.needs-cross == 'true' && inputs.cache-cross-binary == 'true'
 
     - name: Install cross if cross-compiling (*nix)

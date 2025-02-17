@@ -103,6 +103,32 @@ jobs:
             expect-stripped: ""
             can-execute: true
 
+          - platform_name: Linux-aarch64 with arm64 host
+            runs-on: ubuntu-24.04-arm
+            target: aarch64-unknown-linux-gnu
+            cache-cross-binary: true
+            expect-file-re: "aarch64"
+            expect-cross: ""
+            expect-stripped: "--expect-stripped"
+            can-execute: true
+
+          # This fails because of some sort of weird bug in cross. See
+          # https://github.com/cross-rs/cross/issues/1628 for more details. Until that's fixed
+          # cross-compiling on Linux ARM won't work without a custom Docker image, which I don't
+          # want to do just for the sake of testing this.
+          #
+          # - platform_name: Linux-aarch64 with arm64 host compile to x86-64
+          #   runs-on: ubuntu-24.04-arm
+          #   target: x86_64-unknown-linux-gnu
+          #   # Until cross produces arm64 binary releases we _have_ to set this when running on
+          #   # arm64.
+          #   cross-version: "c7dee4d"
+          #   cache-cross-binary: true
+          #   expect-file-re: "ELF.+x86-64"
+          #   expect-cross: "--expect-cross"
+          #   expect-stripped: ""
+          #   can-execute: true
+
           - platform_name: Linux-arm
             runs-on: ubuntu-24.04
             target: arm-unknown-linux-gnueabi
