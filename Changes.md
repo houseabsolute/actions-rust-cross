@@ -1,4 +1,4 @@
-## 1.0.3
+## 1.0.3 - 2025-02-17
 
 - Fixed a bug when running with an ARM Linux host where the action would use a cached `cross`
   download for x86-64 Linux (or vice versa). Now the cache key for the `cross` binary includes both
