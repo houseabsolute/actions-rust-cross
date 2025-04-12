@@ -1,4 +1,4 @@
-## 1.0.4
+## 1.0.4 - 2025-04-12
 
 - Removed validation for the `toolchain` input. The
   [dtolnay/rust-toolchain](https://github.com/dtolnay/rust-toolchain) accepts a lot of different
