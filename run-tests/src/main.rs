@@ -127,7 +127,7 @@ fn check_binary(bin_path: &PathBuf, expect_file_re: Option<&str>, expect_strippe
         let re = Regex::new(file_re).expect("Invalid regex");
         assert!(
             re.is_match(&file_output),
-            "`file` output for {} matches expected output",
+            "`file` output for {} matches `{file_re}`",
             bin_path.display(),
         );
     }
