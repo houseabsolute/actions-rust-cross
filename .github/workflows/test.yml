@@ -11,7 +11,7 @@ jobs:
       fail-fast: false
       matrix:
         platform:
-          - platform_name: FreeBSD-x86_64
+          - name: FreeBSD-x86_64
             runs-on: ubuntu-24.04
             target: x86_64-unknown-freebsd
             cache-cross-binary: true
@@ -20,7 +20,7 @@ jobs:
             expect-stripped: ""
             can-execute: false
 
-          - platform_name: Linux-x86_64
+          - name: Linux-x86_64
             runs-on: ubuntu-24.04
             # It's important to use a musl target here to make sure that the step to install
             # musl-tools works.
@@ -31,7 +31,7 @@ jobs:
             expect-stripped: "--expect-stripped"
             can-execute: true
 
-          - platform_name: Linux-x86_64 (beta)
+          - name: Linux-x86_64 (beta)
             runs-on: ubuntu-24.04
             target: x86_64-unknown-linux-musl
             toolchain: beta
@@ -41,7 +41,7 @@ jobs:
             expect-stripped: "--expect-stripped"
             can-execute: true
 
-          - platform_name: Linux-x86_64 (nightly)
+          - name: Linux-x86_64 (nightly)
             runs-on: ubuntu-24.04
             target: x86_64-unknown-linux-musl
             toolchain: nightly
@@ -51,7 +51,7 @@ jobs:
             expect-stripped: "--expect-stripped"
             can-execute: true
 
-          - platform_name: Linux-x86_64 (force cross)
+          - name: Linux-x86_64 (force cross)
             runs-on: ubuntu-24.04
             target: x86_64-unknown-linux-gnu
             force-use-cross: true
@@ -61,7 +61,7 @@ jobs:
             expect-stripped: ""
             can-execute: true
 
-          - platform_name: Linux-x86_64 (stable 8 months ago)
+          - name: Linux-x86_64 (stable 8 months ago)
             runs-on: ubuntu-24.04
             target: x86_64-unknown-linux-gnu
             toolchain: "stable 8 months ago"
@@ -71,7 +71,7 @@ jobs:
             expect-stripped: "--expect-stripped"
             can-execute: true
 
-          - platform_name: Linux-aarch64
+          - name: Linux-aarch64
             runs-on: ubuntu-24.04
             target: aarch64-unknown-linux-musl
             cache-cross-binary: true
@@ -80,7 +80,7 @@ jobs:
             expect-stripped: ""
             can-execute: true
 
-          - platform_name: Linux-aarch64 (no cache)
+          - name: Linux-aarch64 (no cache)
             runs-on: ubuntu-24.04
             target: aarch64-unknown-linux-gnu
             cache-cross-binary: false
@@ -89,7 +89,7 @@ jobs:
             expect-stripped: ""
             can-execute: true
 
-          - platform_name: Linux-aarch64 with cross v0.2.3
+          - name: Linux-aarch64 with cross v0.2.3
             runs-on: ubuntu-24.04
             target: aarch64-unknown-linux-gnu
             cross-version: "v0.2.3"
@@ -100,7 +100,7 @@ jobs:
             expect-stripped: ""
             can-execute: true
 
-          - platform_name: Linux-aarch64 with cross v0.2.3 (no cache)
+          - name: Linux-aarch64 with cross v0.2.3 (no cache)
             runs-on: ubuntu-24.04
             target: aarch64-unknown-linux-gnu
             cross-version: "v0.2.3"
@@ -111,7 +111,7 @@ jobs:
             expect-stripped: ""
             can-execute: true
 
-          - platform_name: Linux-aarch64 with cross 19be834
+          - name: Linux-aarch64 with cross 19be834
             runs-on: ubuntu-24.04
             target: aarch64-unknown-linux-gnu
             cross-version: "19be834"
@@ -122,7 +122,7 @@ jobs:
             expect-stripped: ""
             can-execute: true
 
-          - platform_name: Linux-aarch64 with cross 19be834 (no cache)
+          - name: Linux-aarch64 with cross 19be834 (no cache)
             runs-on: ubuntu-24.04
             target: aarch64-unknown-linux-gnu
             cross-version: "19be834"
@@ -133,7 +133,7 @@ jobs:
             expect-stripped: ""
             can-execute: true
 
-          - platform_name: Linux-aarch64 with arm64 host
+          - name: Linux-aarch64 with arm64 host
             runs-on: ubuntu-24.04-arm
             target: aarch64-unknown-linux-gnu
             cache-cross-binary: true
@@ -147,7 +147,7 @@ jobs:
           # cross-compiling on Linux ARM won't work without a custom Docker image, which I don't
           # want to do just for the sake of testing this.
           #
-          # - platform_name: Linux-aarch64 with arm64 host compile to x86-64
+          # - name: Linux-aarch64 with arm64 host compile to x86-64
           #   runs-on: ubuntu-24.04-arm
           #   target: x86_64-unknown-linux-gnu
           #   # Until cross produces arm64 binary releases we _have_ to set this when running on
@@ -159,7 +159,7 @@ jobs:
           #   expect-stripped: ""
           #   can-execute: true
 
-          - platform_name: Linux-arm
+          - name: Linux-arm
             runs-on: ubuntu-24.04
             target: arm-unknown-linux-gnueabi
             cache-cross-binary: true
@@ -168,7 +168,7 @@ jobs:
             expect-stripped: ""
             can-execute: true
 
-          - platform_name: Linux-i586
+          - name: Linux-i586
             runs-on: ubuntu-24.04
             target: i586-unknown-linux-gnu
             cache-cross-binary: true
@@ -177,7 +177,7 @@ jobs:
             expect-stripped: ""
             can-execute: true
 
-          - platform_name: Linux-i686
+          - name: Linux-i686
             runs-on: ubuntu-24.04
             target: i686-unknown-linux-gnu
             cache-cross-binary: true
@@ -186,7 +186,7 @@ jobs:
             expect-stripped: ""
             can-execute: true
 
-          - platform_name: Linux-powerpc
+          - name: Linux-powerpc
             runs-on: ubuntu-24.04
             target: powerpc-unknown-linux-gnu
             cache-cross-binary: true
@@ -195,7 +195,7 @@ jobs:
             expect-stripped: ""
             can-execute: true
 
-          - platform_name: Linux-powerpc64
+          - name: Linux-powerpc64
             runs-on: ubuntu-24.04
             target: powerpc64-unknown-linux-gnu
             cache-cross-binary: true
@@ -204,7 +204,7 @@ jobs:
             expect-stripped: ""
             can-execute: true
 
-          - platform_name: Linux-powerpc64le
+          - name: Linux-powerpc64le
             runs-on: ubuntu-24.04
             target: powerpc64le-unknown-linux-gnu
             cache-cross-binary: true
@@ -213,7 +213,7 @@ jobs:
             expect-stripped: ""
             can-execute: true
 
-          - platform_name: Linux-riscv64
+          - name: Linux-riscv64
             runs-on: ubuntu-24.04
             target: riscv64gc-unknown-linux-gnu
             cache-cross-binary: true
@@ -222,7 +222,7 @@ jobs:
             expect-stripped: ""
             can-execute: true
 
-          - platform_name: Linux-s390x
+          - name: Linux-s390x
             runs-on: ubuntu-24.04
             target: s390x-unknown-linux-gnu
             cache-cross-binary: true
@@ -231,7 +231,7 @@ jobs:
             expect-stripped: ""
             can-execute: true
 
-          - platform_name: NetBSD-x86_64
+          - name: NetBSD-x86_64
             runs-on: ubuntu-24.04
             target: x86_64-unknown-netbsd
             cache-cross-binary: true
@@ -240,7 +240,7 @@ jobs:
             expect-stripped: ""
             can-execute: false
 
-          - platform_name: Windows-aarch64
+          - name: Windows-aarch64
             runs-on: windows-latest
             target: aarch64-pc-windows-msvc
             cache-cross-binary: true
@@ -249,7 +249,7 @@ jobs:
             expect-stripped: ""
             can-execute: false
 
-          - platform_name: Windows-i686
+          - name: Windows-i686
             runs-on: windows-latest
             target: i686-pc-windows-msvc
             cache-cross-binary: true
@@ -258,7 +258,7 @@ jobs:
             expect-stripped: "--expect-stripped"
             can-execute: true
 
-          - platform_name: Windows-x86_64
+          - name: Windows-x86_64
             runs-on: windows-latest
             target: x86_64-pc-windows-msvc
             cache-cross-binary: true
@@ -266,7 +266,7 @@ jobs:
             expect-stripped: "--expect-stripped"
             can-execute: true
 
-          - platform_name: macOS-x86_64
+          - name: macOS-x86_64
             runs-on: macOS-latest
             target: x86_64-apple-darwin
             cache-cross-binary: true
@@ -275,7 +275,7 @@ jobs:
             expect-stripped: "--expect-stripped"
             can-execute: true
 
-          - platform_name: macOS-aarch64
+          - name: macOS-aarch64
             runs-on: macOS-latest
             target: aarch64-apple-darwin
             cache-cross-binary: true
@@ -338,7 +338,7 @@ jobs:
           toolchain: ${{ matrix.platform.toolchain || 'stable' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           strip: true
-      - name: Check binary and cross for main crate on ${{ matrix.platform.platform_name }}
+      - name: Check binary and cross for main crate on ${{ matrix.platform.name }}
         shell: bash
         run: |
           set -e
@@ -362,7 +362,7 @@ jobs:
           toolchain: ${{ matrix.platform.toolchain || 'stable' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           strip: true
-      - name: Check binary and cross for subcrate on ${{ matrix.platform.platform_name }}
+      - name: Check binary and cross for subcrate on ${{ matrix.platform.name }}
         shell: bash
         run: |
           set -e
@@ -390,7 +390,7 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: build-artifacts-${{ matrix.platform.platform_name }}
+          name: build-artifacts-${{ matrix.platform.name }}
           path: |
             target/${{ matrix.platform.target }}/debug/bin*
             subcrate/target/${{ matrix.platform.target }}/debug/subcrate
