@@ -122,12 +122,16 @@ fn check_binary(bin_path: &PathBuf, expect_file_re: Option<&str>, expect_strippe
         .output()
         .expect("Failed to execute `file` command");
     let file_output = String::from_utf8_lossy(&output.stdout);
+    println!(
+        "output from `file` for {}: {file_output}",
+        bin_path.display(),
+    );
 
     if let Some(file_re) = expect_file_re {
         let re = Regex::new(file_re).expect("Invalid regex");
         assert!(
             re.is_match(&file_output),
-            "`file` output for {} matches `{file_re}`",
+            "`file` output for {} matches `{file_re}`: `{file_output}`",
             bin_path.display(),
         );
     }
@@ -140,29 +144,25 @@ fn check_binary(bin_path: &PathBuf, expect_file_re: Option<&str>, expect_strippe
     if expect_stripped {
         assert!(
             !file_output.contains("not stripped"),
-            "`file` does not report {} as 'not stripped': `{}`",
+            "`file` does not report {} as 'not stripped': `{file_output}`",
             bin_path.display(),
-            file_output,
         );
         assert!(
             file_output.contains("stripped"),
-            "`file` reports {} as 'stripped': `{}`",
+            "`file` reports {} as 'stripped': `{file_output}`",
             bin_path.display(),
-            file_output,
         );
     } else if cfg!(windows) {
         assert!(
             !file_output.contains("stripped"),
-            "`file` does not report {} as 'stripped': `{}`",
+            "`file` does not report {} as 'stripped': `{file_output}`",
             bin_path.display(),
-            file_output,
         );
     } else {
         assert!(
             file_output.contains("not stripped"),
-            "`file` reports {} as 'not stripped': `{}`",
+            "`file` reports {} as 'not stripped': `{file_output}`",
             bin_path.display(),
-            file_output,
         );
     }
 }
