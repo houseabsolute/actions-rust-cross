@@ -244,7 +244,7 @@ jobs:
             runs-on: windows-latest
             target: aarch64-pc-windows-msvc
             cache-cross-binary: true
-            expect-file-re: "Aarch64.+Windows"
+            expect-file-re: "Windows.+ARM64"
             expect-cross: ""
             expect-stripped: ""
             can-execute: false
@@ -253,7 +253,7 @@ jobs:
             runs-on: windows-latest
             target: i686-pc-windows-msvc
             cache-cross-binary: true
-            expect-file-re: "80386.+Windows"
+            expect-file-re: "Windows.+Intel i386"
             expect-cross: ""
             expect-stripped: "--expect-stripped"
             can-execute: true
@@ -262,7 +262,7 @@ jobs:
             runs-on: windows-latest
             target: x86_64-pc-windows-msvc
             cache-cross-binary: true
-            expect-file-re: "x86-64.+Windows"
+            expect-file-re: "Windows.+x86-64"
             expect-stripped: "--expect-stripped"
             can-execute: true
 
