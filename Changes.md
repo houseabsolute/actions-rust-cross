@@ -4,6 +4,9 @@
   [dtolnay/rust-toolchain](https://github.com/dtolnay/rust-toolchain) accepts a lot of different
   options that this action wasn't allowing. It's simpler and more flexible to just let that action
   handle validation. Requested by @axos88 (Akos Vandra-Meyer). GH #42.
+- Removed validation for the `command` input. This allows you to use this action with any `cargo`
+  extension command, like `cargo-deb`. Setting `command` to `both` is still supported and will run
+  the `build` and `test` commands. Requested by @bvaisvil (Benjamin Vaisvil). GH #43.
 
 ## 1.0.3 - 2025-02-17
 

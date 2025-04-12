@@ -404,3 +404,37 @@ jobs:
       - name: Run tests
         shell: bash
         run: ./validate-inputs.py --test
+
+  test-other-cargo-commands:
+    name: Test a "cargo foo" command
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Copy test project to root
+        shell: bash
+        run: |
+          cp -a test-project/* .
+          rm -fr test-project
+      - name: Create cargo-foo command
+        shell: bash
+        run: |
+          set -e
+          set -x
+
+          dir="${{ github.workspace }}/bin"
+          mkdir -p "$dir"
+
+          bin="$dir/cargo-foo"          
+
+          echo "#!/bin/bash" >> "$bin"
+          echo "echo 'This is cargo-foo!'" >> "$bin"
+          echo "exit 0" >> "$bin"
+          chmod 0755 "$bin"
+
+          echo "PATH=$dir:$PATH" >> "$GITHUB_ENV"
+      - name: Run cargo-foo command
+        uses: ./
+        with:
+          command: foo
+          target: x86_64-unknown-linux-gnu

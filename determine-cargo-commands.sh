@@ -9,5 +9,5 @@ if [ "$COMMAND" == 'both' ]; then
     echo "build=true" >>"$GITHUB_OUTPUT"
     echo "test=true" >>"$GITHUB_OUTPUT"
 else
-    echo "$COMMAND=true" >>"$GITHUB_OUTPUT"
+    echo "command=$COMMAND" >>"$GITHUB_OUTPUT"
 fi

@@ -15,7 +15,7 @@ inputs:
 
   command:
     description: |
-      The commands to run. This must be one of "build", "test", "both" (build and test), or "bench".
+      The commands to run. Use "both" to run both "build" and "test".
     default: build
 
   toolchain:
@@ -191,51 +191,35 @@ runs:
       with: ${{ steps.parse-rust-cache-parameters.outputs }}
       if: inputs.use-rust-cache == 'true'
 
-    - name: Run tests (*nix)
+    - name: Run cargo test
       working-directory: ${{ inputs.working-directory }}
-      shell: bash
+      # We want to run in Powershell on Windows to make sure we compile in a native Windows
+      # environment. Some things won't compile properly under msys, notably OpenSSL, which is
+      # compiled locally when using the `openssl` crate with the `vendored` feature.
+      shell: ${{ runner.os == 'Windows' && 'powershell' || 'bash' }}
       run: |
         ${{ steps.set-build-command.outputs.build-command }} test --target ${{ inputs.target }} ${{ inputs.args }}
-      if: steps.determine-cargo-commands.outputs.test == 'true' && runner.os != 'Windows'
+      if: steps.determine-cargo-commands.outputs.test == 'true'
 
-    # We want to run in Powershell on Windows to make sure we compile in a
-    # native Windows environment. Some things won't compile properly under
-    # msys, notably OpenSSL, which is compiled locally when using the
-    # `openssl` crate with the `vendored` feature.
-    - name: Run tests (Windows)
+    - name: Run cargo build
       working-directory: ${{ inputs.working-directory }}
-      shell: powershell
+      # We want to run in Powershell on Windows to make sure we compile in a native Windows
+      # environment. Some things won't compile properly under msys, notably OpenSSL, which is
+      # compiled locally when using the `openssl` crate with the `vendored` feature.
+      shell: ${{ runner.os == 'Windows' && 'powershell' || 'bash' }}
       run: |
-        & ${{ steps.set-build-command.outputs.build-command }} test --target ${{ inputs.target }} ${{ inputs.args }}
-      if: steps.determine-cargo-commands.outputs.test == 'true' && runner.os == 'Windows'
+        ${{ steps.set-build-command.outputs.build-command }} build --target ${{ inputs.target }} ${{ inputs.args }}
+      if: steps.determine-cargo-commands.outputs.build == 'true'
 
-    - name: Run benchmarks (*nix)
+    - name: Run cargo ${{ steps.determine-cargo-commands.outputs.command }}
       working-directory: ${{ inputs.working-directory }}
-      shell: bash
+      # We want to run in Powershell on Windows to make sure we compile in a native Windows
+      # environment. Some things won't compile properly under msys, notably OpenSSL, which is
+      # compiled locally when using the `openssl` crate with the `vendored` feature.
+      shell: ${{ runner.os == 'Windows' && 'powershell' || 'bash' }}
       run: |
-        ${{ steps.set-build-command.outputs.build-command }} bench --target ${{ inputs.target }} ${{ inputs.args }}
-      if: steps.determine-cargo-commands.outputs.bench == 'true' && runner.os != 'Windows'
-
-    - name: Run benchmarks (Windows)
-      working-directory: ${{ inputs.working-directory }}
-      shell: powershell
-      run: |
-        & ${{ steps.set-build-command.outputs.build-command }} bench --target ${{ inputs.target }} ${{ inputs.args }}
-      if: steps.determine-cargo-commands.outputs.bench == 'true' && runner.os == 'Windows'
-
-    - name: Build binary (*nix)
-      working-directory: ${{ inputs.working-directory }}
-      shell: bash
-      run: |
-        ${{ steps.set-build-command.outputs.build-command }} build ${{ inputs.args }} --target ${{ inputs.target }}
-      if: steps.determine-cargo-commands.outputs.build == 'true' && runner.os != 'Windows'
-
-    - name: Build binary (Windows)
-      working-directory: ${{ inputs.working-directory }}
-      shell: powershell
-      run: |
-        & ${{ steps.set-build-command.outputs.build-command }} build ${{ inputs.args }} --target ${{ inputs.target }}
-      if: steps.determine-cargo-commands.outputs.build == 'true' && runner.os == 'Windows'
+        ${{ steps.set-build-command.outputs.build-command }} ${{ steps.determine-cargo-commands.outputs.command }} --target ${{ inputs.target }} ${{ inputs.args }}
+      if: steps.determine-cargo-commands.outputs.command != ''
 
     - name: Strip binary
       working-directory: ${{ inputs.working-directory }}
