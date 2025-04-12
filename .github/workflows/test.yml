@@ -31,6 +31,26 @@ jobs:
             expect-stripped: "--expect-stripped"
             can-execute: true
 
+          - platform_name: Linux-x86_64 (beta)
+            runs-on: ubuntu-24.04
+            target: x86_64-unknown-linux-musl
+            toolchain: beta
+            cache-cross-binary: true
+            expect-file-re: "ELF.+x86-64"
+            expect-cross: ""
+            expect-stripped: "--expect-stripped"
+            can-execute: true
+
+          - platform_name: Linux-x86_64 (nightly)
+            runs-on: ubuntu-24.04
+            target: x86_64-unknown-linux-musl
+            toolchain: nightly
+            cache-cross-binary: true
+            expect-file-re: "ELF.+x86-64"
+            expect-cross: ""
+            expect-stripped: "--expect-stripped"
+            can-execute: true
+
           - platform_name: Linux-x86_64 (force cross)
             runs-on: ubuntu-24.04
             target: x86_64-unknown-linux-gnu
@@ -39,6 +59,16 @@ jobs:
             expect-file-re: "ELF.+x86-64"
             expect-cross: "--expect-cross"
             expect-stripped: ""
+            can-execute: true
+
+          - platform_name: Linux-x86_64 (stable 8 months ago)
+            runs-on: ubuntu-24.04
+            target: x86_64-unknown-linux-gnu
+            toolchain: "stable 8 months ago"
+            cache-cross-binary: true
+            expect-file-re: "ELF.+x86-64"
+            expect-cross: ""
+            expect-stripped: "--expect-stripped"
             can-execute: true
 
           - platform_name: Linux-aarch64
@@ -271,6 +301,7 @@ jobs:
           cross-version: ${{ matrix.platform.cross-version }}
           cache-cross-binary: ${{ matrix.platform.cache-cross-binary }}
           target: ${{ matrix.platform.target }}
+          toolchain: ${{ matrix.platform.toolchain || 'stable' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ matrix.platform.can-execute }}
       - name: Run test command
@@ -281,6 +312,7 @@ jobs:
           cross-version: ${{ matrix.platform.cross-version }}
           cache-cross-binary: ${{ matrix.platform.cache-cross-binary }}
           target: ${{ matrix.platform.target }}
+          toolchain: ${{ matrix.platform.toolchain || 'stable' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ matrix.platform.can-execute }}
       - name: Run test command with args
@@ -291,6 +323,7 @@ jobs:
           cross-version: ${{ matrix.platform.cross-version }}
           cache-cross-binary: ${{ matrix.platform.cache-cross-binary }}
           target: ${{ matrix.platform.target }}
+          toolchain: ${{ matrix.platform.toolchain || 'stable' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           args: "-- --ignored"
         if: ${{ matrix.platform.can-execute }}
@@ -302,6 +335,7 @@ jobs:
           cross-version: ${{ matrix.platform.cross-version }}
           cache-cross-binary: ${{ matrix.platform.cache-cross-binary }}
           target: ${{ matrix.platform.target }}
+          toolchain: ${{ matrix.platform.toolchain || 'stable' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           strip: true
       - name: Check binary and cross for main crate on ${{ matrix.platform.platform_name }}
@@ -325,6 +359,7 @@ jobs:
           cache-cross-binary: ${{ matrix.platform.cache-cross-binary }}
           working-directory: subcrate
           target: ${{ matrix.platform.target }}
+          toolchain: ${{ matrix.platform.toolchain || 'stable' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           strip: true
       - name: Check binary and cross for subcrate on ${{ matrix.platform.platform_name }}
@@ -349,6 +384,7 @@ jobs:
           cache-cross-binary: ${{ matrix.platform.cache-cross-binary }}
           target: ${{ matrix.platform.target }}
           working-directory: bench
+          toolchain: ${{ matrix.platform.toolchain || 'stable' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ matrix.platform.can-execute }}
 

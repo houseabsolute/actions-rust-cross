@@ -20,7 +20,7 @@ inputs:
 
   toolchain:
     description: |
-      The target toolchain to use (one of "stable", "beta", or "nightly").
+      The target toolchain to use.
     default: stable
 
   working-directory:
@@ -195,7 +195,7 @@ runs:
       working-directory: ${{ inputs.working-directory }}
       shell: bash
       run: |
-        ${{ steps.set-build-command.outputs.build-command }} +${{inputs.toolchain}} test --target ${{ inputs.target }} ${{ inputs.args }}
+        ${{ steps.set-build-command.outputs.build-command }} test --target ${{ inputs.target }} ${{ inputs.args }}
       if: steps.determine-cargo-commands.outputs.test == 'true' && runner.os != 'Windows'
 
     # We want to run in Powershell on Windows to make sure we compile in a
@@ -206,35 +206,35 @@ runs:
       working-directory: ${{ inputs.working-directory }}
       shell: powershell
       run: |
-        & ${{ steps.set-build-command.outputs.build-command }} +${{inputs.toolchain}} test --target ${{ inputs.target }} ${{ inputs.args }}
+        & ${{ steps.set-build-command.outputs.build-command }} test --target ${{ inputs.target }} ${{ inputs.args }}
       if: steps.determine-cargo-commands.outputs.test == 'true' && runner.os == 'Windows'
 
     - name: Run benchmarks (*nix)
       working-directory: ${{ inputs.working-directory }}
       shell: bash
       run: |
-        ${{ steps.set-build-command.outputs.build-command }} +${{inputs.toolchain}} bench --target ${{ inputs.target }} ${{ inputs.args }}
+        ${{ steps.set-build-command.outputs.build-command }} bench --target ${{ inputs.target }} ${{ inputs.args }}
       if: steps.determine-cargo-commands.outputs.bench == 'true' && runner.os != 'Windows'
 
     - name: Run benchmarks (Windows)
       working-directory: ${{ inputs.working-directory }}
       shell: powershell
       run: |
-        & ${{ steps.set-build-command.outputs.build-command }} +${{inputs.toolchain}} bench --target ${{ inputs.target }} ${{ inputs.args }}
+        & ${{ steps.set-build-command.outputs.build-command }} bench --target ${{ inputs.target }} ${{ inputs.args }}
       if: steps.determine-cargo-commands.outputs.bench == 'true' && runner.os == 'Windows'
 
     - name: Build binary (*nix)
       working-directory: ${{ inputs.working-directory }}
       shell: bash
       run: |
-        ${{ steps.set-build-command.outputs.build-command }} +${{inputs.toolchain}} build ${{ inputs.args }} --target ${{ inputs.target }}
+        ${{ steps.set-build-command.outputs.build-command }} build ${{ inputs.args }} --target ${{ inputs.target }}
       if: steps.determine-cargo-commands.outputs.build == 'true' && runner.os != 'Windows'
 
     - name: Build binary (Windows)
       working-directory: ${{ inputs.working-directory }}
       shell: powershell
       run: |
-        & ${{ steps.set-build-command.outputs.build-command }} +${{inputs.toolchain}} build ${{ inputs.args }} --target ${{ inputs.target }}
+        & ${{ steps.set-build-command.outputs.build-command }} build ${{ inputs.args }} --target ${{ inputs.target }}
       if: steps.determine-cargo-commands.outputs.build == 'true' && runner.os == 'Windows'
 
     - name: Strip binary

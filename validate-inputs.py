@@ -50,14 +50,6 @@ class InputValidator:
                     f"Invalid 'command'. Must be one of {sorted(valid_commands)}"
                 )
 
-        # Validate toolchain if present
-        if "toolchain" in self.inputs:
-            valid_toolchains = {"stable", "beta", "nightly"}
-            if self.inputs["toolchain"] not in valid_toolchains:
-                validation_errors.append(
-                    f"Invalid 'toolchain'. Must be one of {sorted(valid_toolchains)}"
-                )
-
         # Validate working directory if present
         if "working_directory" in self.inputs:
             path = Path(self.inputs["working_directory"])
@@ -162,7 +154,13 @@ class TestInputValidator(unittest.TestCase):
 
     def test_validate_valid_toolchain(self) -> None:
         """Test validation of valid toolchains."""
-        valid_toolchains = ["stable", "beta", "nightly"]
+        valid_toolchains = [
+            "stable",
+            "beta",
+            "nightly",
+            "nightly-2025-03-17",
+            "stable 8 weeks ago",
+        ]
 
         for toolchain in valid_toolchains:
             self.setup_env(
@@ -171,13 +169,6 @@ class TestInputValidator(unittest.TestCase):
             validator = InputValidator("/root")
             errors = validator.validate()
             self.assertFalse(errors, f"Toolchain '{toolchain}' should be valid")
-
-    def test_validate_invalid_toolchain(self) -> None:
-        """Test validation of invalid toolchain."""
-        self.setup_env({"target": "x86_64-unknown-linux-gnu", "toolchain": "unknown"})
-        validator = InputValidator("/root")
-        errors = validator.validate()
-        self.assertTrue(errors)
 
     def test_validate_working_directory(self) -> None:
         """Test validation of working directory."""

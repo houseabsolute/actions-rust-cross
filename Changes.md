@@ -1,3 +1,10 @@
+## 1.0.4
+
+- Removed validation for the `toolchain` input. The
+  [dtolnay/rust-toolchain](https://github.com/dtolnay/rust-toolchain) accepts a lot of different
+  options that this action wasn't allowing. It's simpler and more flexible to just let that action
+  handle validation. Requested by @axos88 (Akos Vandra-Meyer). GH #42.
+
 ## 1.0.3 - 2025-02-17
 
 - Fixed a bug when running with a Linux ARM host where the action would use a cached `cross`
