@@ -338,6 +338,11 @@ jobs:
           toolchain: ${{ matrix.platform.toolchain || 'stable' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           strip: true
+          # This is the default cache-provider. This is just added to make sure that we handle
+          # additional rust-cache parameters properly. See
+          # https://github.com/houseabsolute/actions-rust-cross/issues/46 for an example of how this
+          # was broken.
+          rust-cache-parameters: '{ "cache-provider": "github" }'
       - name: Check binary and cross for main crate on ${{ matrix.platform.name }}
         shell: bash
         run: |

@@ -1,3 +1,9 @@
+## 1.0.5 - 2025-07-20
+
+- Fixed a bug in the handling of the `rust-cache-parameters` input. If anything was specified for
+  this, it would end up providing a broken config to the `Swatinem/rust-cache` action. Reported by
+  @SinTan1729 (Sayantan Santra). GH #46.
+
 ## 1.0.4 - 2025-04-12
 
 - Removed validation for the `toolchain` input. The

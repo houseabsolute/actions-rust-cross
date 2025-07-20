@@ -35,7 +35,7 @@ def main():
     file = os.environ["GITHUB_OUTPUT"]
     with open(file, "w") as f:
         for key, value in parameters.items():
-            f.write(f"{key}={value}")
+            f.write(f"{key}={value}\n")
 
 
 def get_file_hash(build_command):
