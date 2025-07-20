@@ -17,8 +17,8 @@
 ## 1.0.3 - 2025-02-17
 
 - Fixed a bug when running with a Linux ARM host where the action would use a cached `cross`
-  download for x86-64 Linux (or vice versa). Now the cache key for the `cross` binary includes both
-  the runner's architecture in addition to its OS.
+  download for x86-64 Linux (or vice versa). Now the cache key for the `cross` binary includes the
+  runner's architecture in addition to its OS.
 - This release partially support running on Linxu ARM, but see the `README.md` file for details on
   this.
 
