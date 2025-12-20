@@ -4,6 +4,6 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-clap = { version = "4.5.23", features = ["derive"] }
-is_executable = "1.0.4"
-regex = "1.11.1"
+clap = { version = "4.5.53", features = ["derive"] }
+is_executable = "1.0.5"
+regex = "1.12.2"
