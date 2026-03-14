@@ -10,7 +10,7 @@ jobs:
     name: Check that code is lint clean using precious
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Install mise
         run: |
           set -e
