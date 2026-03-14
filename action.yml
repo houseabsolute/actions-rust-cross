@@ -114,7 +114,9 @@ runs:
         set -x
 
         docker run --privileged --rm tonistiigi/binfmt --install all
-      if: steps.determine-cross-compile.outputs.needs-cross == 'true' && runner.os == 'Linux' && contains(runner.arch, 'ARM')
+      if:
+        steps.determine-cross-compile.outputs.needs-cross == 'true' && runner.os == 'Linux' &&
+        contains(runner.arch, 'ARM')
 
     - name: Determine cross version
       id: determine-cross-version
@@ -137,13 +139,21 @@ runs:
       uses: actions/cache@v4
       with:
         path: ${{ steps.set-cross-dir.outputs.cross-dir }}/cross
-        key: ${{ runner.os }}-${{ runner.arch }}-${{ steps.determine-cross-version.outputs.cross-version }}
-      if: steps.determine-cross-compile.outputs.needs-cross == 'true' && inputs.cache-cross-binary == 'true'
+        key:
+          ${{ runner.os }}-${{ runner.arch }}-${{
+          steps.determine-cross-version.outputs.cross-version }}
+      if:
+        steps.determine-cross-compile.outputs.needs-cross == 'true' && inputs.cache-cross-binary ==
+        'true'
 
     - name: Install cross if cross-compiling (*nix)
       shell: bash
-      run: install-cross-nix.sh ${{ steps.set-cross-dir.outputs.cross-dir }} ${{ steps.determine-cross-version.outputs.cross-version }}
-      if: steps.determine-cross-compile.outputs.needs-cross == 'true' && steps.cache-cross.outputs.cache-hit != 'true'
+      run:
+        install-cross-nix.sh ${{ steps.set-cross-dir.outputs.cross-dir }} ${{
+        steps.determine-cross-version.outputs.cross-version }}
+      if:
+        steps.determine-cross-compile.outputs.needs-cross == 'true' &&
+        steps.cache-cross.outputs.cache-hit != 'true'
       env:
         GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
 
@@ -155,7 +165,9 @@ runs:
         fi
         sudo apt-get update --yes && \
             sudo apt-get install --yes musl-tools
-      if: steps.determine-cross-compile.outputs.needs-cross != 'true' && contains(inputs.target, 'musl')
+      if:
+        steps.determine-cross-compile.outputs.needs-cross != 'true' && contains(inputs.target,
+        'musl')
 
     - name: Set build command
       id: set-build-command
@@ -226,4 +238,7 @@ runs:
       shell: bash
       run: strip-binary.sh ${{ inputs.target }}
       # strip doesn't work with cross-arch binaries on Linux or Windows.
-      if: inputs.command != 'test' && inputs.strip == 'true' && steps.determine-cross-compile.outputs.needs-cross == 'false' && inputs.target != 'aarch64-pc-windows-msvc'
+      if:
+        inputs.command != 'test' && inputs.strip == 'true' &&
+        steps.determine-cross-compile.outputs.needs-cross == 'false' && inputs.target !=
+        'aarch64-pc-windows-msvc'

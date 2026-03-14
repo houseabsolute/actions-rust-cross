@@ -1,7 +1,4 @@
-exclude = [
-  "target",
-  "tests/lib/**/*",
-]
+exclude = ["target"]
 
 [commands.clippy]
 type = "lint"
@@ -20,11 +17,12 @@ cmd = [
     "--",
     "-D",
     "clippy::pedantic",
+    "-D",
+    "warnings",
 ]
 ok_exit_codes = 0
 lint_failure_exit_codes = 101
 expect_stderr = true
-labels = ["default"]
 
 [commands."clippy --fix"]
 type = "tidy"
@@ -47,78 +45,52 @@ cmd = [
 ok_exit_codes = 0
 lint_failure_exit_codes = 101
 expect_stderr = true
-labels = ["default"]
 
 [commands.rustfmt]
 type = "both"
 include = "**/*.rs"
-working-dir.chdir-to = "run-tests"
 cmd = ["rustfmt", "--edition", "2021"]
 lint_flags = "--check"
 ok_exit_codes = [0]
 lint_failure_exit_codes = [1]
-labels = ["default", "fast-tidy"]
 
 [commands."ruff for linting"]
 type = "both"
-include = [ "**/*.py" ]
+include = ["**/*.py"]
 cmd = "ruff"
-lint_flags = [ "check" ]
-tidy_flags = [ "check", "--fix" ]
+lint_flags = ["check"]
+tidy_flags = ["check", "--fix"]
 ok_exit_codes = 0
 lint_failure_exit_codes = 1
 
 [commands."ruff for tidying"]
 type = "both"
-include = [ "**/*.py" ]
+include = ["**/*.py"]
 cmd = "ruff"
-lint_flags = [ "format", "--check" ]
-tidy_flags = [ "format" ]
+lint_flags = ["format", "--check"]
+tidy_flags = ["format"]
 ok_exit_codes = 0
 lint_failure_exit_codes = 1
 
-[commands.typos]
+[commands.prettier]
 type = "both"
-include = "**/*"
-exclude = "**/*.tar.gz"
-invoke = "once"
-cmd = "typos"
-tidy_flags = "--write-changes"
+include = ["**/*.md", "**/*.yml"]
+cmd = ["prettier", "--no-config", "--print-width", "100", "--prose-wrap", "always"]
+lint-flags = "--check"
+tidy-flags = "--write"
 ok-exit-codes = 0
-lint-failure-exit-codes = 2
-
-[commands.prettier-md]
-type    = "both"
-include = [ "**/*.md" ]
-cmd     = [ "prettier", "--no-config", "--print-width", "100", "--prose-wrap", "always" ]
-lint_flags = "--check"
-tidy_flags = "--write"
-ok_exit_codes = 0
-lint_failure_exit_codes = 1
-ignore_stderr = [ "Code style issues" ]
-
-[commands.prettier-yml]
-type    = "both"
-include = [ "**/*.yml" ]
-cmd     = [ "prettier", "--no-config" ]
-lint_flags = "--check"
-tidy_flags = "--write"
-ok_exit_codes = 0
-lint_failure_exit_codes = 1
-ignore_stderr = [ "Code style issues" ]
+lint-failure-exit-codes = 1
+ignore-stderr = ["Code style issues"]
 
 [commands.omegasort-gitignore]
 type = "both"
 include = "**/.gitignore"
-cmd = [ "omegasort", "--sort", "path", "--unique" ]
-lint_flags = "--check"
-tidy_flags = "--in-place"
-ok_exit_codes = 0
-lint_failure_exit_codes = 1
-ignore_stderr = [
-    "The .+ file is not sorted",
-    "The .+ file is not unique",
-]
+cmd = ["omegasort", "--sort", "path", "--unique"]
+lint-flags = "--check"
+tidy-flags = "--in-place"
+ok-exit-codes = 0
+lint-failure-exit-codes = 1
+ignore-stderr = ["The .+ file is not sorted", "The .+ file is not unique"]
 
 [commands.shellcheck]
 type = "lint"
@@ -135,3 +107,20 @@ lint_flags = "--diff"
 tidy_flags = "--write"
 ok_exit_codes = 0
 lint_failure_exit_codes = 1
+
+[commands.typos]
+type = "lint"
+include = "**/*"
+cmd = "typos"
+invoke = "once"
+ok-exit-codes = 0
+lint-failure-exit-codes = 2
+
+[commands.taplo]
+type = "both"
+include = "**/*.toml"
+cmd = ["taplo", "format", "--option", "indent_string=    ", "--option", "column_width=100"]
+lint_flags = "--check"
+ok_exit_codes = 0
+lint_failure_exit_codes = 1
+ignore_stderr = "INFO taplo.+"
