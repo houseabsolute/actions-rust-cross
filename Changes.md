@@ -1,3 +1,9 @@
+## 1.0.6 2026-03-15
+
+- Updated various actions used by this action so that it no longer triggers warnings about Node.js
+  20 deprecation.
+- Added a section to the docs about dealing with a failure to link `-lexecinfo` on NetBSD.
+
 ## 1.0.5 - 2025-07-20
 
 - Fixed a bug in the handling of the `rust-cache-parameters` input. If anything was specified for
