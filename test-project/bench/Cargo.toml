@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dev-dependencies]
-criterion = "0.4"
+criterion = "0.8"
 
 [[bench]]
 name = "benchmark"
