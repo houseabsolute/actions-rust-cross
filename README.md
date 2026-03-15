@@ -163,6 +163,33 @@ you can avoid this issue by structuring your workflow as follows:
 
 When structured this way, it does not matter if the output of crate A is deleted in step 3.
 
+## NetBSD Failures When Linking `-lexecinfo`
+
+I see a failure like this on NetBSD in many of my projects:
+
+```
+error: linking with `x86_64-unknown-netbsd-gcc` failed: exit status: 1
+  |
+  = note:  "x86_64-unknown-netbsd-gcc" "-m64" "/target/x86_64-unknown-netbsd/debug/deps<sysroot>cMI3xTU/symbols.o" "<2 object files omitted>" "-Wl,--as-needed" "-Wl,-Bstatic" "<sysroot>/lib/rustlib/x86_64-unknown-netbsd/lib/{libstd-*,libpanic_unwind-*,libobject-*,libmemchr-*,libaddr2line-*,libgimli-*,libcfg_if-*,librustc_demangle-*,libstd_detect-*,libhashbrown-*,librustc_std_workspace_alloc-*,libminiz_oxide-*,libadler2-*,libunwind-*,liblibc-*,librustc_std_workspace_core-*,liballoc-*,libcore-*,libcompiler_builtins-*}.rlib" "-Wl,-Bdynamic" "-lexecinfo" "-lpthread" "-lrt" "-lgcc_s" "-lutil" "-lc" "-lm" "-lrt" "-lpthread" "-lutil" "-lrt" "-lutil" "-lexecinfo" "-L" "/target/x86_64-unknown-netbsd/debug/deps<sysroot>cMI3xTU/raw-dylibs" "-Wl,--eh-frame-hdr" "-Wl,-z,noexecstack" "-o" "/target/x86_64-unknown-netbsd/debug/deps/bin2-229bd8a11357eca2" "-Wl,--gc-sections" "-pie" "-Wl,-z,relro,-z,now"
+  = note: some arguments are omitted. use `--verbose` to show all linker arguments
+  = note: /usr/local/lib/gcc/x86_64-unknown-netbsd/9.4.0/../../../../x86_64-unknown-netbsd/bin/ld: cannot find -lexecinfo
+          collect2: error: ld returned 1 exit status
+```
+
+You can work around this by setting `cross-version` to a newer commit of `cross`. At the time I'm
+updating this (2026-03-15), the latest commit on `master` is
+`588b3c99db52b5a9c5906fab96cfadcf1bde7863`. Using this commit fixes this linking issue. Note that
+this is slower because it will cause this action to compile `cross` instead of downloading a
+released binary.
+
+```yaml
+uses: houseabsolute/actions-rust-cross@v1
+with:
+  command: build
+  target: x86_64-unknown-netbsd
+  cross-version: 588b3c99db52b5a9c5906fab96cfadcf1bde7863
+```
+
 ## Cross-Compiling from Linux ARM Runners
 
 In theory, this should work, and this action does implement some of the necessary work for this.
