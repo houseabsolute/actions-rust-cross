@@ -4,6 +4,7 @@ import json
 import os
 import sys
 import hashlib
+import re
 
 
 def main():
@@ -32,6 +33,8 @@ def main():
             get_file_hash(build_command)
         )
 
+    parameters["key"] = sanitize_key(parameters["key"])
+
     file = os.environ["GITHUB_OUTPUT"]
     with open(file, "w") as f:
         for key, value in parameters.items():
@@ -44,6 +47,11 @@ def get_file_hash(build_command):
         while chunk := f.read(65536):
             file_hash.update(chunk)
         return file_hash.hexdigest()
+
+
+def sanitize_key(key):
+    # cache key cannot contain any whitespace
+    return re.sub(r"\s+", "-", key)
 
 
 main()
