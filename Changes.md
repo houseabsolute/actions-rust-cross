@@ -2,7 +2,7 @@
 
 - Fixed a bug in calculating the `cross` binary's hash.
 - Fixed cache key handling to deal with spaces in cache key elements, for example in the OS version.
-  Reported by @gdubicki (Greg Dubicki). GH #50. Fixes #1.
+  Reported by @gdubicki (Greg Dubicki). GH #50. Fixes #51.
 
 ## 1.0.6 - 2026-03-15
 
