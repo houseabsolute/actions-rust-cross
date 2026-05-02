@@ -43,7 +43,7 @@ def get_file_hash(build_command):
         file_hash = hashlib.sha256()
         while chunk := f.read(65536):
             file_hash.update(chunk)
-            return file_hash.hexdigest()
+        return file_hash.hexdigest()
 
 
 main()

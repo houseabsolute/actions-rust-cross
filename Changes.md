@@ -1,3 +1,7 @@
+## 0.0.8
+
+- Fixed a bug in calculating the `cross` binary's hash.
+
 ## 1.0.6 2026-03-15
 
 - Updated various actions used by this action so that it no longer triggers warnings about Node.js
