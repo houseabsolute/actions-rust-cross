@@ -1,10 +1,10 @@
-## 1.0.7
+## 1.0.7 - 2026-05-02
 
 - Fixed a bug in calculating the `cross` binary's hash.
 - Fixed cache key handling to deal with spaces in cache key elements, for example in the OS version.
   Reported by @gdubicki (Greg Dubicki). GH #50. Fixes #1.
 
-## 1.0.6 2026-03-15
+## 1.0.6 - 2026-03-15
 
 - Updated various actions used by this action so that it no longer triggers warnings about Node.js
   20 deprecation.
