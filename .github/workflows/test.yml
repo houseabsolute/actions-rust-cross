@@ -25,13 +25,11 @@ jobs:
 
           - name: Linux-x86_64
             runs-on: ubuntu-24.04
-            # It's important to use a musl target here to make sure that the step to install
-            # musl-tools works.
             target: x86_64-unknown-linux-musl
             cache-cross-binary: true
             expect-file-re: "ELF.+x86-64"
-            expect-cross: ""
-            expect-stripped: "--expect-stripped"
+            expect-cross: "--expect-cross"
+            expect-stripped: ""
             can-execute: true
 
           - name: Linux-x86_64 (beta)
@@ -40,8 +38,8 @@ jobs:
             toolchain: beta
             cache-cross-binary: true
             expect-file-re: "ELF.+x86-64"
-            expect-cross: ""
-            expect-stripped: "--expect-stripped"
+            expect-cross: "--expect-cross"
+            expect-stripped: ""
             can-execute: true
 
           - name: Linux-x86_64 (nightly)
@@ -50,8 +48,8 @@ jobs:
             toolchain: nightly
             cache-cross-binary: true
             expect-file-re: "ELF.+x86-64"
-            expect-cross: ""
-            expect-stripped: "--expect-stripped"
+            expect-cross: "--expect-cross"
+            expect-stripped: ""
             can-execute: true
 
           - name: Linux-x86_64 (force cross)

@@ -15,6 +15,9 @@ path = "src/bin1.rs"
 name = "bin2"
 path = "src/bin2.rs"
 
+[build-dependencies]
+cc = "1"
+
 # workaround for https://github.com/cross-rs/cross/issues/1345
 [package.metadata.cross.target.x86_64-unknown-netbsd]
 pre-build = [
