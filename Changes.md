@@ -1,3 +1,9 @@
+## 1.0.8
+
+- This action now always uses `cross` for `musl` targets on Linux, even when the host architecture
+  matches the target. This fixes C++ compilation failures caused by the lack of `musl-g++` on Ubuntu
+  runners. Reported by @RaulTrombin (Raul Victor Trombin). GH #22.
+
 ## 1.0.7 - 2026-05-02
 
 - Fixed a bug in calculating the `cross` binary's hash.

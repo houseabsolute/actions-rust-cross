@@ -53,9 +53,10 @@ def check_needs_cross(target: str) -> bool:
 
     target = target.lower()
 
-    # Check for x86_64 Linux targets on x86_64 Linux host
+    # Check for x86_64 Linux targets on x86_64 Linux host. We always use cross for musl targets
+    # because the Ubuntu runner lacks a C++ compiler for musl (musl-g++).
     if (
-        re.search(r"x86_64.+linux-(?:gnu|musl)", target)
+        re.search(r"x86_64.+linux-gnu", target)
         and "x86_64" in system_info
         and "linux" in system_info
     ):
@@ -66,9 +67,10 @@ def check_needs_cross(target: str) -> bool:
     # because then we need 32-bit C headers, 32-bit C libs to link to, etc.
 
     # Check if both host and target are ARM Linux. I'm assuming here that for things like
-    # "arm-linux-androideabi" or "armv7-unknown-linux-ohos" we'd still need cross.
+    # "arm-linux-androideabi" or "armv7-unknown-linux-ohos" we'd still need cross. We always use
+    # cross for musl targets because the Ubuntu runner lacks a C++ compiler for musl (musl-g++).
     if (
-        re.search(r"(?:aarch64|arm).+linux-(?:gnu|musl)", target)
+        re.search(r"(?:aarch64|arm).+linux-gnu", target)
         and ("arm" in system_info or "aarch64" in system_info)
         and "linux" in system_info
     ):

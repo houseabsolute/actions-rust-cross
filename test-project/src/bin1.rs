@@ -1,4 +1,9 @@
+extern "C" {
+    fn hello_cpp() -> i32;
+}
+
 fn main() {
+    let _ = unsafe { hello_cpp() };
     println!("Hello, world!");
 }
 
