@@ -1,4 +1,4 @@
-## 1.0.8
+## 1.0.8 - 2026-06-21
 
 - When `working-directory` is set, this will be turned into a `workspaces` argument when running
   `Swatinem/rust-cache`. Fixes GH #53. Reported by @oskolist.
