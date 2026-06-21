@@ -1,3 +1,8 @@
+## 0.0.18 - 2026-06-21
+
+- Updated actions/cache version used by this action so that it no longer triggers warnings about
+  Node.js 20 deprecation.
+
 ## 0.0.17 - 2024-11-23
 
 - Added support for running `cargo bench` or `cross bench`. Implemented by @RaulTrombin (Raul Victor
