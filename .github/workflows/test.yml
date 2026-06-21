@@ -414,6 +414,55 @@ jobs:
         shell: bash
         run: ./validate-inputs.py --test
 
+  test-parse-rust-cache-parameters:
+    name: Test parse-and-set-rust-cache-parameters
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Run tests
+        shell: bash
+        run: ./parse-and-set-rust-cache-parameters.py --test
+
+  test-subdir-only-project:
+    name: Test a project that only exists in a subdirectory
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      # Unlike the other test jobs, we deliberately do *not* copy the test project to the repo
+      # root. This reproduces the layout from
+      # https://github.com/houseabsolute/actions-rust-cross/issues/53, where the only `Cargo.toml`
+      # lives in a subdirectory. With the working-directory passed through to `Swatinem/rust-cache`
+      # as `workspaces`, rust-cache runs `cargo metadata` in that subdirectory instead of failing
+      # at the (manifest-less) repo root.
+      - name: Confirm there is no Cargo.toml at the repo root
+        shell: bash
+        run: |
+          set -e
+          if [ -f Cargo.toml ]; then
+              echo "Expected no Cargo.toml at the repo root for this test"
+              exit 1
+          fi
+      - name: Run build command in subdirectory
+        uses: ./
+        with:
+          command: build
+          target: x86_64-unknown-linux-gnu
+          working-directory: test-project/subcrate
+          toolchain: stable
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Confirm the subcrate binary was built
+        shell: bash
+        run: |
+          set -e
+          set -x
+          bin="test-project/subcrate/target/x86_64-unknown-linux-gnu/debug/subcrate"
+          if [ ! -f "$bin" ]; then
+              echo "Expected built binary at $bin"
+              exit 1
+          fi
+
   test-other-cargo-commands:
     name: Test a "cargo foo" command
     runs-on: ubuntu-24.04

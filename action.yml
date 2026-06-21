@@ -193,7 +193,7 @@ runs:
         fi
         # This will get the inputs JSON from the `RUST_CACHE_PARAMETERS` env var. This avoids
         # any string interpolation issues, since the inputs will contain quotes.
-        parse-and-set-rust-cache-parameters.py "${{ inputs.target }}" "${{ steps.set-build-command.outputs.build-command }}" "$OS_VERSION"
+        parse-and-set-rust-cache-parameters.py "${{ inputs.target }}" "${{ steps.set-build-command.outputs.build-command }}" "$OS_VERSION" "${{ inputs.working-directory }}"
       env:
         RUST_CACHE_PARAMETERS: ${{ inputs.rust-cache-parameters }}
       if: inputs.use-rust-cache == 'true'

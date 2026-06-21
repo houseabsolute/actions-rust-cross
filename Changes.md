@@ -1,3 +1,8 @@
+## 1.0.8
+
+- When `working-directory` is set, this will be turned into a `workspaces` argument when running
+  `Swatinem/rust-cache`. Fixes GH #53. Reported by @oskolist.
+
 ## 1.0.7 - 2026-05-02
 
 - Fixed a bug in calculating the `cross` binary's hash.
